@@ -74,12 +74,11 @@ function activate_flybugs(thisContext,quantity)
                 var imageData = a_zsprite.buffer.getContext('2d', {willReadFrequently:true}).getImageData(0, 0, a_zsprite.img.width, a_zsprite.img.height);
                 a_zsprite.pixels = imageData.data;
 
-            a_zsprite.x = 1000;//Phaser.Math.Between(100, 668);
-            a_zsprite.y = 1000;//Phaser.Math.Between(100, 1180);
+            a_zsprite.x = 2000;//Phaser.Math.Between(100, 668);
+            a_zsprite.y = 2000;//Phaser.Math.Between(100, 1180);
             a_zsprite.dx = Phaser.Math.RND.realInRange(-3.5, 3.5);
             a_zsprite.dy = Phaser.Math.RND.realInRange(-3.5, 3.5);
             a_zsprite.animated = true;
-            //a_zsprite.flying = true;
             a_zsprite.animationtimecheck=0;
             a_zsprite.frametimer = 50;
             a_zsprite.inplay = true;

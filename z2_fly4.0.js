@@ -8,7 +8,7 @@ var backgroundList = [
 
 var floorList = [
 
-'20220825_165313.jpg',
+'SNES_Mario_Circuit_2.png',
 
 ];
 
@@ -561,6 +561,7 @@ var Demo = new Phaser.Class({
         this.TILE_SIZE = 64;
         this.WALL_HEIGHT = 64;
         this.WALL_WIDTH = 64;
+        this.floortilesize = 2560;
         
         // Remember that PROJECTIONPLANE = screen.  This demo assumes your screen is 320 pixels wide, 200 pixels high
         this.PROJECTIONPLANEWIDTH = 320;
@@ -620,8 +621,8 @@ var Demo = new Phaser.Class({
 
         // 2 dimensional map
         this.fMap=[];
-        this.MAP_WIDTH=12;
-        this.MAP_HEIGHT=20; 
+        this.MAP_WIDTH=40;
+        this.MAP_HEIGHT=40; 
         
         this.animationFrameID;
     
@@ -793,10 +794,10 @@ var Demo = new Phaser.Class({
             this.floor[i] = {};
 
             this.floor[i].srcimg = this.textures.get(imagekey).getSourceImage();
-            this.floor[i].buffer = this.textures.createCanvas('floorcanvas'+i, 64, 64);
+            this.floor[i].buffer = this.textures.createCanvas('floorcanvas'+i, this.floortilesize, this.floortilesize);
             this.floor[i].context = this.floor[i].buffer.getContext('2d', {willReadFrequently:true});
-            this.floor[i].context.drawImage(this.floor[i].srcimg, 0,0,this.floor[i].srcimg.width,this.floor[i].srcimg.height, 0, 0, 64, 64);
-            var imageData = this.floor[i].context.getImageData(0, 0, 64, 64);
+            this.floor[i].context.drawImage(this.floor[i].srcimg, 0,0,this.floor[i].srcimg.width,this.floor[i].srcimg.height, 0, 0, this.floortilesize, this.floortilesize);
+            var imageData = this.floor[i].context.getImageData(0, 0, this.floortilesize, this.floortilesize);
             this.floor[i].pixels = imageData.data;
         }
 
@@ -812,8 +813,8 @@ var Demo = new Phaser.Class({
             this.background[i].ImageArc = 0;
             
             this.background[i].width = 960;
-            this.background[i].height = 200;
-            this.background[i].yoffset = 0;
+            this.background[i].height = 600;
+            this.background[i].yoffset = 150;
 
             this.background[i].srcimg = this.textures.get(imagekey).getSourceImage();
             this.background[i].buffer = this.textures.createCanvas('backgroundcanvas'+i, this.background[i].width, this.background[i].height);
@@ -1233,230 +1234,230 @@ var Demo = new Phaser.Class({
 
 
     
-        // this.portal = this.add.image();
+        this.portal = this.add.image();
 
-        // this.portal.p_index = 0;
+        this.portal.p_index = 0;
 
-        // this.portal.buffer = this.textures.createCanvas('portaldisplaycanvas', 64, 64);
-        // this.portal.context = this.portal.buffer.getContext('2d', {willReadFrequently:true});
+        this.portal.buffer = this.textures.createCanvas('portaldisplaycanvas', 64, 64);
+        this.portal.context = this.portal.buffer.getContext('2d', {willReadFrequently:true});
         
-        // this.portal.imagedata = this.portal.context.getImageData(0, 0, 64, 64);
-        // this.portal.pixels = this.portal.imagedata.data;
+        this.portal.imagedata = this.portal.context.getImageData(0, 0, 64, 64);
+        this.portal.pixels = this.portal.imagedata.data;
 
 
 
         
-        // //portal image source
-        // this.portal.sphereTexture = this.textures.get(backgroundList[0]).getSourceImage();
-        // this.portal.sphereTextureBuffer = this.textures.createCanvas('portalimagecanvas', this.portal.sphereTexture.width, this.portal.sphereTexture.height);
-        // this.portal.sphereTexture_context = this.portal.sphereTextureBuffer.getContext('2d', {willReadFrequently:true});
-        // this.portal.sphereTexture_context.drawImage(this.portal.sphereTexture, 0, 0);
-        // this.portal.sphereTexture_imagedata = this.portal.sphereTexture_context.getImageData(0, 0, this.portal.sphereTexture.width, this.portal.sphereTexture.height);
-        // this.portal.sphereTexturePixels = this.portal.sphereTexture_imagedata.data;
+        //portal image source
+        this.portal.sphereTexture = this.textures.get(backgroundList[0]).getSourceImage();
+        this.portal.sphereTextureBuffer = this.textures.createCanvas('portalimagecanvas', this.portal.sphereTexture.width, this.portal.sphereTexture.height);
+        this.portal.sphereTexture_context = this.portal.sphereTextureBuffer.getContext('2d', {willReadFrequently:true});
+        this.portal.sphereTexture_context.drawImage(this.portal.sphereTexture, 0, 0);
+        this.portal.sphereTexture_imagedata = this.portal.sphereTexture_context.getImageData(0, 0, this.portal.sphereTexture.width, this.portal.sphereTexture.height);
+        this.portal.sphereTexturePixels = this.portal.sphereTexture_imagedata.data;
 
 
-        // this.portal.src_vert_scope = this.portal.sphereTexture.height/16;
+        this.portal.src_vert_scope = this.portal.sphereTexture.height/16;
 
 
-        // //portal properties
-        // this.portal.width = 64;
-        // this.portal.height = 64;
+        //portal properties
+        this.portal.width = 64;
+        this.portal.height = 64;
 
-        // this.portal.rotation = 0;
-        // this.portal.s_distance = 0;
+        this.portal.rotation = 0;
+        this.portal.s_distance = 0;
 
-        // this.portal.x = 1280;
-        // this.portal.y = 1280;
-        // this.portal.base_elevation = 32;
-        // this.portal.elevation_delta = 0;//Phaser.Math.Between(-50,70);
-        // this.portal.animated = true; //prevents close-up optimiztion draw routine which has some jankyness 
-        // this.portal.animationtimecheck=0;
-        // this.portal.frametimer = 200;
-        // this.portal.numframes = 1;
-        // this.portal.framewidth = this.portal.width;
-        // this.portal.frameindex = 0;
+        this.portal.x = 1280;
+        this.portal.y = 1280;
+        this.portal.base_elevation = 32;
+        this.portal.elevation_delta = 0;//Phaser.Math.Between(-50,70);
+        this.portal.animated = true; //prevents close-up optimiztion draw routine which has some jankyness 
+        this.portal.animationtimecheck=0;
+        this.portal.frametimer = 200;
+        this.portal.numframes = 1;
+        this.portal.framewidth = this.portal.width;
+        this.portal.frameindex = 0;
 
 
-        // this.portal.inplay = true;
+        this.portal.inplay = true;
         
 
-        // // Main render function. This method is called for each frame (see init() method for initialization).
-        // this.portal.move = function()
-        // {
+        // Main render function. This method is called for each frame (see init() method for initialization).
+        this.portal.move = function()
+        {
             
             
-        //     // this.context.clearRect(0, 0, this.width, this.height);
-        //     // this.imagedata = this.context.getImageData(0, 0, this.width,this.height);
-        //     // this.pixels = this.imagedata.data;
+            // this.context.clearRect(0, 0, this.width, this.height);
+            // this.imagedata = this.context.getImageData(0, 0, this.width,this.height);
+            // this.pixels = this.imagedata.data;
 
-        //     var x, y;
+            var x, y;
 
-        //     var p = {x:0,y:0,z:0};  
+            var p = {x:0,y:0,z:0};  
             
-        //     for(i = 0; i < this.sphere.numberOfVertexes; i++) {
+            for(i = 0; i < this.sphere.numberOfVertexes; i++) {
                 
-        //         p.x = this.sphere.point[i].x;
-        //         p.y = this.sphere.point[i].y;
-        //         p.z = this.sphere.point[i].z;
+                p.x = this.sphere.point[i].x;
+                p.y = this.sphere.point[i].y;
+                p.z = this.sphere.point[i].z;
 
-        //         //this.rotateX(p, this.rotation);
-        //         this.rotateY(p, this.rotation);
-        //         //this.rotateZ(p, this.rotation);
+                //this.rotateX(p, this.rotation);
+                this.rotateY(p, this.rotation);
+                //this.rotateZ(p, this.rotation);
 
-        //         x = this.projection(p.x, p.z, this.width/2.0, 100.0, this.s_distance);
-        //         y = this.projection(p.y, p.z, this.height/2.0, 100.0, this.s_distance);
+                x = this.projection(p.x, p.z, this.width/2.0, 100.0, this.s_distance);
+                y = this.projection(p.y, p.z, this.height/2.0, 100.0, this.s_distance);
 
-        //         if((x >= 0) && (x < this.width)) {
-        //             if((y >= 0) && (y < this.height)) {
+                if((x >= 0) && (x < this.width)) {
+                    if((y >= 0) && (y < this.height)) {
 
-        //                 //limit drawing to front facing vertices. slightly greater than 0 to clean up the edge
-        //                 if(p.z >= 2) 
-        //                 {
-        //                     var mycolor = this.sphere.point[i].color;
-        //                     var bytesPerPixel=4;
-        //                     var targetIndex=(this.width*bytesPerPixel)*Math.round(y)+(bytesPerPixel*Math.round(x));          
+                        //limit drawing to front facing vertices. slightly greater than 0 to clean up the edge
+                        if(p.z >= 2) 
+                        {
+                            var mycolor = this.sphere.point[i].color;
+                            var bytesPerPixel=4;
+                            var targetIndex=(this.width*bytesPerPixel)*Math.round(y)+(bytesPerPixel*Math.round(x));          
             
-        //                     this.pixels[targetIndex]=mycolor.r;
-        //                     this.pixels[targetIndex+1]=mycolor.g;
-        //                     this.pixels[targetIndex+2]=mycolor.b;
-        //                     this.pixels[targetIndex+3]=255;
-        //                 }
-        //             }
-        //         }                   
-        //     }
+                            this.pixels[targetIndex]=mycolor.r;
+                            this.pixels[targetIndex+1]=mycolor.g;
+                            this.pixels[targetIndex+2]=mycolor.b;
+                            this.pixels[targetIndex+3]=255;
+                        }
+                    }
+                }                   
+            }
 
-        //     // this.context.putImageData(this.imagedata,0,0);
+            // this.context.putImageData(this.imagedata,0,0);
 
-        //     this.rotation += Math.PI/90.0;
+            this.rotation += Math.PI/90.0;
 
-        //     if(this.s_distance < 280) {
-        //         this.s_distance += 10;
-        //     }
-        // };
+            if(this.s_distance < 280) {
+                this.s_distance += 10;
+            }
+        };
 
 
-        // // Sphere3D constructor. It builds a 3D sphere from scratch.
-        // this.portal.Sphere3D = function (radius) 
-        // {
-        //     sphere = {};
+        // Sphere3D constructor. It builds a 3D sphere from scratch.
+        this.portal.Sphere3D = function (radius) 
+        {
+            sphere = {};
 
-        //     sphere.point = new Array();
-        //     sphere.radius = (typeof(radius) == "undefined") ? 20.0 : radius;
-        //     sphere.radius = (typeof(radius) != "number") ? 20.0 : radius;
-        //     sphere.numberOfVertexes = 0;
+            sphere.point = new Array();
+            sphere.radius = (typeof(radius) == "undefined") ? 20.0 : radius;
+            sphere.radius = (typeof(radius) != "number") ? 20.0 : radius;
+            sphere.numberOfVertexes = 0;
 
-        //     var vertex_step = .0235;
+            var vertex_step = .0235;
             
-        //     // It builds the middle circle on the XZ plane. Loop of 2*pi with a step of 0.17 radians.
-        //     for(alpha = 0; alpha <= 6.28; alpha += vertex_step) {
-        //         p = sphere.point[sphere.numberOfVertexes] = {x:0,y:0,z:0};
+            // It builds the middle circle on the XZ plane. Loop of 2*pi with a step of 0.17 radians.
+            for(alpha = 0; alpha <= 6.28; alpha += vertex_step) {
+                p = sphere.point[sphere.numberOfVertexes] = {x:0,y:0,z:0};
 
-        //         //console.log("onSphereTextureLoaded imageData="+sphereTexturePixels);
-        //         var bytesPerPixel=4;
-        //         var sourceIndex = bytesPerPixel* Math.round(this.sphereTexture.width*(alpha/6.28) ) + (this.sphereTexture.width*bytesPerPixel)*(Math.round((0/1.445))+this.sphereTexture.height/2 );//22;//
-        //         //console.log("sourceIndex="+100);
+                //console.log("onSphereTextureLoaded imageData="+sphereTexturePixels);
+                var bytesPerPixel=4;
+                var sourceIndex = bytesPerPixel* Math.round(this.sphereTexture.width*(alpha/6.28) ) + (this.sphereTexture.width*bytesPerPixel)*(Math.round((0/1.445))+this.sphereTexture.height/2 );//22;//
+                //console.log("sourceIndex="+100);
 
-        //         var r=this.sphereTexturePixels[sourceIndex];//r=200;//
-        //         var g=this.sphereTexturePixels[sourceIndex+1];//g=11;//
-        //         var b=this.sphereTexturePixels[sourceIndex+2];//b=100;//
-        //         var a=this.sphereTexturePixels[sourceIndex+3];//a=100;//
+                var r=this.sphereTexturePixels[sourceIndex];//r=200;//
+                var g=this.sphereTexturePixels[sourceIndex+1];//g=11;//
+                var b=this.sphereTexturePixels[sourceIndex+2];//b=100;//
+                var a=this.sphereTexturePixels[sourceIndex+3];//a=100;//
 
-        //         // var colors = ['red','green','blue','orange','cyan','violet'];
-        //         p.color = {};//colors[Math.floor(Math.random()*5)];//
-        //         p.color.r = r;
-        //         p.color.g = g;
-        //         p.color.b = b;
+                // var colors = ['red','green','blue','orange','cyan','violet'];
+                p.color = {};//colors[Math.floor(Math.random()*5)];//
+                p.color.r = r;
+                p.color.g = g;
+                p.color.b = b;
 
             
-        //         p.x = Math.cos(alpha) * sphere.radius;
-        //         p.y = 0;
-        //         p.z = Math.sin(alpha) * sphere.radius;
+                p.x = Math.cos(alpha) * sphere.radius;
+                p.y = 0;
+                p.z = Math.sin(alpha) * sphere.radius;
 
-        //         sphere.numberOfVertexes++;
-        //     }
+                sphere.numberOfVertexes++;
+            }
 
-        //     // It builds two hemispheres:
-        //     //  - First hemisphere: loop of pi/2 with step of 0.17 (direction = 1)
-        //     //  - Second hemisphere: loop of pi/2 with step of 0.17 (direction = -1)
+            // It builds two hemispheres:
+            //  - First hemisphere: loop of pi/2 with step of 0.17 (direction = 1)
+            //  - Second hemisphere: loop of pi/2 with step of 0.17 (direction = -1)
             
-        //     for(var direction = 1; direction >= -1; direction -= 2) {
-        //         for(var beta = vertex_step; beta < 1.445; beta += vertex_step) {
-        //             var radius = Math.cos(beta) * sphere.radius;
-        //             var fixedY = Math.sin(beta) * sphere.radius * direction;
+            for(var direction = 1; direction >= -1; direction -= 2) {
+                for(var beta = vertex_step; beta < 1.445; beta += vertex_step) {
+                    var radius = Math.cos(beta) * sphere.radius;
+                    var fixedY = Math.sin(beta) * sphere.radius * direction;
 
-        //             for(var alpha = 0; alpha < 6.28; alpha += vertex_step) {
-        //                 p = sphere.point[sphere.numberOfVertexes] = {x:0,y:0,z:0};
-
-
-
-        //                 var src_vert_scope = this.src_vert_scope;
-
-        //                 var bytesPerPixel=4;
-        //                 var sourceIndex = bytesPerPixel* Math.round(this.sphereTexture.width*(alpha/6.28) ) + (this.sphereTexture.width*bytesPerPixel)*(Math.round((fixedY*-1*src_vert_scope/1.445))+this.sphereTexture.height/2);//11;//
-
-        //                 var r=this.sphereTexturePixels[sourceIndex];//r=200;//
-        //                 var g=this.sphereTexturePixels[sourceIndex+1];//g=11;//
-        //                 var b=this.sphereTexturePixels[sourceIndex+2];//b=100;//
-        //                 var a=this.sphereTexturePixels[sourceIndex+3];//a=100;//
-
-        //                 // var colors = ['red','green','blue','orange','cyan','violet'];
-        //                 p.color = {};//colors[Math.floor(Math.random()*5)];//
-        //                 p.color.r = r;
-        //                 p.color.g = g;
-        //                 p.color.b = b;
+                    for(var alpha = 0; alpha < 6.28; alpha += vertex_step) {
+                        p = sphere.point[sphere.numberOfVertexes] = {x:0,y:0,z:0};
 
 
 
-        //                 p.x = Math.cos(alpha) * radius;
-        //                 p.y = fixedY;
-        //                 p.z = Math.sin(alpha) * radius;
+                        var src_vert_scope = this.src_vert_scope;
 
-        //                 sphere.numberOfVertexes++;
-        //             }
-        //         }
-        //     }
+                        var bytesPerPixel=4;
+                        var sourceIndex = bytesPerPixel* Math.round(this.sphereTexture.width*(alpha/6.28) ) + (this.sphereTexture.width*bytesPerPixel)*(Math.round((fixedY*-1*src_vert_scope/1.445))+this.sphereTexture.height/2);//11;//
 
-        //     return sphere;
-        // }
+                        var r=this.sphereTexturePixels[sourceIndex];//r=200;//
+                        var g=this.sphereTexturePixels[sourceIndex+1];//g=11;//
+                        var b=this.sphereTexturePixels[sourceIndex+2];//b=100;//
+                        var a=this.sphereTexturePixels[sourceIndex+3];//a=100;//
 
-
-
-
-
-        // // Utility method to rotate point by X in a 3D space
-        // this.portal.rotateX = function (point, radians) 
-        // {
-        //     var y = point.y;
-        //     point.y = (y * Math.cos(radians)) + (point.z * Math.sin(radians) * -1.0);
-        //     point.z = (y * Math.sin(radians)) + (point.z * Math.cos(radians));
-        // };
-
-        // // Utility method to rotate point by Y in a 3D space
-        // this.portal.rotateY = function (point, radians) 
-        // {
-        //     var x = point.x;
-        //     point.x = (x * Math.cos(radians)) + (point.z * Math.sin(radians) * -1.0);
-        //     point.z = (x * Math.sin(radians)) + (point.z * Math.cos(radians));
-        // };
-
-        // // Utility method to rotate point by Z in a 3D space
-        // this.portal.rotateZ = function (point, radians) 
-        // {
-        //     var x = point.x;
-        //     point.x = (x * Math.cos(radians)) + (point.y * Math.sin(radians) * -1.0);
-        //     point.y = (x * Math.sin(radians)) + (point.y * Math.cos(radians));
-        // };
-
-        // // Utility method to project a 3D point a a 2D surface
-        // this.portal.projection = function (xy, z, xyOffset, zOffset, s_distance) 
-        // {
-        //     return ((s_distance * xy) / (z - zOffset)) + xyOffset;
-        // };
+                        // var colors = ['red','green','blue','orange','cyan','violet'];
+                        p.color = {};//colors[Math.floor(Math.random()*5)];//
+                        p.color.r = r;
+                        p.color.g = g;
+                        p.color.b = b;
 
 
-        // this.portal.sphere = this.portal.Sphere3D(10);
 
-        // this.zspritesgroup.add(this.portal);
+                        p.x = Math.cos(alpha) * radius;
+                        p.y = fixedY;
+                        p.z = Math.sin(alpha) * radius;
+
+                        sphere.numberOfVertexes++;
+                    }
+                }
+            }
+
+            return sphere;
+        }
+
+
+
+
+
+        // Utility method to rotate point by X in a 3D space
+        this.portal.rotateX = function (point, radians) 
+        {
+            var y = point.y;
+            point.y = (y * Math.cos(radians)) + (point.z * Math.sin(radians) * -1.0);
+            point.z = (y * Math.sin(radians)) + (point.z * Math.cos(radians));
+        };
+
+        // Utility method to rotate point by Y in a 3D space
+        this.portal.rotateY = function (point, radians) 
+        {
+            var x = point.x;
+            point.x = (x * Math.cos(radians)) + (point.z * Math.sin(radians) * -1.0);
+            point.z = (x * Math.sin(radians)) + (point.z * Math.cos(radians));
+        };
+
+        // Utility method to rotate point by Z in a 3D space
+        this.portal.rotateZ = function (point, radians) 
+        {
+            var x = point.x;
+            point.x = (x * Math.cos(radians)) + (point.y * Math.sin(radians) * -1.0);
+            point.y = (x * Math.sin(radians)) + (point.y * Math.cos(radians));
+        };
+
+        // Utility method to project a 3D point a a 2D surface
+        this.portal.projection = function (xy, z, xyOffset, zOffset, s_distance) 
+        {
+            return ((s_distance * xy) / (z - zOffset)) + xyOffset;
+        };
+
+
+        this.portal.sphere = this.portal.Sphere3D(10);
+
+        this.zspritesgroup.add(this.portal);
 
 
 
@@ -1643,9 +1644,9 @@ var Demo = new Phaser.Class({
 
         ///////////////pre activations
 
-        //activate_flybugs(thisContext,3);
+        activate_flybugs(thisContext,3);
 
-        //activate_plantedrocks(thisContext,50);
+        activate_plantedrocks(thisContext,50);
 
         ////////////////////////////////////////////
 
@@ -1748,9 +1749,9 @@ var Demo = new Phaser.Class({
         
         this.drawBackground();
         
-        //this.rain(this.wall[6]);
+        this.rain(this.wall[6]);
 
-        //this.wave(this.wall[4]);
+        this.wave(this.wall[4]);
 
         this.raycast();
 
@@ -2876,8 +2877,8 @@ var Demo = new Phaser.Class({
                         //     cellX>=0 && cellY>=0)
                         // {            
                             // Find offset of tile and column in texture
-                            var tileRow = Math.floor(yEnd % 64);
-                            var tileColumn = Math.floor(xEnd % 64);
+                            var tileRow = Math.floor(yEnd % this.floortilesize);
+                            var tileColumn = Math.floor(xEnd % this.floortilesize);
                             // Pixel to draw
                             var sourceIndex=(tileRow*this.floor[this.floor.currentIndex].buffer.width*bytesPerPixel)+(bytesPerPixel*tileColumn);
                             
@@ -3574,7 +3575,7 @@ var gShoot = false;
 
 var playerHitCount = 0;
 
-var map0=
+var map3=
                             '----------------------------------------'+
                             '----------------------------------------'+
                             '----------------------------------------'+
@@ -3583,12 +3584,12 @@ var map0=
                             '----------------------------------------'+
                             '----------------------------------------'+
                             '----------------------------------------'+
-                            '----------------------------------------'+
-                            '----------------------------------------'+
-                            '----------------------------------------'+
-                            '----------------------------------------'+
-                            '----------------------------------------'+
-                            '----------------------------------------'+
+                            '--------------4-------------------------'+
+                            '--------------4-------------------------'+
+                            '--------------4-------------------------'+
+                            '----------6666666666666666664-----------'+
+                            '----------------------------4-----------'+
+                            '----------------------------4-----------'+
                             '----------------------------------------'+
                             '----------------------------------------'+
                             '----------------------------------------'+
@@ -3616,7 +3617,7 @@ var map0=
                             '----------------------------------------'+
                             '----------------------------------------';
 
-var map3=
+var map0=
 
 '------------'+
 '------------'+
