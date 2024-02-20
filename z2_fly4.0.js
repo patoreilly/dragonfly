@@ -812,8 +812,8 @@ var Demo = new Phaser.Class({
             this.background[i].ImageArc = 0;
             
             this.background[i].width = 960;
-            this.background[i].height = 600;
-            this.background[i].yoffset = 150;
+            this.background[i].height = 200;
+            this.background[i].yoffset = 0;
 
             this.background[i].srcimg = this.textures.get(imagekey).getSourceImage();
             this.background[i].buffer = this.textures.createCanvas('backgroundcanvas'+i, this.background[i].width, this.background[i].height);
