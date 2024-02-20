@@ -18,7 +18,7 @@ function activate_plantedrocks(thisContext,quantity)
         a_zsprite.x = Phaser.Math.Between(100,1180);
         a_zsprite.y = Phaser.Math.Between(100,1180);
         a_zsprite.animated = false;
-        a_zsprite.inplay = false;
+        a_zsprite.inplay = true;
 
         // where the object visually touches the ground based on 1/2 the height in pixels as standard
         a_zsprite.base_elevation = Math.floor(a_zsprite.img.height/2)-4;//32;

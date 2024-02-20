@@ -1643,7 +1643,7 @@ var Demo = new Phaser.Class({
 
         ///////////////pre activations
 
-        activate_flybugs(thisContext,3);
+        //activate_flybugs(thisContext,3);
 
         activate_plantedrocks(thisContext,50);
 
@@ -1748,9 +1748,9 @@ var Demo = new Phaser.Class({
         
         this.drawBackground();
         
-        this.rain(this.wall[6]);
+        //this.rain(this.wall[6]);
 
-        this.wave(this.wall[4]);
+        //this.wave(this.wall[4]);
 
         this.raycast();
 
