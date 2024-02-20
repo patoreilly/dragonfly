@@ -1278,7 +1278,7 @@ var Demo = new Phaser.Class({
         this.portal.frameindex = 0;
 
 
-        this.portal.inplay = true;
+        this.portal.inplay = false;
         
 
         // Main render function. This method is called for each frame (see init() method for initialization).
@@ -1644,7 +1644,7 @@ var Demo = new Phaser.Class({
 
         ///////////////pre activations
 
-        activate_flybugs(thisContext,3);
+        //activate_flybugs(thisContext,3);
 
         activate_plantedrocks(thisContext,50);
 
