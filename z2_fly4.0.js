@@ -30,12 +30,12 @@ var wallList = [
 var wallData = [
 
 {'height':64,'width':64},
-{'height':200,'width':64},
 {'height':64,'width':64},
-{'height':220,'width':64},
-{'height':180,'width':64},
-{'height':300,'width':64},
-{'height':220,'width':64},
+{'height':64,'width':64},
+{'height':64,'width':64},
+{'height':64,'width':64},
+{'height':64,'width':64},
+{'height':64,'width':64},
 {'height':64,'width':64},
 {'height':64,'width':64},
 {'height':64,'width':64}
@@ -793,10 +793,10 @@ var Demo = new Phaser.Class({
             this.floor[i] = {};
 
             this.floor[i].srcimg = this.textures.get(imagekey).getSourceImage();
-            this.floor[i].buffer = this.textures.createCanvas('floorcanvas'+i, 512, 512);
+            this.floor[i].buffer = this.textures.createCanvas('floorcanvas'+i, 64, 64);
             this.floor[i].context = this.floor[i].buffer.getContext('2d', {willReadFrequently:true});
-            this.floor[i].context.drawImage(this.floor[i].srcimg, 0,0,this.floor[i].srcimg.width,this.floor[i].srcimg.height, 0, 0, 512, 512);
-            var imageData = this.floor[i].context.getImageData(0, 0, 512, 512);
+            this.floor[i].context.drawImage(this.floor[i].srcimg, 0,0,this.floor[i].srcimg.width,this.floor[i].srcimg.height, 0, 0, 64, 64);
+            var imageData = this.floor[i].context.getImageData(0, 0, 64, 64);
             this.floor[i].pixels = imageData.data;
         }
 
@@ -1645,7 +1645,7 @@ var Demo = new Phaser.Class({
 
         //activate_flybugs(thisContext,3);
 
-        activate_plantedrocks(thisContext,50);
+        //activate_plantedrocks(thisContext,50);
 
         ////////////////////////////////////////////
 
@@ -2876,8 +2876,8 @@ var Demo = new Phaser.Class({
                         //     cellX>=0 && cellY>=0)
                         // {            
                             // Find offset of tile and column in texture
-                            var tileRow = Math.floor(yEnd % 512);
-                            var tileColumn = Math.floor(xEnd % 512);
+                            var tileRow = Math.floor(yEnd % 64);
+                            var tileColumn = Math.floor(xEnd % 64);
                             // Pixel to draw
                             var sourceIndex=(tileRow*this.floor[this.floor.currentIndex].buffer.width*bytesPerPixel)+(bytesPerPixel*tileColumn);
                             
