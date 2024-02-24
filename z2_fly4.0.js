@@ -150,13 +150,15 @@ var Menu = new Phaser.Class({
         // 'audio/horizon6_sounds.mp3'
         // ]);
 
-        // this.load.audio('theme', [
-        // 'audio/tdujam_000.ogg',
-        // 'audio/tdujam_000.mp3'
-        // ]);
+        this.load.audio('theme', [
+        'audio/tdujam_000.ogg',
+        'audio/tdujam_000.mp3'
+        ]);
         
 
         // load gui assets
+
+        this.load.image('dragonfly_title', 'gui/dragonfly_title.png');
 
         this.load.spritesheet('flybug', 'gui/fly1_sheet1.png',{ frameWidth: 52, frameHeight: 34 });
 
@@ -192,6 +194,14 @@ var Menu = new Phaser.Class({
         }
 
 
+
+
+        for (var m = 1; m < 23; m++)
+        {
+
+            this.load.image('mariocart'+m+'.png', 'mariocart/mariocart'+m+'.png');
+            
+        }
 
 
 
@@ -381,8 +391,8 @@ var Menu = new Phaser.Class({
             touchActivated = false;
 
 
-            // music = this.sound.add('theme');
-            // music.play({loop: true});
+            music = this.sound.add('theme');
+            //music.play({loop: true});
 
             text4 = this.add.dynamicBitmapText(0, 0, 'Afterburner1', 'get ready!').setOrigin(0.5).setScale(2).setCenterAlign().setPosition(160,100).setDepth(100);
             startFlag=true;//this.scene.start('demo');
@@ -400,8 +410,8 @@ var Menu = new Phaser.Class({
             
             touchActivated = true;
 
-            // music = this.sound.add('theme');
-            // music.play({loop: true});
+            music = this.sound.add('theme');
+            //music.play({loop: true});
 
             text4 = this.add.dynamicBitmapText(0, 0, 'Afterburner1', 'get ready!').setOrigin(0.5).setScale(2).setCenterAlign().setPosition(160,100).setDepth(100);
             startFlag=true;//this.scene.start('demo');
@@ -419,8 +429,8 @@ var Menu = new Phaser.Class({
             
             touchActivated = false;
 
-            // music = this.sound.add('theme');
-            // music.play({loop: true});
+            music = this.sound.add('theme');
+            //music.play({loop: true});
 
             text4 = this.add.dynamicBitmapText(0, 0, 'Afterburner1', 'get ready!').setOrigin(0.5).setScale(2).setCenterAlign().setPosition(160,100).setDepth(100);
             startFlag=true;//this.scene.start('demo');
@@ -440,6 +450,9 @@ var Menu = new Phaser.Class({
         //this.scale.startFullscreen();
 
         touchActivated = false;
+
+        music = this.sound.add('theme');
+        //music.play({loop: true});
 
         text4 = this.add.dynamicBitmapText(0, 0, 'Afterburner1', 'get ready!').setOrigin(0.5).setScale(2).setCenterAlign().setPosition(160,100).setDepth(100);
         startFlag=true;//this.scene.start('demo');
@@ -557,11 +570,16 @@ var Demo = new Phaser.Class({
     create: function ()
     {
 
-        // size of tile (wall height)
+        // TILE_SIZE is the defualt grid unit
         this.TILE_SIZE = 64;
-        this.WALL_HEIGHT = 64;
-        this.WALL_WIDTH = 64;
+        
+        // Custom floor tile size must be set. 2560
         this.floortilesize = 2560;
+
+        // 2 dimensional map
+        this.fMap=[];
+        this.MAP_WIDTH=40;
+        this.MAP_HEIGHT=40; 
         
         // Remember that PROJECTIONPLANE = screen.  This demo assumes your screen is 320 pixels wide, 200 pixels high
         this.PROJECTIONPLANEWIDTH = 320;
@@ -607,26 +625,6 @@ var Demo = new Phaser.Class({
         
         // Half of the screen height
         this.fProjectionPlaneYCenter = this.PROJECTIONPLANEHEIGHT/2;
-
-        // the following variables are used to keep the player coordinate in the overhead map
-        this.fPlayerMapX;
-        this.fPlayerMapY;
-        this.fMinimapWidth;
-
-        // movement flag
-        this.fKeyUp=false;
-        this.fKeyDown=false;
-        this.fKeyLeft=false; 
-        this.fKeyRight=false;
-
-        // 2 dimensional map
-        this.fMap=[];
-        this.MAP_WIDTH=40;
-        this.MAP_HEIGHT=40; 
-        
-        this.animationFrameID;
-    
-
 
 
         var i;
@@ -1461,6 +1459,558 @@ var Demo = new Phaser.Class({
 
 
 
+        ///// Player Cart
+
+        this.playercart = this.add.image();
+
+        
+
+
+
+        this.playercart.x = 400;
+        this.playercart.y = 1060;
+
+        this.playercart.lastX = this.playercart.x-1;
+        this.playercart.lastY = this.playercart.y-1;
+        this.playercart.lastPoint = {x:this.playercart.lastX,y:this.playercart.lastY};
+
+        this.playercart.savedpath = [];
+
+        // initialize array --saved path for camera follow
+        for (var s=0;s<40;s++)
+        {
+            this.playercart.savedpath[s] = this.playercart.lastPoint;
+        }
+
+        
+        this.playercart.sswidth = 32;
+        this.playercart.ssheight = 32;
+        this.playercart.framewidth = 32;
+        this.playercart.numframes = 22;
+        this.playercart.frameindex = 0;
+
+        this.playercart.buffer = this.textures.createCanvas('playercartcanvas', this.playercart.sswidth, this.playercart.ssheight );
+
+        this.playercart.context = this.playercart.buffer.getContext('2d', {willReadFrequently:true});      
+        
+        var imageData = this.playercart.context.getImageData(0, 0, this.playercart.sswidth, this.playercart.ssheight);
+        this.playercart.pixels = imageData.data;
+
+        this.playercart.frames=[];
+
+        for (var i=1;i<23;i++)
+        {
+            this.playercart.frames[i-1] = {};
+
+            var frameimg = this.textures.get('mariocart'+i+'.png').getSourceImage();
+            this.playercart.frames[i-1].buffer = this.textures.createCanvas('playercartframe'+i, this.playercart.sswidth, this.playercart.ssheight );
+
+            this.playercart.frames[i-1].context = this.playercart.frames[i-1].buffer.getContext('2d', {willReadFrequently:true});      
+            this.playercart.frames[i-1].context.drawImage(frameimg, 0, 0,frameimg.width,frameimg.height, 0, 0, this.playercart.framewidth, this.playercart.ssheight );
+        
+            var imageData = this.playercart.frames[i-1].context.getImageData(0, 0, this.playercart.sswidth, this.playercart.ssheight);
+            this.playercart.frames[i-1].pixels = imageData.data;        
+        }
+        
+
+        this.playercart.label = "playercart";
+        this.playercart.type = 'target';
+        this.playercart.hitcount = 0;
+        this.playercart.explosioncolor= 'orange';
+
+        this.playercart.img = this.textures.get('playercartcanvas').getSourceImage();
+        
+        this.playercart.arc = 0;
+        this.playercart.animated = false;
+        //a_zsprite.flying = false;
+        this.playercart.animationtimecheck=0;
+        this.playercart.frametimer = 50;
+        this.playercart.frameindex = 0;
+
+        this.playercart.inplay = true;
+        
+        this.playercart.elevation_delta = 0;
+        this.playercart.base_elevation = Math.floor(this.playercart.img.height/2)-5;
+
+        this.playercart.startX = 500;
+        this.playercart.startY = 500;
+
+        this.playercart.followerdata = 0;
+        this.playercart.followerdata2 = 0;
+        this.playercart.path_duration = 28000;
+        this.playercart.path_delay = 0
+
+        this.playercart.path = new Phaser.Curves.Path(this.playercart.startX, this.playercart.startY);
+        
+        this.playercart.path.splineTo([ 160,136,440,280,640,56,870,194,1240,56,1160,536,1200,736,840,896,800,536,480,816,80,776,400,496,100,250 ]);
+        this.playercart.path.closePath();
+
+        this.tweens.add({
+            targets: this.playercart,
+            followerdata: 1,
+            ease: 'none',
+            duration: this.playercart.path_duration,
+            delay: this.playercart.path_delay,
+            yoyo: 0,
+            repeat: -1
+        });
+
+        this.tweens.add({
+            targets: this.playercart,
+            followerdata2: 1,
+            ease: 'none',
+            duration: this.playercart.path_duration,
+            delay: this.playercart.path_delay+1,
+            yoyo: 0,
+            repeat: -1
+        });
+
+        
+        this.playercart.move = function()
+        {            
+
+            // this.x = 500;//this.path.getPoint(this.followerdata2).x; 
+            // this.y = 500;//this.path.getPoint(this.followerdata2).y;
+
+            // var trackingX = 0;//this.path.getPoint(this.followerdata).x;           
+            // var trackingY = 0;//this.path.getPoint(this.followerdata).y;            
+
+            // var distance = Phaser.Math.Distance.Between(this.x,this.y,trackingX,trackingY);
+            // var xdelta = this.x-trackingX;
+            // var ydelta = this.y-trackingY;
+            // var myrad = Math.asin(ydelta/distance);
+            // var myarc = Math.round(thisContext.radToArc(myrad))+thisContext.ANGLE180;            
+
+            // if (xdelta>0)
+            // {
+            //     var myadjarc = myarc;                
+            // }
+            // else if (ydelta>0)
+            // {
+            //     var myadjarc = (1440-myarc)+1440;                
+            // }    
+            // else 
+            // {
+            //     var myadjarc = (960-myarc);                
+            // }
+            var myadjarc = this.arc;
+
+            myadjarc -= thisContext.fPlayerArc;
+
+            if (myadjarc<0) myadjarc+=1920;
+            if (myadjarc>1920) myadjarc-=1920;
+            
+
+            var myarcframeindex = Math.floor((myadjarc*this.numframes)/1920);
+
+            if (this.frames[myarcframeindex] !=undefined)
+            {
+                this.pixels = this.frames[myarcframeindex].pixels;
+            }
+
+            if (this.x!=this.lastX || this.y!=this.lastY)
+            {
+                var myPoint = {x:this.x,y:this.y};
+                    
+                this.savedpath.unshift(myPoint);
+                this.lastPoint  = this.savedpath.pop();                
+            }
+
+            this.lastX = this.x;
+            this.lastY = this.y;
+
+            
+        }
+
+
+
+        this.zspritesgroup.add(this.playercart);
+
+
+        //// end Player Cart
+
+        this.mariocart = this.add.image();
+
+        
+        this.mariocart.sswidth = 32;
+        this.mariocart.ssheight = 32;
+        this.mariocart.framewidth = 32;
+        this.mariocart.numframes = 22;
+        this.mariocart.frameindex = 0;
+
+        this.mariocart.buffer = this.textures.createCanvas('mariocartcanvas', this.mariocart.sswidth, this.mariocart.ssheight );
+
+        this.mariocart.context = this.mariocart.buffer.getContext('2d', {willReadFrequently:true});      
+        
+        var imageData = this.mariocart.context.getImageData(0, 0, this.mariocart.sswidth, this.mariocart.ssheight);
+        this.mariocart.pixels = imageData.data;
+
+        this.mariocart.frames=[];
+
+        for (var i=1;i<23;i++)
+        {
+            this.mariocart.frames[i-1] = {};
+
+            var frameimg = this.textures.get('mariocart'+i+'.png').getSourceImage();
+            this.mariocart.frames[i-1].buffer = this.textures.createCanvas('mariocartframe'+i, this.mariocart.sswidth, this.mariocart.ssheight );
+
+            this.mariocart.frames[i-1].context = this.mariocart.frames[i-1].buffer.getContext('2d', {willReadFrequently:true});      
+            this.mariocart.frames[i-1].context.drawImage(frameimg, 0, 0,frameimg.width,frameimg.height, 0, 0, this.mariocart.framewidth, this.mariocart.ssheight );
+        
+            var imageData = this.mariocart.frames[i-1].context.getImageData(0, 0, this.mariocart.sswidth, this.mariocart.ssheight);
+            this.mariocart.frames[i-1].pixels = imageData.data;
+        
+        }
+        
+
+        this.mariocart.label = "mariocarts";
+        this.mariocart.type = 'target';
+        this.mariocart.hitcount = 0;
+        this.mariocart.explosioncolor= 'orange';
+
+        this.mariocart.img = this.textures.get('mariocartcanvas').getSourceImage();
+        this.mariocart.x = 400;
+        this.mariocart.y = 1060;
+        this.mariocart.arc = 0;
+        this.mariocart.animated = false;
+        //a_zsprite.flying = false;
+        this.mariocart.animationtimecheck=0;
+        this.mariocart.frametimer = 50;
+        this.mariocart.frameindex = 0;
+
+        this.mariocart.inplay = true;
+        
+        this.mariocart.elevation_delta = 0;
+        this.mariocart.base_elevation = Math.floor(this.mariocart.img.height/2)-5;
+
+        this.mariocart.startX = 100;
+        this.mariocart.startY = 100;
+
+        this.mariocart.relative_arcdelta;
+
+
+        this.mariocart.followerdata = 0;
+        this.mariocart.followerdata2 = 0;
+        this.mariocart.path_duration = 24000;
+        this.mariocart.path_delay = 0
+
+
+        this.mariocart.path = new Phaser.Curves.Path(this.mariocart.startX, this.mariocart.startY);
+
+        //this.demoBot.path.ellipseTo(1200,1200,360,0,true,180);
+
+        
+        this.mariocart.path.splineTo([ 160,136,440,280,640,56,870,194,1240,56,1160,536,1200,736,840,896,800,536,480,816,80,776,400,496,100,250 ]);
+        this.mariocart.path.closePath();
+
+        this.tweens.add({
+            targets: this.mariocart,
+            followerdata: 1,
+            ease: 'none',
+            duration: this.mariocart.path_duration,
+            delay: this.mariocart.path_delay,
+            yoyo: 0,
+            repeat: -1
+        });
+
+        this.tweens.add({
+            targets: this.mariocart,
+            followerdata2: 1,
+            ease: 'none',
+            duration: this.mariocart.path_duration,
+            delay: this.mariocart.path_delay+1,
+            yoyo: 0,
+            repeat: -1
+        });
+
+        
+        this.mariocart.move = function()
+        {
+
+            
+            
+
+            this.x = this.path.getPoint(this.followerdata2).x; 
+            this.y = this.path.getPoint(this.followerdata2).y;
+
+
+
+            // var trackBotSprite = thisContext.zspritesgroupArray[thisContext.trackbotData.index];
+            // var followDelta = trackBotSprite.followerdata;//*.945;
+
+            var trackingX = this.path.getPoint(this.followerdata).x;           
+            var trackingY = this.path.getPoint(this.followerdata).y;
+
+
+            
+            //console.log(adjtrackbotX,adjtrackbotY);
+
+            // if (trackBotSprite.x!=undefined && trackBotSprite.y!=undefined)
+            // {
+            //     var XlookPoint = trackingX;
+            //     var YlookPoint = trackingY;
+            // }
+            // else
+            // {
+            //     var XlookPoint = 600;
+            //     var YlookPoint = 1600;
+            // }
+            
+
+            var distance = Phaser.Math.Distance.Between(this.x,this.y,trackingX,trackingY);
+            var xdelta = this.x-trackingX;
+            var ydelta = this.y-trackingY;
+            var myrad = Math.asin(ydelta/distance);
+            var myarc = Math.round(thisContext.radToArc(myrad))+thisContext.ANGLE180;
+
+            //myarc -= thisContext.fPlayerArc;
+
+            // if (myarc<0) myarc+=1920;
+            // if (myarc>1920) myarc-=1920;
+
+            if (xdelta>0)
+            {
+                var myadjarc = myarc;
+                // var shotXDir=this.fCosTable[myarc];//thisContext.fPlayerArc
+                // var shotYDir=this.fSinTable[myarc];
+
+            }
+            else if (ydelta>0)
+            {
+                var myadjarc = (1440-myarc)+1440;
+                // var shotXDir=-this.fCosTable[myarc];//thisContext.fPlayerArc
+                // var shotYDir=this.fSinTable[myarc];
+            }    
+            else 
+            {
+                var myadjarc = (960-myarc);
+                // var shotXDir=-this.fCosTable[myarc];//thisContext.fPlayerArc
+                // var shotYDir=this.fSinTable[myarc];
+            }
+
+            myadjarc -= thisContext.fPlayerArc;
+
+            if (myadjarc<0) myadjarc+=1920;
+            if (myadjarc>1920) myadjarc-=1920;
+            
+            this.arc = myadjarc;
+
+
+
+            var myarcframeindex = Math.floor((myadjarc*this.numframes)/1920);
+
+            if (this.frames[myarcframeindex] !=undefined)
+            {
+                this.pixels = this.frames[myarcframeindex].pixels;
+            }
+        }
+
+
+
+        this.zspritesgroup.add(this.mariocart);
+
+
+
+
+        
+
+        this.titlegen={};
+
+        this.titlegen.buffer = this.textures.createCanvas('titlegencanvas', 320, 50);
+
+        this.titlegen.buffer.drawFrame('dragonfly_title',0, 0, 0);
+
+        var imageData = this.titlegen.buffer.getContext('2d', {willReadFrequently:true}).getImageData(0, 0, 320, 50);
+
+        this.titlegen.imagedata = imageData;
+
+        this.titlegen.pixels = imageData.data;
+
+        
+        
+
+        //title gen properties
+
+        this.titlegen.inplay = true;
+        this.titlegen.timestart = 0;
+        this.titlegen.timecheck = 0;
+        this.titlegen.switchtime = 2450;
+
+
+        this.titlegen.t_width = 320;
+        this.titlegen.t_height = 50;
+        this.titlegen.color = 'blue';
+
+        this.titlegen.lineindex = this.titlegen.t_height-1;
+        this.titlegen.linespeed = 1.4;
+        this.titlegen.colorswitchindex = 0;
+        this.titlegen.resolution = 1.0;
+        // spectrum range from pure to white
+        this.titlegen.specrange = 200;
+
+
+        this.titlegen.displayimg = this.add.image(0, 0,'titlegencanvas').setOrigin(0);
+
+        this.tweens.add({
+            targets: this.titlegen,
+            linespeed: -1.4,                    
+            ease: 'Sine.easeInOut',
+            duration: 8000,
+            yoyo: false,
+            repeat: -1
+        });
+
+        // this.tweens.add({
+        //     targets: this.titlegen,
+        //     linespeed: -3,                    
+        //     ease: 'Sine.easeInOut',
+        //     duration: 1000,
+        //     yoyo: false,
+        //     repeat: -1
+        // });
+
+        // this.tweens.add({
+        //     targets: this.titlegen,
+        //     resolution: 6,                    
+        //     ease: 'Sine.easeInOut',
+        //     duration: 3000,
+        //     yoyo: true,
+        //     repeat: -1
+        // });
+
+
+        this.titlegen.animate = function ()
+        {
+
+
+
+            this.lineindex+=this.linespeed;
+            if (this.lineindex>this.t_height-1)  
+            {
+                this.lineindex = 0;
+            }
+            else if (this.lineindex<0)
+            {
+                this.lineindex = this.t_height-1;
+            }
+            
+
+
+
+            var numbars = Math.floor(this.t_height/this.resolution)+1;
+            var colorbitdelta = Math.floor(this.specrange/numbars);
+            var currentcolorbit = 0;
+            var redcurrentcolorbit = 0;
+            var greencurrentcolorbit = 0;
+            var bluecurrentcolorbit = 0;
+            
+            var colors = ['violet','red','black','black','black','black','black','rainbow','rainbow','rainbow','rainbow','rainbow'];
+            
+                
+            if (game.loop.now>this.timecheck+this.switchtime)  
+            {
+                    
+                this.color = colors[Phaser.Math.Between(0,colors.length-1)];
+                    
+
+
+                this.timecheck=game.loop.now;
+            }       
+             
+
+            var r,g,b;
+            var cb_r,cb_g,cb_b;
+
+            if (this.color=='red') { r=this.specrange; g=0; b=0; cb_r=1;cb_g=0;cb_b=0; }
+            if (this.color=='green') { r=0; g=this.specrange; b=0; cb_r=0;cb_g=1;cb_b=0; }
+            if (this.color=='blue') { r=0; g=0; b=this.specrange; cb_r=0;cb_g=0;cb_b=1; }
+            if (this.color=='orange') { r=this.specrange; g=this.specrange; b=0; cb_r=1;cb_g=1;cb_b=0; }
+            if (this.color=='cyan') { r=0; g=this.specrange; b=this.specrange; cb_r=0;cb_g=1;cb_b=1; }
+            if (this.color=='violet') { r=this.specrange; g=0; b=this.specrange; cb_r=1;cb_g=0;cb_b=1; }
+            if (this.color=='white') { r=this.specrange; g=this.specrange; b=this.specrange; cb_r=1;cb_g=1;cb_b=1; }
+            if (this.color=='black') { r=0; g=0; b=0; cb_r=0;cb_g=0;cb_b=0; }
+
+
+
+
+
+            var lineindex = Math.round(this.lineindex);
+            var resolution = Math.round(this.resolution);
+            //copy pixels
+            for (var x=0; x<this.t_width; x++)
+            {            
+
+
+                var blurp=false;
+                var blurpAdj=0;
+                if (Phaser.Math.Between(1,4)==1) {blurp=true}
+
+                currentcolorbit = 0;
+                for (var y=0; y<this.t_height; y++)
+                {
+                    
+                    
+                    if ( (y % resolution) == 0)
+                    {
+                        var thisbar = (Math.floor(y/resolution));
+                        currentcolorbit = colorbitdelta * thisbar;
+
+                        if (!cb_r) redcurrentcolorbit = currentcolorbit;
+                        if (!cb_g) greencurrentcolorbit = currentcolorbit;
+                        if (!cb_b) bluecurrentcolorbit = currentcolorbit;
+
+                        if (this.color=='rainbow') 
+                        {
+                            var spectrumNum = 6*thisbar/numbars;
+                            var specNumbars = numbars/6;
+                            var intspecnum = Math.round(spectrumNum);
+                            cb_r=0;cb_g=0;cb_b=0;
+
+                            if (spectrumNum>0 && spectrumNum<1) {r=0;g=0;b=255;greencurrentcolorbit=Math.round(numbars*colorbitdelta/6);}
+                            if (spectrumNum>1 && spectrumNum<2) {r=0;g=255;b=255;bluecurrentcolorbit=-Math.round(numbars*colorbitdelta/6);}
+                            if (spectrumNum>2 && spectrumNum<3) {r=0;g=255;b=0;redcurrentcolorbit=Math.round(numbars*colorbitdelta/6);}
+                            if (spectrumNum>3 && spectrumNum<4) {r=255;g=255;b=0;greencurrentcolorbit=-Math.round(numbars*colorbitdelta/6);}
+                            if (spectrumNum>4 && spectrumNum<5) {r=255;g=0;b=0;bluecurrentcolorbit=Math.round(numbars*colorbitdelta/6);}
+                            if (spectrumNum>5 && spectrumNum<6) {r=255;g=0;b=255;redcurrentcolorbit=-Math.round(numbars*colorbitdelta/6);}
+
+                            if (blurp) {blurpAdj+=1;}
+                        }
+                    }
+                    
+
+                    var calcline = y+lineindex;
+                    if (calcline>=this.t_height) calcline-=this.t_height;
+
+                    
+                    var bytesPerPixel=4;
+                    var targetIndex=(320*bytesPerPixel)*(calcline+blurpAdj)+(bytesPerPixel*x);
+
+                    //check current pixel to see if its one to animate
+                    var red = this.pixels[targetIndex];
+                    //var green = this.pixels[targetIndex+1];
+                    //var blue = this.pixels[targetIndex+2];
+
+                    var alpha = this.pixels[targetIndex+3];
+
+                          
+
+                    if ( alpha!=0 )
+                    {
+                        if (this.color=='rainbow') {alpha=120} else {alpha=255}
+                        //var greylev = ((40-this.lineindex)/this.t_height)*255;
+                        this.pixels[targetIndex]=r+redcurrentcolorbit;
+                        this.pixels[targetIndex+1]=g+greencurrentcolorbit;
+                        this.pixels[targetIndex+2]=b+bluecurrentcolorbit;
+                        this.pixels[targetIndex+3]=alpha;
+                    }                
+                }            
+            }        
+            this.buffer.getContext('2d', {willReadFrequently:true}).putImageData(this.imagedata,0,0);
+            this.buffer.refresh();       
+            
+                 
+        }
+
 
 
 
@@ -1537,10 +2087,33 @@ var Demo = new Phaser.Class({
         cursors = this.input.keyboard.createCursorKeys();
 
         this.input.keyboard.addCapture('ALT, LEFT, RIGHT');
-        keys = this.input.keyboard.addKeys('E,C,W,A,S,D,CTRL,SPACE');
+        keys = this.input.keyboard.addKeys('E,C,W,A,S,D');
 
-        // this.input.keyboard.on('keydown-CTRL', function (event) {gShoot=true});
-        // this.input.keyboard.on('keyup-CTRL', function (event) {gShoot=false});
+        this.input.keyboard.on('keydown-CTRL', function (event) 
+            {
+                if (drive_mode)
+                {
+                    thisContext.tweens.add({
+                    targets: thisContext.playercart,
+                    //delay: Phaser.Math.Between(500,1500),
+                    elevation_delta: 60,
+                    ease: 'Quad.easeOut',
+                    duration: 250,
+                    yoyo: true,
+                    repeat: 0,
+                    });
+                }
+            }
+
+        );
+        
+
+        this.input.keyboard.on('keydown-ESC', function (event) 
+            {
+
+                thisContext.displayHideMenu();
+            }
+        );
 
 
         this.input.keyboard.on('keydown-ONE', function (event) 
@@ -1575,26 +2148,163 @@ var Demo = new Phaser.Class({
         );
 
 
-        cont = this.add.container();
+        ////////////  menu(s) set-up
+
+        // menu graphic font
+        var config4 = {
+                image: 'Afterburner',
+                width: 8,
+                height: 8,
+                chars: Phaser.GameObjects.RetroFont.TEXT_SET1,
+                charsPerRow: 96,
+                spacing: { x: 0, y: 0 },
+                offset: {y:40}
+                };
+
+                this.cache.bitmapFont.add('Menu', Phaser.GameObjects.RetroFont.Parse(this, config4));
+
+
+
+        var text2 = this.add.dynamicBitmapText(0, 0, 'Menu', 'new game').setOrigin(0.5).setScale(1).setCenterAlign().setPosition(160,80).setInteractive();
+        var text3 = this.add.dynamicBitmapText(0, 0, 'Menu', 'options').setOrigin(0.5).setScale(1).setCenterAlign().setPosition(160,100).setInteractive();
+        var text3a = this.add.dynamicBitmapText(0, 0, 'Menu', 'demo').setOrigin(0.5).setScale(1).setCenterAlign().setPosition(160,120).setInteractive();
+
+        var text4 = this.add.dynamicBitmapText(0, 0, 'Menu', 'editor').setOrigin(0.5).setScale(1).setCenterAlign().setPosition(160,140).setInteractive();
+
+        var text5 = this.add.dynamicBitmapText(0, 0, 'Menu', 'soundfx off').setOrigin(0.5).setScale(1).setCenterAlign().setPosition(160,80).setInteractive();
+        var text6 = this.add.dynamicBitmapText(0, 0, 'Menu', 'soundfx on').setOrigin(0.5).setScale(1).setCenterAlign().setPosition(160,80).setInteractive().setVisible(false);
+        var text7 = this.add.dynamicBitmapText(0, 0, 'Menu', 'music off').setOrigin(0.5).setScale(1).setCenterAlign().setPosition(160,100).setInteractive();
+        var text8 = this.add.dynamicBitmapText(0, 0, 'Menu', 'music on').setOrigin(0.5).setScale(1).setCenterAlign().setPosition(160,100).setInteractive().setVisible(false);
+        
+        var text10 = this.add.dynamicBitmapText(0, 0, 'Menu', 'tilt off').setOrigin(0.5).setScale(1).setCenterAlign().setPosition(160,120).setInteractive();
+        var text11 = this.add.dynamicBitmapText(0, 0, 'Menu', 'tilt on').setOrigin(0.5).setScale(1).setCenterAlign().setPosition(160,120).setInteractive().setVisible(false);
+
+        var text9 = this.add.dynamicBitmapText(0, 0, 'Menu', 'done').setOrigin(0.5).setScale(1).setCenterAlign().setPosition(160,140).setInteractive();
+
+
+        text3.on('pointerup', function () //options
+            { 
+                menu1_cont.visible = false;
+                menu2_cont.visible = true;
+            }, 
+        this);
+
+        text4.on('pointerup', function () //editor
+            {
+                // demo_mode = false;
+                
+                // menu1_cont.visible = false;
+                // editor_cont.visible = true;
+                // this.editor.saved_source_map = this.fMap;
+
+                // //refresh displaystring if reappearing
+                // this.editor.map_display_string='';
+                // this.editor.map_code_rows = [];
+                // for (var y=0;y<20;y++)
+                // {
+                //     this.editor.map_code_rows[y] = this.fMap.slice(y*20,y*20+20);
+                //     this.editor.map_display_string += this.editor.map_code_rows[y] +'\n';
+                // }
+                // this.editor.mapEditSprite.setText(this.editor.map_display_string);
+            }, 
+        this);
+
+        text3a.on('pointerup', function () //demo
+            { 
+                // demo_mode = true; 
+                // drive_mode = false;
+
+                // this.fProjectionPlaneYCenter = 100;
+                
+                // this.displayHideMenu();
+            }, 
+        this);
+
+        text9.on('pointerup', function () //done options menu
+            { 
+                
+                this.displayHideMenu();
+                
+            }, 
+        this);
+
+        text2.on('pointerup', function () //new game
+            { 
+                // demo_mode = false; 
+                drive_mode = true;
+                
+
+                this.displayHideMenu();
+                
+            }, 
+        this);
+
+
+
+
+        text5.on('pointerup', function () { soundfx_enabled=true; text5.visible=false; text6.visible=true; }, this);
+        text6.on('pointerup', function () { soundfx_enabled=false; text6.visible=false; text5.visible=true;}, this);
+
+        text7.on('pointerup', function () { music.play(); text7.visible=false; text8.visible=true; }, this);
+        text8.on('pointerup', function () { music.stop(); text8.visible=false; text7.visible=true;}, this);
+
+        text10.on('pointerup', function () { tilt_mode=true; gamedisplayImage.setScale(1.17); text10.visible=false; text11.visible=true; }, this);
+        text11.on('pointerup', function () { tilt_mode=false; gamedisplayImage.setScale(1.0); text11.visible=false; text10.visible=true;}, this);
+
+
+
+
+
+
+
+
+
+
+
+        ///// setup containers and cameras
+
+        
+
+        menu1_cont = this.add.container();
+        menu1_cont.add([this.titlegen.displayimg,text2,text3,text3a,text4]);// 
+        this.cameras.main.ignore(menu1_cont);
+
+        menu2_cont = this.add.container();
+        menu2_cont.add([text5,text6,text7,text8,text9,text10,text11]);
+        this.cameras.main.ignore(menu2_cont);
+        menu2_cont.visible = false;
+
+        // editor_cont = this.add.container();
+        // editor_cont.add([this.editor.mapEditSprite,this.editor.selectedtextdisplay,this.editor.revert_button,this.editor.done_button,this.editor.marker,thumbs_cont])
+        // editor_cont.visible = false;
+
+        menugui_cont = this.add.container();
+        menugui_cont.add([menu1_cont,menu2_cont]);//,editor_cont
+        this.cameras.main.ignore(menugui_cont);
+
+        touchgui_cont = this.add.container();
 
 
         if (touchActivated)
         {
-            cont.add([guide_back,guide_forward,guide_left,guide_right,guide_up,guide_down,guide_sleft,guide_sright, guide_multi, guide_zspeed, guide_shoot, access_menu, debug]);
+            touchgui_cont.add([guide_back,guide_forward,guide_left,guide_right,guide_up,guide_down,guide_sleft,guide_sright, guide_multi, guide_zspeed, guide_shoot, access_menu, debug]); // , debug
         }
         else
         {
-            cont.add([debug]);
+            touchgui_cont.add([debug ]);
         }
         
 
         //  Add in a new camera, the same size and position as the main camera
-        UICam = this.cameras.add(0, 0, 320, 180);
+        UICam = this.cameras.add(0, 0, 320, 200);
 
         //  The main camera will not render the container
-        this.cameras.main.ignore(cont);
+        this.cameras.main.ignore(touchgui_cont);
 
-        //  The new UI Camera will not render the background image
+        // //  The main camera will not render the fuzz image
+        // this.cameras.main.ignore([fuzzImage]);
+
+        //  The new UI Camera will not render the background image or fuzz image
         UICam.ignore([gamedisplayImage]);
 
         this.cameras.main.on('camerashakestart', function () {
@@ -1629,6 +2339,9 @@ var Demo = new Phaser.Class({
 
         
 
+
+        /// activates gamepad in this scene
+
         this.input.gamepad.once('down', function (pad, button, index) {
 
         pad.setAxisThreshold(0.3);
@@ -1649,6 +2362,113 @@ var Demo = new Phaser.Class({
         activate_plantedrocks(thisContext,50);
 
         ////////////////////////////////////////////
+
+
+    },
+
+    displayHideMenu: function ()
+    {
+        if (!menu_mode)
+        {
+            //display - always reverts to main menu; make sure all others are off(not visible) here
+            this.cameras.main.rotation = 0;
+
+            menu_mode = true;
+            //this.titlegen.inplay = true;
+            menu1_cont.visible = true;
+            menu2_cont.visible = false;   
+            //editor_cont.visible = false;          
+
+            this.tweens.add({
+            targets: menugui_cont,
+            y: 0,                    
+            ease: 'Sine.easeOut',
+            duration: 600,
+            yoyo: false,
+            repeat: 0
+            });
+
+            this.tweens.add({
+            targets: menugui_cont,
+            //y: 0,
+            alpha: 1,
+            //ease: 'Sine.easeInOut',
+            duration: 1000,
+            yoyo: false,
+            repeat: 0
+            });
+        }
+        else
+        {
+            //hide
+
+            //this.titlegen.inplay = false;
+            menu_mode = false;
+
+            this.tweens.add({
+            targets: menugui_cont,
+            y: -200,
+            //alpha: 0,
+            ease: 'Sine.easeOut',
+            duration: 600,
+            yoyo: false,
+            repeat: 0
+            });
+            this.tweens.add({
+            targets: menugui_cont,
+            //y: -200,
+            alpha: 0,
+            //ease: 'Sine.easeInOut',
+            duration: 300,
+            yoyo: false,
+            repeat: 0
+            });
+        }
+    },
+
+    driveCart: function()
+    {
+        
+        this.fPlayerX = this.playercart.lastPoint.x; //this.demoBot.path.getPoint(this.demoBot.followerdata).x;          
+        this.fPlayerY = this.playercart.lastPoint.y; //this.demoBot.path.getPoint(this.demoBot.followerdata).y;  
+
+        var distance = Phaser.Math.Distance.Between(this.fPlayerX,this.fPlayerY,this.playercart.x,this.playercart.y);
+        var xdelta = this.fPlayerX-this.playercart.x;
+        var ydelta = this.fPlayerY-this.playercart.y;
+        var myrad = Math.asin(ydelta/distance);
+        var myarc = Math.round(this.radToArc(myrad))+this.ANGLE180;
+
+        if (xdelta>0)
+        {
+            var myadjarc = myarc;
+            // var shotXDir=this.fCosTable[myarc];//thisContext.fPlayerArc
+            // var shotYDir=this.fSinTable[myarc];
+
+        }
+        else if (ydelta>0)
+        {
+            var myadjarc = (1440-myarc)+1440;
+            // var shotXDir=-this.fCosTable[myarc];//thisContext.fPlayerArc
+            // var shotYDir=this.fSinTable[myarc];
+        }    
+        else 
+        {
+            var myadjarc = (960-myarc);
+            // var shotXDir=-this.fCosTable[myarc];//thisContext.fPlayerArc
+            // var shotYDir=this.fSinTable[myarc];
+        }
+
+        var currentArcDelta = this.fPlayerArc-myadjarc;
+
+        // corrects the difference for when lead value crosses zero threshold before other value
+        if (currentArcDelta<-1900) currentArcDelta+=1920;
+        if (currentArcDelta>1900) currentArcDelta-=1920;
+
+        this.background[this.background.currentIndex].ImageArc += currentArcDelta;
+
+        this.fPlayerArc = myadjarc;
+        this.fPlayerElevation = 50;
+
 
 
     },
@@ -1738,7 +2558,10 @@ var Demo = new Phaser.Class({
 
     update: function()
     {
-
+        if (menu_mode)
+        {
+            this.titlegen.animate();
+        }
         var debugt = [];
                 // debugt.push(backgroundList[this.demoBot.bg_index]);
                 debugt.push('fps: '+ Math.floor(this.sys.game.loop.actualFps.toString()) );
@@ -1891,6 +2714,16 @@ var Demo = new Phaser.Class({
             horizontalDelta = guide_multi.input.localX-.5;
             verticalDelta = guide_multi_activeY-.5;
 
+            if (drive_mode)
+            {
+                var r=Math.round(strafeDelta);
+                
+                this.playercart.arc+=r*5;
+                    
+                if (this.playercart.arc<this.ANGLE0) this.playercart.arc+=this.ANGLE360;
+                else if (this.playercart.arc>=this.ANGLE360) this.playercart.arc-=this.ANGLE360;
+            }
+
         }
         else if (gamepad)
         {
@@ -1899,6 +2732,16 @@ var Demo = new Phaser.Class({
             zspeedDelta = (gamepad.rightStick.y*.5)*-10;
             horizontalDelta = gamepad.leftStick.x*.5;
             verticalDelta = gamepad.leftStick.y*.5;
+
+            if (drive_mode)
+            {
+                var r=Math.round(strafeDelta);
+                
+                this.playercart.arc+=r*5;
+                    
+                if (this.playercart.arc<this.ANGLE0) this.playercart.arc+=this.ANGLE360;
+                else if (this.playercart.arc>=this.ANGLE360) this.playercart.arc-=this.ANGLE360;
+            }
 
             if (gamepad.R1)
             {     
@@ -3523,14 +4366,12 @@ var wallCastMask = false;
 
 var gamedisplayImage;
 
-var tilt_mode = true;
+var tilt_mode = false;
 var drive_mode = false;
 var demo_mode = false;
-var menu_mode = false;
+var menu_mode = true;
 var game_mode = false;
-//// temp
-var cont;
-////
+
 var menu1_cont;
 var menu2_cont;
 var editor_cont;
