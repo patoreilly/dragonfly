@@ -2704,38 +2704,40 @@ var Demo = new Phaser.Class({
         else if (touchActivated)
         {
 
-            var turnDelta = (guide_zspeed.input.localX-.5)*10;
+            strafeDelta = (guide_zspeed.input.localX-.5)*10;
             zspeedDelta = (guide_zspeed.input.localY-.5)*-10;
             horizontalDelta = guide_multi.input.localX-.5;
             verticalDelta = guide_multi_activeY-.5;
 
             if (drive_mode)
             {
-                var r=Math.round(turnDelta);
+                var r=Math.round(strafeDelta);
                 
-                this.playercart.arc+=r*5;
+                this.playercart.arc+=r*2;
                     
                 if (this.playercart.arc<this.ANGLE0) this.playercart.arc+=this.ANGLE360;
                 else if (this.playercart.arc>=this.ANGLE360) this.playercart.arc-=this.ANGLE360;
+                strafeDelta=0;
             }
 
         }
         else if (gamepad)
         {
 
-            var turnDelta = (gamepad.rightStick.x*.5)*10;
+            strafeDelta = (gamepad.rightStick.x*.5)*10;
             zspeedDelta = (gamepad.rightStick.y*.5)*-10;
             horizontalDelta = gamepad.leftStick.x*.5;
             verticalDelta = gamepad.leftStick.y*.5;
 
             if (drive_mode)
             {
-                var r=Math.round(turnDelta);
+                var r=Math.round(strafeDelta);
                 
-                this.playercart.arc+=r*5;
+                this.playercart.arc+=r*2;
                     
                 if (this.playercart.arc<this.ANGLE0) this.playercart.arc+=this.ANGLE360;
                 else if (this.playercart.arc>=this.ANGLE360) this.playercart.arc-=this.ANGLE360;
+                strafeDelta=0;
             }
 
             if (gamepad.R1)
