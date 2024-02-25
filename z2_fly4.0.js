@@ -2097,7 +2097,7 @@ var Demo = new Phaser.Class({
                     targets: thisContext.playercart,
                     //delay: Phaser.Math.Between(500,1500),
                     elevation_delta: 60,
-                    ease: 'Quad.easeOut',
+                    ease: 'Cubic.easeOut',
                     duration: 250,
                     yoyo: true,
                     repeat: 0,
@@ -2713,7 +2713,7 @@ var Demo = new Phaser.Class({
             {
                 var r=Math.round(strafeDelta);
                 
-                this.playercart.arc+=r*2;
+                this.playercart.arc+=r*3;
                     
                 if (this.playercart.arc<this.ANGLE0) this.playercart.arc+=this.ANGLE360;
                 else if (this.playercart.arc>=this.ANGLE360) this.playercart.arc-=this.ANGLE360;
@@ -2733,21 +2733,42 @@ var Demo = new Phaser.Class({
             {
                 var r=Math.round(strafeDelta);
                 
-                this.playercart.arc+=r*2;
+                this.playercart.arc+=r*3;
                     
                 if (this.playercart.arc<this.ANGLE0) this.playercart.arc+=this.ANGLE360;
                 else if (this.playercart.arc>=this.ANGLE360) this.playercart.arc-=this.ANGLE360;
                 strafeDelta=0;
-            }
 
-            if (gamepad.R1)
-            {     
-                gShoot = true;
+                
+
+                if (gamepad.R1)
+                {     
+                    this.tweens.add({
+                    targets: this.playercart,
+                    //delay: Phaser.Math.Between(500,1500),
+                    elevation_delta: 60,
+                    ease: 'Cubic.easeOut',
+                    duration: 250,
+                    yoyo: true,
+                    repeat: 0,
+                    });
+                }
+                
+
             }
             else
             {
-                gShoot = false;
-            }    
+                if (gamepad.R1)
+                {     
+                    gShoot = true;
+                }
+                else
+                {
+                    gShoot = false;
+                }  
+            }
+
+            
 
         }
         else //default to keyboard/mouse
