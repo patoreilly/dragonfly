@@ -2955,62 +2955,125 @@ var Demo = new Phaser.Class({
 
         if (!demo_mode)
         {
-
-            // CHECK COLLISION AGAINST WALLS
-            // compute cell position
-            var playerXCell = Math.floor(this.fPlayerX/this.TILE_SIZE);
-            var playerYCell = Math.floor(this.fPlayerY/this.TILE_SIZE);
-
-            // compute position relative to cell (ie: how many pixel from edge of cell)
-            var playerXCellOffset = this.fPlayerX % this.TILE_SIZE;
-            var playerYCellOffset = this.fPlayerY % this.TILE_SIZE;
-
-            var minDistanceToWall=30;
             
-            // make sure the player don't bump into walls
-            if ((dx+sdx)>0)
+            if (drive_mode)  
             {
-                // moving right -- must manually check cell for left right map edge check
-                if (   ( playerXCell==this.MAP_WIDTH-1 || this.fMap.charAt( (playerYCell*this.MAP_WIDTH)+playerXCell+1)!='-' )&&
-                    playerXCellOffset > (this.TILE_SIZE-minDistanceToWall)   ) 
+                // CHECK COLLISION AGAINST WALLS
+                // compute cell position
+                var playerXCell = Math.floor(this.playercart.x/this.TILE_SIZE);
+                var playerYCell = Math.floor(this.playercart.y/this.TILE_SIZE);
+
+                // compute position relative to cell (ie: how many pixel from edge of cell)
+                var playerXCellOffset = this.playercart.x % this.TILE_SIZE;
+                var playerYCellOffset = this.playercart.y % this.TILE_SIZE;
+
+                var minDistanceToWall=16;
+                
+                // make sure the player don't bump into walls
+                if ((dx+sdx)>0)
                 {
-                    // back player up
-                    this.fPlayerX-= (playerXCellOffset-(this.TILE_SIZE-minDistanceToWall));
-                }  
-          
-            }
-            else
-            {
-                // moving left -- must manually check cell for left right map edge check
-                if (   ( playerXCell==0 || this.fMap.charAt( (playerYCell*this.MAP_WIDTH)+playerXCell-1)!='-' )&&
-                    playerXCellOffset < (minDistanceToWall)  )
+                    // moving right -- must manually check cell for left right map edge check
+                    if (   ( playerXCell==this.MAP_WIDTH-1 || this.fMap.charAt( (playerYCell*this.MAP_WIDTH)+playerXCell+1)!='-' )&&
+                        playerXCellOffset > (this.TILE_SIZE-minDistanceToWall)   ) 
+                    {
+                        // back player up
+                        this.playercart.x-= (playerXCellOffset-(this.TILE_SIZE-minDistanceToWall));
+                    }  
+              
+                }
+                else
                 {
-                    // back player up
-                    this.fPlayerX+= (minDistanceToWall-playerXCellOffset);
+                    // moving left -- must manually check cell for left right map edge check
+                    if (   ( playerXCell==0 || this.fMap.charAt( (playerYCell*this.MAP_WIDTH)+playerXCell-1)!='-' )&&
+                        playerXCellOffset < (minDistanceToWall)  )
+                    {
+                        // back player up
+                        this.playercart.x+= (minDistanceToWall-playerXCellOffset);
+                    } 
+
                 } 
 
-            } 
-
-            if ((dy+sdy)<0)
-            {
-                // moving up
-                if ((this.fMap.charAt(((playerYCell-1)*this.MAP_WIDTH)+playerXCell)!='-')&&
-                    (playerYCellOffset < (minDistanceToWall)))
+                if ((dy+sdy)<0)
                 {
-                    // back player up 
-                    this.fPlayerY+= (minDistanceToWall-playerYCellOffset);
+                    // moving up
+                    if ((this.fMap.charAt(((playerYCell-1)*this.MAP_WIDTH)+playerXCell)!='-')&&
+                        (playerYCellOffset < (minDistanceToWall)))
+                    {
+                        // back player up 
+                        this.playercart.y+= (minDistanceToWall-playerYCellOffset);
+                    }
+                }
+                else
+                {
+                    // moving down                                  
+                    if ((this.fMap.charAt(((playerYCell+1)*this.MAP_WIDTH)+playerXCell)!='-')&&
+                        (playerYCellOffset > (this.TILE_SIZE-minDistanceToWall)))
+                    {
+                        // back player up 
+                        this.playercart.y-= (playerYCellOffset-(this.TILE_SIZE-minDistanceToWall ));
+                    }
                 }
             }
             else
             {
-                // moving down                                  
-                if ((this.fMap.charAt(((playerYCell+1)*this.MAP_WIDTH)+playerXCell)!='-')&&
-                    (playerYCellOffset > (this.TILE_SIZE-minDistanceToWall)))
+                // CHECK COLLISION AGAINST WALLS
+                // compute cell position
+                var playerXCell = Math.floor(this.fPlayerX/this.TILE_SIZE);
+                var playerYCell = Math.floor(this.fPlayerY/this.TILE_SIZE);
+
+                // compute position relative to cell (ie: how many pixel from edge of cell)
+                var playerXCellOffset = this.fPlayerX % this.TILE_SIZE;
+                var playerYCellOffset = this.fPlayerY % this.TILE_SIZE;
+
+                var minDistanceToWall=30;
+                
+                // make sure the player don't bump into walls
+                if ((dx+sdx)>0)
                 {
-                    // back player up 
-                    this.fPlayerY-= (playerYCellOffset-(this.TILE_SIZE-minDistanceToWall ));
+                    // moving right -- must manually check cell for left right map edge check
+                    if (   ( playerXCell==this.MAP_WIDTH-1 || this.fMap.charAt( (playerYCell*this.MAP_WIDTH)+playerXCell+1)!='-' )&&
+                        playerXCellOffset > (this.TILE_SIZE-minDistanceToWall)   ) 
+                    {
+                        // back player up
+                        this.fPlayerX-= (playerXCellOffset-(this.TILE_SIZE-minDistanceToWall));
+                    }  
+              
+                }
+                else
+                {
+                    // moving left -- must manually check cell for left right map edge check
+                    if (   ( playerXCell==0 || this.fMap.charAt( (playerYCell*this.MAP_WIDTH)+playerXCell-1)!='-' )&&
+                        playerXCellOffset < (minDistanceToWall)  )
+                    {
+                        // back player up
+                        this.fPlayerX+= (minDistanceToWall-playerXCellOffset);
+                    } 
+
+                } 
+
+                if ((dy+sdy)<0)
+                {
+                    // moving up
+                    if ((this.fMap.charAt(((playerYCell-1)*this.MAP_WIDTH)+playerXCell)!='-')&&
+                        (playerYCellOffset < (minDistanceToWall)))
+                    {
+                        // back player up 
+                        this.fPlayerY+= (minDistanceToWall-playerYCellOffset);
+                    }
+                }
+                else
+                {
+                    // moving down                                  
+                    if ((this.fMap.charAt(((playerYCell+1)*this.MAP_WIDTH)+playerXCell)!='-')&&
+                        (playerYCellOffset > (this.TILE_SIZE-minDistanceToWall)))
+                    {
+                        // back player up 
+                        this.fPlayerY-= (playerYCellOffset-(this.TILE_SIZE-minDistanceToWall ));
+                    }
                 }
             }
+
+            
 
         }
         
