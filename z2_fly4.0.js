@@ -569,6 +569,7 @@ var Demo = new Phaser.Class({
 
     create: function ()
     {
+        
 
         // TILE_SIZE is the defualt grid unit
         this.TILE_SIZE = 64;
@@ -1565,7 +1566,21 @@ var Demo = new Phaser.Class({
             repeat: -1
         });
 
-        
+        this.playercart.jumptween = this.tweens.add({
+                targets: this.playercart,
+                elevation_delta: 80,
+                ease: 'Quad.easeOut',
+                duration: 450,
+                yoyo: true,
+                repeat: 0,
+                paused:true
+            });
+
+        this.playercart.jump = function()
+        { 
+            if ( !this.jumptween.isPlaying() )
+            this.jumptween.play();
+        }
         this.playercart.move = function()
         {            
 
@@ -2093,15 +2108,8 @@ var Demo = new Phaser.Class({
             {
                 if (drive_mode)
                 {
-                    thisContext.tweens.add({
-                    targets: thisContext.playercart,
-                    //delay: Phaser.Math.Between(500,1500),
-                    elevation_delta: 60,
-                    ease: 'Cubic.easeOut',
-                    duration: 250,
-                    yoyo: true,
-                    repeat: 0,
-                    });
+                    thisContext.playercart.jump();
+                   
                 }
             }
 
@@ -2743,15 +2751,7 @@ var Demo = new Phaser.Class({
 
                 if (gamepad.R1)
                 {     
-                    this.tweens.add({
-                    targets: this.playercart,
-                    //delay: Phaser.Math.Between(500,1500),
-                    elevation_delta: 60,
-                    ease: 'Cubic.easeOut',
-                    duration: 250,
-                    yoyo: true,
-                    repeat: 0,
-                    });
+                    this.playercart.jump();
                 }
                 
 
