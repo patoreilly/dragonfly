@@ -725,12 +725,12 @@ var Demo = new Phaser.Class({
         this.gamedisplayCanvas = this.textures.createCanvas('gamedisplaycanvas', 320, 200);
 
         //     This code uses a regular dom canvas created in css/html
-        // this.gamedisplayCanvas = document.getElementById("gameCanvas");
+        //this.gamedisplayCanvas = document.getElementById("gameCanvas");
 
 
         this.gamedisplay_context = this.gamedisplayCanvas.getContext('2d', {willReadFrequently:true});
 
-        // to accomodate camera tilting for flying the main projected image has to be scaled (larger) and shifted (left/up)
+        //to accomodate camera tilting for flying the main projected image has to be scaled (larger) and shifted (left/up)
 
         if (tilt_mode)
         {
@@ -2299,14 +2299,9 @@ var Demo = new Phaser.Class({
         UICam = this.cameras.add(0, 0, 320, 200);
 
         //  The main camera will not render the container
-        this.cameras.main.ignore(touchgui_cont);
+        this.cameras.main.ignore(touchgui_cont);        
 
-        // //  The main camera will not render the fuzz image
-        // this.cameras.main.ignore([fuzzImage]);
-
-        //  The new UI Camera will not render the background image or fuzz image
-        UICam.ignore([gamedisplayImage]);
-
+        //  The new UI Camera will not render the gameDisplay image
         this.cameras.main.on('camerashakestart', function () {
 
             if (tilt_mode)
@@ -2709,14 +2704,14 @@ var Demo = new Phaser.Class({
         else if (touchActivated)
         {
 
-            strafeDelta = (guide_zspeed.input.localX-.5)*10;
+            var turnDelta = (guide_zspeed.input.localX-.5)*10;
             zspeedDelta = (guide_zspeed.input.localY-.5)*-10;
             horizontalDelta = guide_multi.input.localX-.5;
             verticalDelta = guide_multi_activeY-.5;
 
             if (drive_mode)
             {
-                var r=Math.round(strafeDelta);
+                var r=Math.round(turnDelta);
                 
                 this.playercart.arc+=r*5;
                     
@@ -2728,14 +2723,14 @@ var Demo = new Phaser.Class({
         else if (gamepad)
         {
 
-            strafeDelta = (gamepad.rightStick.x*.5)*10;
+            var turnDelta = (gamepad.rightStick.x*.5)*10;
             zspeedDelta = (gamepad.rightStick.y*.5)*-10;
             horizontalDelta = gamepad.leftStick.x*.5;
             verticalDelta = gamepad.leftStick.y*.5;
 
             if (drive_mode)
             {
-                var r=Math.round(strafeDelta);
+                var r=Math.round(turnDelta);
                 
                 this.playercart.arc+=r*5;
                     
@@ -4309,7 +4304,7 @@ var config = {
     parent: 'phaser-example',
     width: 320,
     height: 200,
-    transparent: false,
+    transparent: true,
     roundPixels: true,
     pixelArt: true,
     physics: {
