@@ -2309,7 +2309,10 @@ var Demo = new Phaser.Class({
         //  The main camera will not render the container
         this.cameras.main.ignore(touchgui_cont);        
 
-        //  The new UI Camera will not render the gameDisplay image
+        //  The new UI Camera will not render the background image or fuzz image
+        UICam.ignore([gamedisplayImage]);
+
+        //  zoom camera to cover edges during camera shake
         this.cameras.main.on('camerashakestart', function () {
 
             if (tilt_mode)
@@ -2417,6 +2420,7 @@ var Demo = new Phaser.Class({
             yoyo: false,
             repeat: 0
             });
+
             this.tweens.add({
             targets: menugui_cont,
             //y: -200,
@@ -2430,8 +2434,7 @@ var Demo = new Phaser.Class({
     },
 
     driveCart: function()
-    {
-        
+    {        
         this.fPlayerX = this.playercart.lastPoint.x; //this.demoBot.path.getPoint(this.demoBot.followerdata).x;          
         this.fPlayerY = this.playercart.lastPoint.y; //this.demoBot.path.getPoint(this.demoBot.followerdata).y;  
 
@@ -2471,9 +2474,6 @@ var Demo = new Phaser.Class({
 
         this.fPlayerArc = myadjarc;
         this.fPlayerElevation = 50;
-
-
-
     },
 
     playerShoot: function()
@@ -2565,11 +2565,13 @@ var Demo = new Phaser.Class({
         {
             this.titlegen.animate();
         }
+
         var debugt = [];
                 // debugt.push(backgroundList[this.demoBot.bg_index]);
                 debugt.push('fps: '+ Math.floor(this.sys.game.loop.actualFps.toString()) );
-                // debugt.push('this.fPlayerArc: '+ this.fPlayerArc );
+                debugt.push('tilt_mode: '+ tilt_mode );
         debug.setText(debugt);
+
 
         var thisContext = this;
         
