@@ -2388,7 +2388,7 @@ var Demo = new Phaser.Class({
             duration: 600,
             yoyo: false,
             repeat: 0,
-            paused:true
+            paused: true
 
             });
 
@@ -2400,7 +2400,7 @@ var Demo = new Phaser.Class({
     {
         if (!menu_mode)
         {
-            if (!this.showMenuTween.isPlaying() && !this.hideMenuTween.isPlaying())
+            if (!this.hideMenuTween.isPlaying())
             {
                 //display - always reverts to main menu; make sure all others are off(not visible) here
                 this.cameras.main.rotation = 0;
@@ -2418,7 +2418,7 @@ var Demo = new Phaser.Class({
         else
         {
             //hide
-            if (!this.showMenuTween.isPlaying() && !this.hideMenuTween.isPlaying())
+            if (!this.showMenuTween.isPlaying())
             {
                 //this.titlegen.inplay = false;
                 menu_mode = false;
