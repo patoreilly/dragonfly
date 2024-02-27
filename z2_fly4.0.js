@@ -2275,11 +2275,9 @@ var Demo = new Phaser.Class({
 
         menu1_cont = this.add.container();
         menu1_cont.add([this.titlegen.displayimg,text2,text3,text3a,text4]);// 
-        this.cameras.main.ignore(menu1_cont);
 
         menu2_cont = this.add.container();
         menu2_cont.add([text5,text6,text7,text8,text9,text10,text11]);
-        this.cameras.main.ignore(menu2_cont);
         menu2_cont.visible = false;
 
         // editor_cont = this.add.container();
@@ -2288,10 +2286,8 @@ var Demo = new Phaser.Class({
 
         menugui_cont = this.add.container();
         menugui_cont.add([menu1_cont,menu2_cont]);//,editor_cont
-        this.cameras.main.ignore(menugui_cont);
 
         touchgui_cont = this.add.container();
-
 
         if (touchActivated)
         {
@@ -2306,10 +2302,10 @@ var Demo = new Phaser.Class({
         //  Add in a new camera, the same size and position as the main camera
         UICam = this.cameras.add(0, 0, 320, 200);
 
-        //  The main camera will not render the container
-        this.cameras.main.ignore(touchgui_cont);        
+        //  The main camera will not render the gui containers
+        this.cameras.main.ignore([touchgui_cont,menugui_cont]);        
 
-        //  The new UI Camera will not render the background image or fuzz image
+        //  The new UI Camera will not render the background
         UICam.ignore([gamedisplayImage]);
 
         //  zoom camera to cover edges during camera shake
@@ -2317,12 +2313,12 @@ var Demo = new Phaser.Class({
 
             if (tilt_mode)
             {
-                //set greater 
+                //zoom greater 
                 gamedisplayImage.setScale(1.25);
             }
             else
             {
-                //set regular 
+                //zoom regular 
                 gamedisplayImage.setScale(1.08);
             }
 
@@ -2370,66 +2366,68 @@ var Demo = new Phaser.Class({
         ////////////////////////////////////////////
 
 
-    },
 
-    displayHideMenu: function ()
-    {
-        if (!menu_mode)
-        {
-            //display - always reverts to main menu; make sure all others are off(not visible) here
-            this.cameras.main.rotation = 0;
+        this.showMenuTween = this.tweens.add({
 
-            menu_mode = true;
-            //this.titlegen.inplay = true;
-            menu1_cont.visible = true;
-            menu2_cont.visible = false;   
-            //editor_cont.visible = false;          
-
-            this.tweens.add({
             targets: menugui_cont,
             y: 0,                    
             ease: 'Sine.easeOut',
             duration: 600,
             yoyo: false,
-            repeat: 0
+            repeat: 0,
+            paused: true
+
             });
 
-            this.tweens.add({
-            targets: menugui_cont,
-            //y: 0,
-            alpha: 1,
-            //ease: 'Sine.easeInOut',
-            duration: 1000,
-            yoyo: false,
-            repeat: 0
-            });
-        }
-        else
-        {
-            //hide
+        this.hideMenuTween = this.tweens.add({
 
-            //this.titlegen.inplay = false;
-            menu_mode = false;
-
-            this.tweens.add({
             targets: menugui_cont,
             y: -200,
             //alpha: 0,
             ease: 'Sine.easeOut',
             duration: 600,
             yoyo: false,
-            repeat: 0
+            repeat: 0,
+            paused:true
+
             });
 
-            this.tweens.add({
-            targets: menugui_cont,
-            //y: -200,
-            alpha: 0,
-            //ease: 'Sine.easeInOut',
-            duration: 300,
-            yoyo: false,
-            repeat: 0
-            });
+
+        // end create
+    },
+
+    displayHideMenu: function ()
+    {
+        if (!menu_mode)
+        {
+            if (!this.showMenuTween.isPlaying() && !this.hideMenuTween.isPlaying())
+            {
+                //display - always reverts to main menu; make sure all others are off(not visible) here
+                this.cameras.main.rotation = 0;
+
+                menu_mode = true;
+
+                menu1_cont.visible = true;
+                menu2_cont.visible = false;   
+                //editor_cont.visible = false;          
+            
+                this.showMenuTween.play();
+            }
+            
+        }
+        else
+        {
+            //hide
+            if (!this.showMenuTween.isPlaying() && !this.hideMenuTween.isPlaying())
+            {
+                //this.titlegen.inplay = false;
+                menu_mode = false;
+
+            
+                this.hideMenuTween.play();
+            }
+
+            
         }
     },
 
