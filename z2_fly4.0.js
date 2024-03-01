@@ -469,6 +469,40 @@ var Menu = new Phaser.Class({
 
         }, this);
 
+
+        //var debug = [];
+        var pads = this.input.gamepad.gamepads;
+        if (pads.length !=0)
+        {
+            var text5 = this.add.dynamicBitmapText(0, 0, 'ab_headtext', 'GAMEPAD DETECTED PRESS ANY BUTTON').setOrigin(0).setScale(1).setPosition(320,190).setDepth(200);
+
+            this.tweens.add({
+                    targets: text5,
+                    x: -200,
+                    ease: 'none',
+                    duration: 4000,
+                    yoyo: false,
+                    repeat: -1
+                });
+        }
+        
+        // var pad;
+        // // get first pad detected only. otherwise loop to 'pads.length'
+        // for (var i = 0; i < pads.length; i++)
+        // {
+        //     pad = pads[i];
+
+        //     if (!pad)
+        //     {
+        //         continue;
+        //     }
+
+        //     //  Timestamp, index. ID
+        //     // debug.push(pad.id);
+        //     // debug.push('Index: ' + pad.index + ' Timestamp: ' + pad.timestamp);            
+        // }
+        
+
         
 
         this.events.on('shutdown', this.shutdown, this);
@@ -504,43 +538,15 @@ var Menu = new Phaser.Class({
         {
             this.scene.start('demo');
         }        
-        else if (this.input.gamepad.total === 0)// exit update loop if no gamepad detected
-        {
-            return;
-        }
+        // else if (this.input.gamepad.total === 0)// exit update loop if no gamepad detected
+        // {
+        //     return;
+        // }
 
         
 
 
-        //var debug = [];
-        var pads = this.input.gamepad.gamepads;
-        // var pads = this.input.gamepad.getAll();
-        // var pads = navigator.getGamepads();
-        var pad;
-        // get first pad detected only. otherwise loop to 'pads.length'
-        for (var i = 0; i < pads.length; i++)
-        {
-            pad = pads[i];
-
-            if (!pad)
-            {
-                continue;
-            }
-
-            //  Timestamp, index. ID
-            // debug.push(pad.id);
-            // debug.push('Index: ' + pad.index + ' Timestamp: ' + pad.timestamp);            
-        }
-        var text5 = this.add.dynamicBitmapText(0, 0, 'ab_headtext', 'GAMEPAD DETECTED '+pad.id+' PRESS ANY BUTTON').setOrigin(0).setScale(1).setPosition(320,190).setDepth(200);
-
-        this.tweens.add({
-                targets: text5,
-                x: -200,
-                ease: 'none',
-                duration: 600,
-                yoyo: false,
-                repeat: -1
-            });
+        
         
 
     }
