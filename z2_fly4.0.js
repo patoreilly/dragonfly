@@ -484,7 +484,7 @@ var Menu = new Phaser.Class({
                     yoyo: false,
                     repeat: -1
                 });
-        }
+        // }
         
         // var pad;
         // // get first pad detected only. otherwise loop to 'pads.length'
