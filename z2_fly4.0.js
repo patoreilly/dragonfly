@@ -504,10 +504,10 @@ var Menu = new Phaser.Class({
         {
             this.scene.start('demo');
         }        
-        // else if (this.input.gamepad.total === 0)// exit update loop if no gamepad detected
-        // {
-        //     return;
-        // }
+        else if (this.input.gamepad.total === 0)// exit update loop if no gamepad detected
+        {
+            return;
+        }
 
         
 
@@ -516,32 +516,22 @@ var Menu = new Phaser.Class({
         var pads = this.input.gamepad.gamepads;
         // var pads = this.input.gamepad.getAll();
         // var pads = navigator.getGamepads();
-
+        var pad;
         // get first pad detected only. otherwise loop to 'pads.length'
-        for (var i = 0; i < 1; i++)
+        for (var i = 0; i < pads.length; i++)
         {
-            var pad = pads[i];
+            pad = pads[i];
 
             if (!pad)
             {
-                this.add.dynamicBitmapText(0, 0, 'ab_headtext', 'no gamepad detected').setOrigin(0).setScale(1).setPosition(4,190).setDepth(200);
                 continue;
-            }
-
-            else
-            {
-                this.add.dynamicBitmapText(0, 0, 'ab_headtext', 'gamepad detected: '+pad.id+' press any button').setOrigin(0).setScale(1).setPosition(4,190).setDepth(200);
             }
 
             //  Timestamp, index. ID
             // debug.push(pad.id);
-            // debug.push('Index: ' + pad.index + ' Timestamp: ' + pad.timestamp);
-
-            
-            
-            
+            // debug.push('Index: ' + pad.index + ' Timestamp: ' + pad.timestamp);            
         }
-        
+        this.add.dynamicBitmapText(0, 0, 'ab_headtext', pad.id+' press any button').setOrigin(0).setScale(1).setPosition(4,190).setDepth(200);
         
 
     }
