@@ -544,9 +544,13 @@ var Menu = new Phaser.Class({
             {
                 continue;
             }
+            else
+            {
+                text5.setText('gamepad detected press any button '+pad.id );
+            }
         }
         
-        text5.setText('gamepad detected press any button '+pad.id );
+        
 
         
 
