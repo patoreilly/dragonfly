@@ -513,6 +513,7 @@ var Menu = new Phaser.Class({
 
         //  We need to clear keyboard events, or they'll stack up when the Menu is re-run
         this.input.keyboard.shutdown();
+        this.input.gamepad.shutdown();
     },
     update: function ()
     {
