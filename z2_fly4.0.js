@@ -402,7 +402,7 @@ var Menu = new Phaser.Class({
             music = this.sound.add('theme');
             //music.play({loop: true});
 
-            text4 = this.add.dynamicBitmapText(0, 0, 'Afterburner1', 'getting ready..').setOrigin(0.5).setScale(2).setCenterAlign().setPosition(160,100).setDepth(100);
+            this.add.dynamicBitmapText(0, 0, 'Afterburner1', 'getting ready..').setOrigin(0.5).setScale(2).setCenterAlign().setPosition(160,100).setDepth(100);
             startFlag=true;//this.scene.start('demo');
             
 
@@ -421,7 +421,7 @@ var Menu = new Phaser.Class({
             music = this.sound.add('theme');
             //music.play({loop: true});
 
-            text4 = this.add.dynamicBitmapText(0, 0, 'Afterburner1', 'getting ready..').setOrigin(0.5).setScale(2).setCenterAlign().setPosition(160,100).setDepth(100);
+            this.add.dynamicBitmapText(0, 0, 'Afterburner1', 'getting ready..').setOrigin(0.5).setScale(2).setCenterAlign().setPosition(160,100).setDepth(100);
             startFlag=true;//this.scene.start('demo');
             
 
@@ -440,7 +440,7 @@ var Menu = new Phaser.Class({
             music = this.sound.add('theme');
             //music.play({loop: true});
 
-            text4 = this.add.dynamicBitmapText(0, 0, 'Afterburner1', 'getting ready..').setOrigin(0.5).setScale(2).setCenterAlign().setPosition(160,100).setDepth(100);
+            this.add.dynamicBitmapText(0, 0, 'Afterburner1', 'getting ready..').setOrigin(0.5).setScale(2).setCenterAlign().setPosition(160,100).setDepth(100);
             startFlag=true;//this.scene.start('demo');
             
 
@@ -464,7 +464,7 @@ var Menu = new Phaser.Class({
 
         
 
-        text4 = this.add.dynamicBitmapText(0, 0, 'Afterburner1', 'getting ready..').setOrigin(0.5).setScale(2).setCenterAlign().setPosition(160,100).setDepth(100);
+        this.add.dynamicBitmapText(0, 0, 'Afterburner1', 'getting ready..').setOrigin(0.5).setScale(2).setCenterAlign().setPosition(160,100).setDepth(100);
         startFlag=true;//this.scene.start('demo');
 
         }, this);
@@ -531,7 +531,16 @@ var Menu = new Phaser.Class({
             // debug.push(pad.id);
             // debug.push('Index: ' + pad.index + ' Timestamp: ' + pad.timestamp);            
         }
-        this.add.dynamicBitmapText(0, 0, 'ab_headtext', pad.id+' press any button').setOrigin(0).setScale(1).setPosition(4,190).setDepth(200);
+        var text5 = this.add.dynamicBitmapText(0, 0, 'ab_headtext', 'GAMEPAD DETECTED '+pad.id+' PRESS ANY BUTTON').setOrigin(0).setScale(1).setPosition(320,190).setDepth(200);
+
+        this.tweens.add({
+                targets: text5,
+                x: -200,
+                ease: 'none',
+                duration: 600,
+                yoyo: false,
+                repeat: -1
+            });
         
 
     }
