@@ -471,8 +471,8 @@ var Menu = new Phaser.Class({
 
 
         //var debug = [];
-        var pads = this.input.gamepad.gamepads;
-        if (pads.length !=0)
+        
+        if ( this.input.gamepad.total !==0 )
         {
             var text5 = this.add.dynamicBitmapText(0, 0, 'ab_headtext', 'GAMEPAD DETECTED PRESS ANY BUTTON').setOrigin(0).setScale(1).setPosition(320,190).setDepth(200);
 
@@ -513,25 +513,10 @@ var Menu = new Phaser.Class({
 
         //  We need to clear keyboard events, or they'll stack up when the Menu is re-run
         this.input.keyboard.shutdown();
-        this.input.gamepad.shutdown();
     },
     update: function ()
     {
         
-        //console.log(i);
-        // var ml = hsv.length-1;
-        // var a = hsv[Math.floor(hsvindex)].color;
-        // var b = hsv[ml-Math.floor(hsvindex)].color;
-        // var c = hsv[ml-Math.floor(hsvindex)].color;
-        // var d = hsv[Math.floor(hsvindex)].color;
-        // hsvindex += 1.25;
-
-        // if (hsvindex >= hsv.length)
-        // {
-        //     hsvindex = 0;
-        // }
-
-        // bgimg.setTintFill(a,b,c,d);
 
 
 
