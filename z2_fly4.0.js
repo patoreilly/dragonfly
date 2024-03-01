@@ -166,6 +166,10 @@ var Menu = new Phaser.Class({
 
         this.load.image('Major Title', 'gui/Major Title (IREM).png');
 
+        ///// testing
+        this.load.image('Nintendo', 'gui/Super Mario Bros 3 (Nintendo).png');
+        //////
+
         this.load.image('mousekeys_icon', 'gui/mousekeys_icon.png');
         this.load.image('touch_icon', 'gui/touch_icon.png');
         this.load.image('gamepad_icon', 'gui/gamepad_icon.png');        
@@ -176,21 +180,25 @@ var Menu = new Phaser.Class({
         for (var i = 0; i < backgroundList.length; i++)
         {
             this.load.image(backgroundList[i], 'backgrounds/'+backgroundList[i]);
+            allImageKeys.push(backgroundList[i]);
         }
 
         for (var j = 0; j < wallList.length; j++)
         {
             this.load.image(wallList[j], 'walls/'+wallList[j]);
+            allImageKeys.push(wallList[j]);
         }
 
         for (var k = 0; k < floorList.length; k++)
         {
-            this.load.image(floorList[k], 'floors/'+floorList[k]);    
+            this.load.image(floorList[k], 'floors/'+floorList[k]);
+            allImageKeys.push(floorList[k]);
         }
 
         for (var h = 0; h < objectList.length; h++)
         {
             this.load.image(objectList[h], 'objects/'+objectList[h]);
+            allImageKeys.push(objectList[h]);
         }
 
 
@@ -212,8 +220,8 @@ var Menu = new Phaser.Class({
 
         var progress = this.add.graphics().setDepth(99);
 
-        var text = this.add.text(10, 50, '(debug text)', { font: '10px Courier', fill: '#00ff00' });
-        var text2 = this.add.text(10, 72, '(debug text)', { font: '10px Courier', fill: '#00ff00' });
+        var text = this.add.text(10, 50, '(debug text)', { font: '10px Courier', fill: '#ffffff' });
+        var text2 = this.add.text(10, 72, '(debug text)', { font: '10px Courier', fill: '#ffffff' });
         
 
         this.load.on('progress', function (value) {
@@ -252,16 +260,16 @@ var Menu = new Phaser.Class({
 
     showFile: function (key, type, texture)
     {
-        file_thumbs[loadfile_index] = this.add.image(10+20*(loadfile_index%16), 80+20, key).setDisplaySize(20, 20);
+        file_thumbs[loadfile_index] = this.add.image(10+20*(loadfile_index%16), 100+20*(Math.floor(loadfile_index/16)), key).setDisplaySize(20, 20);
         
 
         
         loadfile_index++;
 
-        if (key=='Major Title')
+        if (key=='Nintendo')
         {
             var config3 = {
-            image: 'Major Title',
+            image: 'Nintendo',
             width: 8,
             height: 8,
             chars: Phaser.GameObjects.RetroFont.TEXT_SET1,
@@ -367,13 +375,13 @@ var Menu = new Phaser.Class({
         this.cache.bitmapFont.add('Afterburner', Phaser.GameObjects.RetroFont.Parse(this, config2));
         this.cache.bitmapFont.add('Afterburner1', Phaser.GameObjects.RetroFont.Parse(this, config1));
 
-        var text1 = this.add.dynamicBitmapText(0, 0, 'Afterburner', " PLAY keyboard mouse \n ").setOrigin(0.5).setScale(1).setCenterAlign().setPosition(160,70).setDepth(100);
-        var text2 = this.add.dynamicBitmapText(0, 0, 'Afterburner1', " PLAY touchscreen \n ").setOrigin(0.5).setScale(1).setCenterAlign().setPosition(160,120).setDepth(100);
-        text3 = this.add.dynamicBitmapText(0, 0, 'Afterburner', " PLAY gamepad \n ").setOrigin(0.5).setScale(1).setCenterAlign().setPosition(160,170).setDepth(100);
+        var text1 = this.add.dynamicBitmapText(0, 0, 'Afterburner', " keyboard mouse \n ").setOrigin(0.5).setScale(1).setCenterAlign().setPosition(160,60).setDepth(100);
+        var text2 = this.add.dynamicBitmapText(0, 0, 'Afterburner1', " touchscreen \n ").setOrigin(0.5).setScale(1).setCenterAlign().setPosition(160,110).setDepth(100);
+        var text3 = this.add.dynamicBitmapText(0, 0, 'Afterburner', " gamepad \n ").setOrigin(0.5).setScale(1).setCenterAlign().setPosition(160,160).setDepth(100);
         
-        this.add.sprite(160, 70, 'mousekeys_icon').setOrigin(.5,0).setScale(1);   
-        this.add.sprite(160, 120, 'touch_icon').setOrigin(.5,0).setScale(1);   
-        this.add.sprite(160, 170, 'gamepad_icon').setOrigin(.5,0).setScale(1);   
+        this.add.sprite(160, 60, 'mousekeys_icon').setOrigin(.5,0).setScale(1);   
+        this.add.sprite(160, 110, 'touch_icon').setOrigin(.5,0).setScale(1);   
+        this.add.sprite(160, 160, 'gamepad_icon').setOrigin(.5,0).setScale(1);   
         
         var hitarea1 = this.add.rectangle(text1.x, text1.y, text1.width + 20, text1.height + 16, 0x00ff00, 0.25).setInteractive();
         var hitarea2 = this.add.rectangle(text2.x, text2.y, text2.width + 20, text2.height + 16, 0xff00ff, 0.25).setInteractive();
@@ -394,7 +402,7 @@ var Menu = new Phaser.Class({
             music = this.sound.add('theme');
             //music.play({loop: true});
 
-            text4 = this.add.dynamicBitmapText(0, 0, 'Afterburner1', 'get ready!').setOrigin(0.5).setScale(2).setCenterAlign().setPosition(160,100).setDepth(100);
+            text4 = this.add.dynamicBitmapText(0, 0, 'Afterburner1', 'getting ready..').setOrigin(0.5).setScale(2).setCenterAlign().setPosition(160,100).setDepth(100);
             startFlag=true;//this.scene.start('demo');
             
 
@@ -413,7 +421,7 @@ var Menu = new Phaser.Class({
             music = this.sound.add('theme');
             //music.play({loop: true});
 
-            text4 = this.add.dynamicBitmapText(0, 0, 'Afterburner1', 'get ready!').setOrigin(0.5).setScale(2).setCenterAlign().setPosition(160,100).setDepth(100);
+            text4 = this.add.dynamicBitmapText(0, 0, 'Afterburner1', 'getting ready..').setOrigin(0.5).setScale(2).setCenterAlign().setPosition(160,100).setDepth(100);
             startFlag=true;//this.scene.start('demo');
             
 
@@ -432,7 +440,7 @@ var Menu = new Phaser.Class({
             music = this.sound.add('theme');
             //music.play({loop: true});
 
-            text4 = this.add.dynamicBitmapText(0, 0, 'Afterburner1', 'get ready!').setOrigin(0.5).setScale(2).setCenterAlign().setPosition(160,100).setDepth(100);
+            text4 = this.add.dynamicBitmapText(0, 0, 'Afterburner1', 'getting ready..').setOrigin(0.5).setScale(2).setCenterAlign().setPosition(160,100).setDepth(100);
             startFlag=true;//this.scene.start('demo');
             
 
@@ -454,7 +462,9 @@ var Menu = new Phaser.Class({
         music = this.sound.add('theme');
         //music.play({loop: true});
 
-        text4 = this.add.dynamicBitmapText(0, 0, 'Afterburner1', 'get ready!').setOrigin(0.5).setScale(2).setCenterAlign().setPosition(160,100).setDepth(100);
+        
+
+        text4 = this.add.dynamicBitmapText(0, 0, 'Afterburner1', 'getting ready..').setOrigin(0.5).setScale(2).setCenterAlign().setPosition(160,100).setDepth(100);
         startFlag=true;//this.scene.start('demo');
 
         }, this);
@@ -474,19 +484,19 @@ var Menu = new Phaser.Class({
     {
         
         //console.log(i);
-        var ml = hsv.length-1;
-        var a = hsv[Math.floor(hsvindex)].color;
-        var b = hsv[ml-Math.floor(hsvindex)].color;
-        var c = hsv[ml-Math.floor(hsvindex)].color;
-        var d = hsv[Math.floor(hsvindex)].color;
-        hsvindex += 1.25;
+        // var ml = hsv.length-1;
+        // var a = hsv[Math.floor(hsvindex)].color;
+        // var b = hsv[ml-Math.floor(hsvindex)].color;
+        // var c = hsv[ml-Math.floor(hsvindex)].color;
+        // var d = hsv[Math.floor(hsvindex)].color;
+        // hsvindex += 1.25;
 
-        if (hsvindex >= hsv.length)
-        {
-            hsvindex = 0;
-        }
+        // if (hsvindex >= hsv.length)
+        // {
+        //     hsvindex = 0;
+        // }
 
-        bgimg.setTintFill(a,b,c,d);
+        // bgimg.setTintFill(a,b,c,d);
 
 
 
@@ -494,38 +504,45 @@ var Menu = new Phaser.Class({
         {
             this.scene.start('demo');
         }        
-        else if (this.input.gamepad.total === 0)// exit update loop if no gamepad detected
-        {
-            return;
-        }
+        // else if (this.input.gamepad.total === 0)// exit update loop if no gamepad detected
+        // {
+        //     return;
+        // }
 
         
 
 
-        var debug = [];
+        //var debug = [];
         var pads = this.input.gamepad.gamepads;
         // var pads = this.input.gamepad.getAll();
         // var pads = navigator.getGamepads();
 
-        for (var i = 0; i < pads.length; i++)
+        // get first pad detected only. otherwise loop to 'pads.length'
+        for (var i = 0; i < 1; i++)
         {
             var pad = pads[i];
 
             if (!pad)
             {
+                this.add.dynamicBitmapText(0, 0, 'ab_headtext', 'no gamepad detected').setOrigin(0).setScale(1).setPosition(4,190).setDepth(200);
                 continue;
             }
 
+            else
+            {
+                this.add.dynamicBitmapText(0, 0, 'ab_headtext', 'gamepad detected: '+pad.id+' press any button').setOrigin(0).setScale(1).setPosition(4,190).setDepth(200);
+            }
+
             //  Timestamp, index. ID
-            debug.push(pad.id);
-            debug.push('Index: ' + pad.index + ' Timestamp: ' + pad.timestamp);
+            // debug.push(pad.id);
+            // debug.push('Index: ' + pad.index + ' Timestamp: ' + pad.timestamp);
 
             
             
             
         }
         
-        text3.setText("\\ PLAY (gamepad) \\\n-press any button-");
+        
 
     }
 
@@ -749,8 +766,77 @@ var Demo = new Phaser.Class({
         this.offscreenCanvasPixels =  this.offscreenCanvasContext.getImageData(0,0,this.gamedisplayCanvas.width, this.gamedisplayCanvas.height);
 
         
-           
+
+        // set-up a text canvas with frames for each bitmap char
+        var textCanvas = this.textures.createCanvas('fontsheet',760,72);
+        var all_characters = ' !"#$%&\'()*+,-./0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[|]^_`abcdefghijklmnopqrstuvwxyz{\\}~';
+
+        textCanvas.drawFrame('Nintendo',0,0,0);
+
         
+        for (var b=0;b<textCanvas.height/8;b++)
+        {
+
+        
+            for (var v=0;v<all_characters.length;v++)
+            {
+
+                var thisChar = all_characters.charAt(v);
+
+                //console.log(thisChar);
+
+                textCanvas.add(thisChar+'color'+b, 0, v*8, b*8, 8, 8);
+
+            }
+        }
+
+           
+        this.animationData = {};
+
+        for (var i = 0; i<allImageKeys.length; i++)
+        {
+            var thisImageKey = allImageKeys[i];
+
+            this.animationData[thisImageKey] = {};
+
+            this.animationData[thisImageKey].waveData = Phaser.Math.SinCosTableGenerator(256, 3, 3, 32);
+
+
+
+            this.animationData[thisImageKey].burstpixels = [];
+            for (var j = 0; j < 800; j++)
+            {
+                this.animationData[thisImageKey].burstpixels[j] = {};
+                this.animationData[thisImageKey].burstpixels[j].xincr = 0;//Phaser.Math.RND.realInRange(-1, 1);
+                this.animationData[thisImageKey].burstpixels[j].yincr = Phaser.Math.RND.realInRange(-.25, -4.5);
+                this.animationData[thisImageKey].burstpixels[j].xpos = Phaser.Math.Between(0,64);
+                this.animationData[thisImageKey].burstpixels[j].ypos = Phaser.Math.Between(0,64);
+                this.animationData[thisImageKey].burstpixels[j].timecheck = 0;
+                this.animationData[thisImageKey].burstpixels[j].switchtime = Phaser.Math.Between(300,1000);
+            }
+
+
+            this.animationData[thisImageKey].textspace = 0;
+            
+
+            var a = "incoming";
+            var b = "        ";
+            var c = " COMS   ";
+            var d = " ^^^^^  ";
+            var e = " defualt";
+            var f = "message ";
+            var g = " %//@<> ";
+            var h = "  2023  ";
+
+            this.animationData[thisImageKey].msgstring = a+b+c+d+e+f+g+h;
+            this.animationData[thisImageKey].msgindex = 0; 
+            this.animationData[thisImageKey].colorindex = 0;
+            this.animationData[thisImageKey].timecheck = 0;
+            this.animationData[thisImageKey].scrollindex = 0;
+            this.animationData[thisImageKey].scrollcycles = 0;
+            this.animationData[thisImageKey].modedoneflag = true;
+
+        }
         
 
 
@@ -761,26 +847,14 @@ var Demo = new Phaser.Class({
                 
             this.wall[i] = {};
 
+            this.wall[i].animationData = this.animationData[imagekey];
+
             this.wall[i].srcimg = this.textures.get(imagekey).getSourceImage();
             this.wall[i].buffer = this.textures.createCanvas('wallcanvas'+i, wallData[i].width, wallData[i].height);
             this.wall[i].context = this.wall[i].buffer.getContext('2d', {willReadFrequently:true});
             this.wall[i].context.drawImage(this.wall[i].srcimg, 0,0,this.wall[i].srcimg.width,this.wall[i].srcimg.height,0,0,wallData[i].width, wallData[i].height);
             var imageData = this.wall[i].context.getImageData(0, 0, wallData[i].width, wallData[i].height);
             this.wall[i].pixels = imageData.data;
-
-            this.wall[i].waveData = Phaser.Math.SinCosTableGenerator(256, 3, 3, 32);
-
-            this.wall[i].burstpixels = [];
-            for (var j = 0; j < 800; j++)
-            {
-                this.wall[i].burstpixels[j] = {};
-                this.wall[i].burstpixels[j].xincr = 0;//Phaser.Math.RND.realInRange(-1, 1);
-                this.wall[i].burstpixels[j].yincr = Phaser.Math.RND.realInRange(-.25, -4.5);
-                this.wall[i].burstpixels[j].xpos = Phaser.Math.Between(0,wallData[i].width);
-                this.wall[i].burstpixels[j].ypos = Phaser.Math.Between(0,wallData[i].height);
-                this.wall[i].burstpixels[j].timecheck = 0;
-                this.wall[i].burstpixels[j].switchtime = Phaser.Math.Between(300,1000);
-            }
         }
 
         this.floor = [];
@@ -791,6 +865,8 @@ var Demo = new Phaser.Class({
             var imagekey = floorList[i];
                 
             this.floor[i] = {};
+
+            this.floor[i].animationData = this.animationData[imagekey];
 
             this.floor[i].srcimg = this.textures.get(imagekey).getSourceImage();
             this.floor[i].buffer = this.textures.createCanvas('floorcanvas'+i, this.floortilesize, this.floortilesize);
@@ -809,6 +885,8 @@ var Demo = new Phaser.Class({
                 
             this.background[i] = {};
 
+            this.background[i].animationData = this.animationData[imagekey];
+
             this.background[i].ImageArc = 0;
             
             this.background[i].width = 960;
@@ -823,10 +901,12 @@ var Demo = new Phaser.Class({
             this.background[i].imagedata = imageData;
             this.background[i].pixels = imageData.data;
 
-            this.background[i].waveData = Phaser.Math.SinCosTableGenerator(256, 3, 3, 32);
+            
         }
 
 
+
+        
 
 
         // player shooting settings
@@ -2393,7 +2473,176 @@ var Demo = new Phaser.Class({
             });
 
 
-        // end create
+        this.demoBot = {};
+
+        this.demoBot.tracksprite = this.mariocart; //this.zspritesgroupArray[this.trackbotData.index];
+
+        this.demoBot.strafeDelta = 0;
+        this.demoBot.zspeedDelta = 15.0;
+        this.demoBot.horizontalDelta = 0;
+        this.demoBot.verticalDelta = 0;
+
+        this.demoBot.arcDelta = 0;
+        this.demoBot.deltaChange = 0;
+
+        this.demoBot.xincr = 1;
+        this.demoBot.yincr = 2.4;//Phaser.Math.RND.realInRange(.5, 2.5);
+
+        //this.demoBot.xpos = this.fPlayerX;//Phaser.Math.Between(0,959);
+        //this.demoBot.ypos = this.fPlayerY;//Phaser.Math.Between(0,199);
+
+        this.demoBot.arc = 600;
+        this.demoBot.elevation = 40;
+        this.demoBot.level_index = 0;
+        this.demoBot.bg_index = 0;
+        this.demoBot.wall_index = 0;
+        this.demoBot.floor_index = 0;
+        this.demoBot.og_index = 0;
+        //this.demoBot.current_objectgang = 'ufo';
+        this.demoBot.startX = 99;
+        this.demoBot.startY = 99;
+
+        this.demoBot.followerdata = 0;
+        this.demoBot.path = new Phaser.Curves.Path(this.demoBot.startX, this.demoBot.startY);
+        //this.demoBot.path.ellipseTo(1200,1200,360,0,true,180);        
+        this.demoBot.path.splineTo([ 160,136,440,280,640,56,870,194,1240,56,1160,536,1200,736,840,896,800,536,480,816,80,776,400,496,100,250 ]);
+        this.demoBot.path.closePath();
+
+        // this.tweens.add({
+        //     targets: this.demoBot,
+        //     elevation: 64,
+        //     ease: 'none',
+        //     duration: 3000,
+        //     delay: 100,
+        //     yoyo: true,
+        //     repeat: -1
+        // });
+
+        this.tweens.add({
+            targets: this.demoBot,
+            followerdata: 1,
+            ease: 'none',
+            duration: this.demoBot.tracksprite.path_duration,
+            delay: this.demoBot.tracksprite.path_delay+1500,
+            yoyo: 0,
+            repeat: -1
+        });
+
+
+    }, ////// END OF create()
+
+    doDemoBot: function()
+    {
+        var trackBotSprite = this.demoBot.tracksprite; // this.zspritesgroupArray[this.trackbotData.index];
+        var followDelta = trackBotSprite.followerdata; // use multiplier for look angle latency when following
+        
+        
+        this.fPlayerX =  this.demoBot.path.getPoint(this.demoBot.followerdata).x; //trackBotSprite.lastPoint.x;         
+        this.fPlayerY =  this.demoBot.path.getPoint(this.demoBot.followerdata).y; //trackBotSprite.lastPoint.y; 
+        
+        
+
+        
+        
+
+        var adjtrackbotX = trackBotSprite.path.getPoint(followDelta).x;           
+        var adjtrackbotY = trackBotSprite.path.getPoint(followDelta).y;
+
+
+        
+        //console.log(adjtrackbotX,adjtrackbotY);
+
+        if (trackBotSprite.x!=undefined && trackBotSprite.y!=undefined)
+        {
+            var XlookPoint = adjtrackbotX;
+            var YlookPoint = adjtrackbotY;
+        }
+        else
+        {
+            var XlookPoint = 600;
+            var YlookPoint = 1600;
+        }
+        
+
+        var distance = Phaser.Math.Distance.Between(this.fPlayerX,this.fPlayerY,XlookPoint,YlookPoint);
+        var xdelta = this.fPlayerX-XlookPoint;
+        var ydelta = this.fPlayerY-YlookPoint;
+        var myrad = Math.asin(ydelta/distance);
+        var myarc = Math.round(this.radToArc(myrad))+this.ANGLE180;
+
+        if (xdelta>0)
+        {
+            var myadjarc = myarc;
+            // var shotXDir=this.fCosTable[myarc];//thisContext.fPlayerArc
+            // var shotYDir=this.fSinTable[myarc];
+
+        }
+        else if (ydelta>0)
+        {
+            var myadjarc = (1440-myarc)+1440;
+            // var shotXDir=-this.fCosTable[myarc];//thisContext.fPlayerArc
+            // var shotYDir=this.fSinTable[myarc];
+        }    
+        else 
+        {
+            var myadjarc = (960-myarc);
+            // var shotXDir=-this.fCosTable[myarc];//thisContext.fPlayerArc
+            // var shotYDir=this.fSinTable[myarc];
+        }
+
+
+
+
+
+
+        var currentArcDelta = this.fPlayerArc-myadjarc;
+
+        // corrects the difference for when lead value crosses zero threshold before other value
+        if (currentArcDelta<-1900) currentArcDelta+=1920;
+        if (currentArcDelta>1900) currentArcDelta-=1920;
+
+        this.background[this.background.currentIndex].ImageArc += currentArcDelta;
+
+        this.fPlayerArc = myadjarc;
+        this.fPlayerElevation = this.demoBot.elevation;
+
+        
+
+
+
+
+        // var debugt = [];
+        //         // debugt.push(backgroundList[this.demoBot.bg_index]);
+        //         debugt.push('fps: '+ Math.floor(this.sys.game.loop.actualFps.toString()) );
+        //         // debugt.push('this.fPlayerArc: '+ this.fPlayerArc );
+
+                
+                
+                
+
+                // debugt.push('this.mariocart.arc: '+ this.mariocart.arc );
+                
+                
+                // // // debugt.push('this.playerArcDelta: '+ this.playerArcDelta );
+                // //debugt.push('verticalDelta: '+ verticalDelta );
+                // // debugt.push('playerXCell: '+ playerXCell );
+                // // debugt.push('playerYCell: '+ playerYCell );
+                // //debugt.push('track--deltax: '+ trackBotSprite.lastPoint.x );
+               
+                // debugt.push('this.fPlayerX: '+ this.fPlayerX ); 
+
+                // //debugt.push('track--deltay: '+ trackBotSprite.lastPoint.y );
+
+                // debugt.push('this.fPlayerY: '+ this.fPlayerY );
+                // debugt.push('mapIndex: '+ (playerYCell*this.MAP_WIDTH)+playerXCell );
+                // debugt.push('charAt: '+ this.fMap.charAt( ( playerYCell*this.MAP_WIDTH)+playerXCell ) );
+                // debugt.push('horizontalMouseDelta: '+ horizontalMouseDelta );
+        //debug.setText(debugt);
+
+        
+
+
+
     },
 
     displayHideMenu: function ()
@@ -2577,7 +2826,7 @@ var Demo = new Phaser.Class({
         
         this.rain(this.wall[6]);
 
-        this.wave(this.wall[4]);
+        this.timedtext(this.wall[4]);
 
         this.raycast();
 
@@ -3148,6 +3397,42 @@ var Demo = new Phaser.Class({
 
     },
     
+    timedtext: function(thing)
+    {
+
+        var nextChar = thing.animationData.msgstring.charAt(thing.animationData.msgindex);
+        if ( game.loop.now > thing.animationData.timecheck + 65 || nextChar==' ')
+        {
+            if (thing.animationData.textspace == 0)
+            {
+                //this.wallAnimatedData[i].colorindex = Phaser.Math.Between(0,this.wallAnimatedData[i].numfontcolors-1);
+
+                // this.wall_context.drawImage(this.walleraseimg, 0, 0, 
+                // this.walleraseimg.width, this.walleraseimg.height, 
+                // 0, 0, this.wallsrcimg.width, this.wallsrcimg.height);
+                thing.context.clearRect(0, 0, 64, 64);
+
+               
+            }
+            thing.animationData.timecheck=game.loop.now;
+            var textX = thing.animationData.textspace%8;
+            var textY = Math.floor(thing.animationData.textspace/8);
+            thing.animationData.textspace++;
+            if (thing.animationData.textspace>=64) {thing.animationData.textspace = 0; }
+
+
+            
+            thing.animationData.msgindex++;
+            if (thing.animationData.msgindex>=64) { thing.animationData.msgindex=0 } //this.wallAnimatedData[i].modedoneflag='true';
+
+            thing.buffer.drawFrame('fontsheet',nextChar+'color'+thing.animationData.colorindex,textX*8,textY*8);
+        }
+
+        var imageData = thing.context.getImageData(0,0, 64, 64);    
+        thing.pixels = imageData.data;
+    
+
+    },
 
     wave: function(thing)
     {
@@ -3164,7 +3449,7 @@ var Demo = new Phaser.Class({
         // width is number of frames, 1 frame for every col
         for (var x = 0; x <numberOfFrames ; x += wavePixelChunk)
         {
-            var y = thing.waveData.sin[x];
+            var y = thing.animationData.waveData.sin[x];
 
             for (var sy=0; sy<thing.buffer.height; sy++)  
             {   
@@ -3188,7 +3473,7 @@ var Demo = new Phaser.Class({
         }
             
         //  Cycle through the wave data - this is what causes the image to "undulate"
-        Phaser.Utils.Array.RotateRight(thing.waveData.sin);
+        Phaser.Utils.Array.RotateRight(thing.animationData.waveData.sin);
     
         // this.waveFrameIndex+=this.wavePixelChunk;
     
@@ -3269,12 +3554,12 @@ var Demo = new Phaser.Class({
             // if ( game.loop.now < this.wallAnimatedData.timecheck + 6000 )
             // {
 
-                for (var j=0; j<thing.burstpixels.length; j++)
+                for (var j=0; j<thing.animationData.burstpixels.length; j++)
                 {
 
 
 
-                    var thispixel = thing.burstpixels[j];
+                    var thispixel = thing.animationData.burstpixels[j];
 
 
                     thispixel.xpos += thispixel.xincr;
@@ -4420,6 +4705,7 @@ var config = {
 var game = new Phaser.Game(config);
 
 var file_thumbs = [];
+var allImageKeys = [];
 
 var sound_enabled;
 var music;
