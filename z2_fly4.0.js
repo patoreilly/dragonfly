@@ -478,7 +478,7 @@ var Menu = new Phaser.Class({
 
             this.tweens.add({
                     targets: text5,
-                    x: -200,
+                    x: -320,
                     ease: 'none',
                     duration: 4000,
                     yoyo: false,
