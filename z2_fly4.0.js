@@ -474,7 +474,7 @@ var Menu = new Phaser.Class({
         
         // if ( this.input.gamepad.total !==0 )
         // {
-            text5 = this.add.dynamicBitmapText(0, 0, 'ab_headtext', 'NO GAMEPAD DETECTED').setOrigin(0).setScale(1).setPosition(320,190).setDepth(200);
+            text5 = this.add.dynamicBitmapText(0, 0, 'ab_headtext', 'no gamepad detected').setOrigin(0).setScale(1).setPosition(320,190).setDepth(200);
 
             this.tweens.add({
                     targets: text5,
@@ -532,30 +532,21 @@ var Menu = new Phaser.Class({
         
 
 
-        var debug = [];
+        
         var pads = this.input.gamepad.gamepads;
-        // var pads = this.input.gamepad.getAll();
-        // var pads = navigator.getGamepads();
+        var pad;
 
         for (var i = 0; i < pads.length; i++)
         {
-            var pad = pads[i];
+            pad = pads[i];
 
             if (!pad)
             {
                 continue;
             }
-
-            //  Timestamp, index. ID
-            debug.push(pad.id);
-            debug.push('Index: ' + pad.index + ' Timestamp: ' + pad.timestamp);
-
-            
-            
-            
         }
         
-        text5.setText("gamepad detected press any button");
+        text5.setText('gamepad detected '+pad.id+' press any button');
 
         
 
