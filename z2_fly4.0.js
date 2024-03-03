@@ -2,13 +2,57 @@
 
 var backgroundList = [
 
+'backscroll3.png',
+'deep-space.jpg',
+'shadow-of-the-beast2-karamoon.png',
+'20210413_172913.jpg',
+'20220326_073008.jpg',
+'20220404_081108.jpg',
+'20220814_204402.jpg',
+'20220814_212339.jpg',
+'20220814_212343.jpg',
+'20220814_212346.jpg',
+'20220814_212353.jpg',
+'20220814_212403.jpg',
+'20220814_212406.jpg',
+'20220814_212409.jpg',
+'20220814_212412.jpg',
 '20220814_212439.jpg',
+'20220814_212506.jpg',
+'20220814_213632.jpg'
 
 ];
 
 var floorList = [
 
-'SNES_Mario_Circuit_2.png',
+'stonefloor1.png',
+'stonefloor2.png',
+'stonefloor3.png',
+'stonefloor4.png',
+'space-baddie.png',
+'brownstone_tile.png',
+'tile41.png',
+'tile42.png',
+'tile43.png',
+'tile7.png',
+'tile1.jpg',
+'transparent64x64.png',
+'spinObj_04.png',
+'green.png',
+'floortile.png',
+'pineapple.png',
+'mushroom.png',
+'leaf1.png',
+'leaf2.png',
+'rain.png',
+'green_specs64x64.png',
+'wallv.png',
+'wallq.png',
+'walls.png',
+'wallw.png',
+'wallc.png',
+'mana_card.png',
+'wallg.png'
 
 ];
 
@@ -470,37 +514,18 @@ var Menu = new Phaser.Class({
         }, this);
 
 
-        //var debug = [];
         
-        // if ( this.input.gamepad.total !==0 )
-        // {
-            text5 = this.add.dynamicBitmapText(0, 0, 'ab_headtext', 'no gamepad detected').setOrigin(0).setScale(1).setPosition(320,190).setDepth(200);
+        text5 = this.add.dynamicBitmapText(0, 0, 'ab_headtext', 'no gamepad detected').setOrigin(0).setScale(1).setPosition(320,190).setDepth(200);
 
-            this.tweens.add({
-                    targets: text5,
-                    x: -320,
-                    ease: 'none',
-                    duration: 4000,
-                    yoyo: false,
-                    repeat: -1
-                });
-        // }
+        this.tweens.add({
+            targets: text5,
+            x: -320,
+            ease: 'none',
+            duration: 4000,
+            yoyo: false,
+            repeat: -1
+        });
         
-        // var pad;
-        // // get first pad detected only. otherwise loop to 'pads.length'
-        // for (var i = 0; i < pads.length; i++)
-        // {
-        //     pad = pads[i];
-
-        //     if (!pad)
-        //     {
-        //         continue;
-        //     }
-
-        //     //  Timestamp, index. ID
-        //     // debug.push(pad.id);
-        //     // debug.push('Index: ' + pad.index + ' Timestamp: ' + pad.timestamp);            
-        // }
         
 
         
@@ -605,8 +630,7 @@ var Demo = new Phaser.Class({
         // TILE_SIZE is the defualt grid unit
         this.TILE_SIZE = 64;
         
-        // Custom floor tile size must be set. 2560
-        this.floortilesize = 2560;
+        
 
         // 2 dimensional map
         this.fMap=[];
@@ -754,13 +778,12 @@ var Demo = new Phaser.Class({
    
         //     This code uses a Phaser generated canvas (phaser.image)
         //     Must uncomment background.refresh in blitOffscreenCanvas() for it to work
-        this.gamedisplayCanvas = this.textures.createCanvas('gamedisplaycanvas', 320, 200);
-
+        
+        this.gamedisplay_buffer = this.textures.createCanvas('gamedisplaycanvas', 320, 200);
         //     This code uses a regular dom canvas created in css/html
-        //this.gamedisplayCanvas = document.getElementById("gameCanvas");
-
-
-        this.gamedisplay_context = this.gamedisplayCanvas.getContext('2d', {willReadFrequently:true});
+        //this.gamedisplay_buffer = document.getElementById("gameCanvas");
+        this.gamedisplay_context = this.gamedisplay_buffer.getContext('2d', {willReadFrequently:true});
+        
 
         //to accomodate camera tilting for flying the main projected image has to be scaled (larger) and shifted (left/up)
 
@@ -775,10 +798,14 @@ var Demo = new Phaser.Class({
         }
         
         // create the offscreen buffer (canvas)
-        this.offscreenCanvas = this.textures.createCanvas('offscreencanvas', 320, 200); //document.createElement('canvas');
-        this.offscreenCanvasContext = this.offscreenCanvas.getContext('2d', {willReadFrequently:true});
-        this.offscreenCanvasPixels =  this.offscreenCanvasContext.getImageData(0,0,this.gamedisplayCanvas.width, this.gamedisplayCanvas.height);
 
+        this.offscreen = {};
+        this.offscreen.buffer = this.textures.createCanvas('offscreencanvas', 320, 200); //document.createElement('canvas');
+        this.offscreen.context = this.offscreen.buffer.getContext('2d', {willReadFrequently:true});
+        this.offscreen.imagedata =  this.offscreen.context.getImageData(0,0,this.gamedisplay_buffer.width, this.gamedisplay_buffer.height);
+        this.offscreen.pixels = this.offscreen.imagedata.data;
+        
+        allImageKeys.push('offscreencanvas');
         
 
         // set-up a text canvas with frames for each bitmap char
@@ -813,7 +840,7 @@ var Demo = new Phaser.Class({
 
             this.animationData[thisImageKey] = {};
 
-            this.animationData[thisImageKey].waveData = Phaser.Math.SinCosTableGenerator(256, 3, 3, 32);
+            this.animationData[thisImageKey].waveData = Phaser.Math.SinCosTableGenerator(320, 14, 14, 20);
 
 
 
@@ -851,7 +878,9 @@ var Demo = new Phaser.Class({
             this.animationData[thisImageKey].modedoneflag = true;
 
         }
-        
+
+        //special case add for offscreen
+        this.offscreen.animationData = this.animationData['offscreencanvas'];
 
 
         this.wall = [];
@@ -874,7 +903,11 @@ var Demo = new Phaser.Class({
         this.floor = [];
         this.floor.defaultIndex = 0;
         this.floor.currentIndex = 0;
-        for (var i = 0; i < 1; i++)
+
+        // Custom floor tile size must be set.
+        this.floortilesize = 64;
+
+        for (var i = 0; i < floorList.length; i++)
         {
             var imagekey = floorList[i];
                 
@@ -893,7 +926,7 @@ var Demo = new Phaser.Class({
         this.background = [];
         this.background.defaultIndex = 0;
         this.background.currentIndex = 0;
-        for (var i = 0; i < 1; i++)
+        for (var i = 0; i < backgroundList.length; i++)
         {
             var imagekey = backgroundList[i];
                 
@@ -2299,7 +2332,7 @@ var Demo = new Phaser.Class({
                 // editor_cont.visible = true;
                 // this.editor.saved_source_map = this.fMap;
 
-                // //refresh displaystring if reappearing
+                // reappearing so refresh displaystring 
                 // this.editor.map_display_string='';
                 // this.editor.map_code_rows = [];
                 // for (var y=0;y<20;y++)
@@ -2318,7 +2351,8 @@ var Demo = new Phaser.Class({
 
                 // this.fProjectionPlaneYCenter = 100;
                 
-                // this.displayHideMenu();
+                this.displayHideMenu();
+                this.initDemo();
             }, 
         this);
 
@@ -2543,7 +2577,84 @@ var Demo = new Phaser.Class({
         });
 
 
+        transitionTween = this.tweens.add({
+            targets: gamedisplayImage,
+            scale: 10,
+            alpha: 0,
+            ease: 'Expo.easeIn',
+            duration: 800,
+            delay: 100,
+            yoyo: 1,
+            repeat: 0,
+            paused: true,
+            onStart: function ()
+            {
+                if (!objectGangs.includes('flybugs')) 
+                {
+                    activate_flybugs(thisContext,3);
+                }
+                if (!objectGangs.includes('classictrees')) 
+                {
+                    activate_classictrees(thisContext,3);
+                }
+            },
+            onYoYo: function ()
+            {
+                oginitflag=false;
+            },
+            onUpdate: function () 
+                { 
+                    if (this.totalProgress>.5)
+                    {                    
+                        if (!oginitflag)
+                        {
+                            oginitflag=true;
+                            thisContext.changeObjectgang();
+
+                            thisContext.background.currentIndex = Phaser.Math.Between(0,thisContext.background.length-1);
+                            //if (thisContext.background.currentIndex==thisContext.background.length) {thisContext.background.currentIndex=0}
+
+                            thisContext.floor.currentIndex = Phaser.Math.Between(0,thisContext.floor.length-1);
+                            //if (thisContext.floor.currentIndex==thisContext.floor.length) {thisContext.floor.currentIndex=0}
+                        }
+                    }                   
+                },
+            onComplete: function ()
+                {
+                    thisContext.resetbuffer(thisContext.floor[thisContext.floor.currentIndex]);
+
+                    thisContext.resetbuffer(thisContext.wall[6]);
+
+                    thisContext.resetbuffer(thisContext.wall[4]);
+
+                    thisContext.zspritesgroup.children.iterate( 
+                    function(_sprite)
+                    { 
+                        if (_sprite != undefined)
+                        {
+                            // if (_sprite.inplay) 
+                            // {                                
+                            //     if (_sprite.animationData != undefined)
+                            //     {
+                                    
+                                    thisContext.resetbuffer(_sprite);
+
+                            //     }                                
+                            // }
+                        }    
+                    } );
+                }
+        });
+
     }, ////// END OF create()
+
+
+    initDemo: function()
+    {
+        transitionTween.play();
+
+        
+    },
 
     doDemoBot: function()
     {
@@ -2831,19 +2942,54 @@ var Demo = new Phaser.Class({
                 // debugt.push(backgroundList[this.demoBot.bg_index]);
                 debugt.push('fps: '+ Math.floor(this.sys.game.loop.actualFps.toString()) );
                 debugt.push('tilt_mode: '+ tilt_mode );
+                debugt.push('this.floor.currentIndex: '+ this.floor.currentIndex );
+
         debug.setText(debugt);
 
 
         var thisContext = this;
+
+
+        
         
         this.drawBackground();
-        
-        this.rain(this.wall[6]);
 
-        this.timedtext(this.wall[4]);
+        if (transitionTween.isPlaying())
+        {
+
+            // if (Phaser.Math.Between(1,4)==1)
+            // {
+                this.wave(this.offscreen,'green');
+            // }
+
+            var colors = ['red','green','blue','orange','cyan','violet'];
+            var mycolor = colors[Phaser.Math.Between(0,5)];
+
+            this.wave(this.floor[this.floor.currentIndex],'cyan');
+
+            this.wave(this.wall[6],'blue');
+
+            this.wave(this.wall[4],'cyan');
+            
+        }
+
+        
+        
+        //this.timedtext(this.wall[6],'blue');
+
+        //this.wave(this.wall[4],'cyan');
+
+        //this.noise(this.wall[4],'green');
+
+        
+
+        
+
+        //this.noise(this.offscreen,'red');
+
 
         this.raycast();
-
+        
 
         this.zspritesgroup.children.iterate( 
             function(_sprite)
@@ -2852,18 +2998,18 @@ var Demo = new Phaser.Class({
                 {
                     if (_sprite.inplay) 
                     {
-                        if (_sprite.label == 'ferns')
+                        
+                        if (transitionTween.isPlaying() && _sprite.animationData != undefined)
                         {
-                           thisContext.noise(_sprite,'orange');
+                            //thisContext.wave(_sprite);
+                            var colors = ['orange','white'];
+                            var mycolor = colors[Phaser.Math.Between(0,1)];
+
+                            thisContext.noise(_sprite, mycolor);
+
                         }
-                        if (_sprite.label == 'classictrees')
-                        {
-                           thisContext.wave(_sprite);
-                        }
-                        if (_sprite.label == 'fancytrees')
-                        {
-                           thisContext.wave(_sprite);
-                        }
+                           
+                        
 
                         _sprite.move();
                     }
@@ -2876,6 +3022,8 @@ var Demo = new Phaser.Class({
 
 
         this.drawAllObjects();
+
+        
 
 
         this.blitOffscreenCanvas();
@@ -3112,6 +3260,7 @@ var Demo = new Phaser.Class({
             
             if (verticalDelta>0)
             {
+                //moving down -- ycenter decreases
                 if (this.fProjectionPlaneYCenter<20)
                 {
                     this.fPlayerElevation-=verticalDelta*3*forceAmp;
@@ -3123,7 +3272,8 @@ var Demo = new Phaser.Class({
             }
             if (verticalDelta<0)
             {
-                if (this.fProjectionPlaneYCenter>240)
+                // moving up -- ycenter increases
+                if (this.fProjectionPlaneYCenter>140)
                 {
                     this.fPlayerElevation-=verticalDelta*3*forceAmp;
                 }
@@ -3137,7 +3287,7 @@ var Demo = new Phaser.Class({
             this.background[this.background.currentIndex].ImageArc-= this.playerArcDelta;
 
         }
-        /////////////elevation contol
+        ///////////// keyboard elevation contol for editor/etc
         if (menu_mode)
         {
 
@@ -3186,7 +3336,7 @@ var Demo = new Phaser.Class({
         }
 
 
-
+        //// Background Image Control
                 
         if (this.background[this.background.currentIndex].buffer!=undefined)
         {
@@ -3200,6 +3350,7 @@ var Demo = new Phaser.Class({
         }
 
 
+        //// Player Position Updating
 
         if (drive_mode)
         {
@@ -3223,21 +3374,20 @@ var Demo = new Phaser.Class({
         
 
 
-        /////////////elevation contol
+        //// Elevation Limits
 
         if (this.fPlayerElevation<10)
             this.fPlayerElevation=10;
         else if (this.fPlayerElevation>800)
             this.fPlayerElevation=800;
 
-        ///////////////end elevation control
+        ///////////////
 
         //console.log(this.fMapArrays[this.MAP_currentlevelindex][playerYCell]);
         //console.log(this.fMapArrays[this.MAP_currentlevelindex][playerYCell][playerXCell+1]);
 
 
-
-
+        //// Wall / Boundary Collisions
 
         if (!demo_mode)
         {
@@ -3264,8 +3414,7 @@ var Demo = new Phaser.Class({
                     {
                         // back player up
                         this.playercart.x-= (playerXCellOffset-(this.TILE_SIZE-minDistanceToWall));
-                    }  
-              
+                    }                
                 }
                 else
                 {
@@ -3276,7 +3425,6 @@ var Demo = new Phaser.Class({
                         // back player up
                         this.playercart.x+= (minDistanceToWall-playerXCellOffset);
                     } 
-
                 } 
 
                 if ((dy+sdy)<0)
@@ -3357,12 +3505,9 @@ var Demo = new Phaser.Class({
                         this.fPlayerY-= (playerYCellOffset-(this.TILE_SIZE-minDistanceToWall ));
                     }
                 }
-            }
+            }        
+        }        
 
-            
-
-        }
-        
     
     },
 
@@ -3393,22 +3538,30 @@ var Demo = new Phaser.Class({
         {
             // offset .putImageData y value to accomodate vertical projectionplane shifting
 
-            this.offscreenCanvasContext.putImageData(this.background[this.background.currentIndex].imagedata,this.background[this.background.currentIndex].ImageArc,this.fProjectionPlaneYCenter-(this.PROJECTIONPLANEHEIGHT/2) - this.background[this.background.currentIndex].yoffset);
+            this.offscreen.context.putImageData(this.background[this.background.currentIndex].imagedata,this.background[this.background.currentIndex].ImageArc,this.fProjectionPlaneYCenter-(this.PROJECTIONPLANEHEIGHT/2) - this.background[this.background.currentIndex].yoffset);
 
-            this.offscreenCanvasPixels=this.offscreenCanvasContext.getImageData(0,0,this.gamedisplayCanvas.width, this.gamedisplayCanvas.height);             
+            this.offscreen.imagedata = this.offscreen.context.getImageData(0,0,this.gamedisplay_buffer.width, this.gamedisplay_buffer.height);
+
+            this.offscreen.pixels = this.offscreen.imagedata.data;
         }
     },
     
     
     blitOffscreenCanvas : function()
     {        
-        //this.offscreenCanvasPixels =  this.offscreenCanvasContext.getImageData(0,0,this.gamedisplayCanvas.width, this.gamedisplayCanvas.height);
+        //this.offscreen.imagedata =  this.offscreen.context.getImageData(0,0,this.gamedisplay_buffer.width, this.gamedisplay_buffer.height);
 
         //this.tickleOffscreenCanvas();
         
-        this.gamedisplay_context.putImageData(this.offscreenCanvasPixels,0,0);
-        this.gamedisplayCanvas.refresh();
+        this.gamedisplay_context.putImageData(this.offscreen.imagedata,0,0);
+        this.gamedisplay_buffer.refresh();
 
+    },
+
+    resetbuffer: function(thing)
+    {
+        var imageData = thing.buffer.getContext('2d', {willReadFrequently:true}).getImageData(0, 0, thing.buffer.width, thing.buffer.height);
+        thing.pixels = imageData.data;
     },
     
     timedtext: function(thing)
@@ -3463,6 +3616,11 @@ var Demo = new Phaser.Class({
         // width is number of frames, 1 frame for every col
         for (var x = 0; x <numberOfFrames ; x += wavePixelChunk)
         {
+            
+                
+            
+                
+
             var y = thing.animationData.waveData.sin[x];
 
             for (var sy=0; sy<thing.buffer.height; sy++)  
@@ -3544,9 +3702,6 @@ var Demo = new Phaser.Class({
             //  'clearRect' clears the image from the CONTEXT. it does not clear any risidual data already extracted
             //  with 'getImageData' into var imageData. to do that 'getImageData' must be called again
 
-            //this.wall[i].context.clearRect(0, 0, wallData[i].width, wallData[i].height);
-
-            //this.wall[i].buffer.drawFrame('wallcanvas'+i,0,0,0);
             var imageData = thing.buffer.getContext('2d', {willReadFrequently:true}).getImageData(0, 0, thing.buffer.width, thing.buffer.height);
             thing.pixels = imageData.data;
             
@@ -4068,11 +4223,11 @@ var Demo = new Phaser.Class({
                 //*************
                 // FLOOR CASTING at the simplest!  Try to find ways to optimize this, you can do it!
                 //*************
-                if (this.floor[this.floor.currentIndex].buffer!=undefined)
+                if (this.floor[this.floor.currentIndex] != undefined)
                 {
                     // find the first bit so we can just add the width to get the
                     // next row (of the same column)
-                    var targetIndex=lastBottomOfWall*(this.offscreenCanvasPixels.width*bytesPerPixel)+(bytesPerPixel*castColumn);
+                    var targetIndex=lastBottomOfWall*(this.offscreen.imagedata.width*bytesPerPixel)+(bytesPerPixel*castColumn);
 
                     // added 1 to this.PROJECTIONPLANEHEIGHT to correct last row glitch
                     for (var row=lastBottomOfWall;row<this.PROJECTIONPLANEHEIGHT+1;row++) 
@@ -4115,15 +4270,15 @@ var Demo = new Phaser.Class({
                             // Draw the pixel 
                             if (alpha!=0)
                             {
-                                this.offscreenCanvasPixels.data[targetIndex]=red;
-                                this.offscreenCanvasPixels.data[targetIndex+1]=green;
-                                this.offscreenCanvasPixels.data[targetIndex+2]=blue;
-                                //this.offscreenCanvasPixels.data[targetIndex+3]=alpha;
+                                this.offscreen.imagedata.data[targetIndex]=red;
+                                this.offscreen.imagedata.data[targetIndex+1]=green;
+                                this.offscreen.imagedata.data[targetIndex+2]=blue;
+                                //this.offscreen.imagedata.data[targetIndex+3]=alpha;
                             }
 
                             
                             // Go to the next pixel (directly under the current pixel)
-                            targetIndex+=(bytesPerPixel*this.offscreenCanvasPixels.width);                                          
+                            targetIndex+=(bytesPerPixel*this.offscreen.imagedata.width);                                          
                         // }                                                              
                     }   
                 }  
@@ -4162,7 +4317,7 @@ var Demo = new Phaser.Class({
 
         var lastSourceIndex= sourceIndex + (this.wall[savedMapIndex].buffer.width*this.wall[savedMapIndex].buffer.height*bytesPerPixel);
         
-        var targetIndex=(this.offscreenCanvasPixels.width*bytesPerPixel)*y+(bytesPerPixel*x);
+        var targetIndex=(this.offscreen.imagedata.width*bytesPerPixel)*y+(bytesPerPixel*x);
         
 
 
@@ -4179,8 +4334,8 @@ var Demo = new Phaser.Class({
 
 
 // clip bottom
-        if (y+heightToDraw>this.offscreenCanvasPixels.height)
-            heightToDraw=this.offscreenCanvasPixels.height-y;
+        if (y+heightToDraw>this.offscreen.imagedata.height)
+            heightToDraw=this.offscreen.imagedata.height-y;
 
 
 
@@ -4227,15 +4382,15 @@ var Demo = new Phaser.Class({
 
                 if (alpha!=0)
                 {
-                    this.offscreenCanvasPixels.data[targetIndex]=red;
-                    this.offscreenCanvasPixels.data[targetIndex+1]=green;
-                    this.offscreenCanvasPixels.data[targetIndex+2]=blue;
-                    //this.offscreenCanvasPixels.data[targetIndex+3]=alpha;
+                    this.offscreen.imagedata.data[targetIndex]=red;
+                    this.offscreen.imagedata.data[targetIndex+1]=green;
+                    this.offscreen.imagedata.data[targetIndex+2]=blue;
+                    //this.offscreen.imagedata.data[targetIndex+3]=alpha;
                 }
                 
 
 
-                targetIndex+=(bytesPerPixel*this.offscreenCanvasPixels.width);
+                targetIndex+=(bytesPerPixel*this.offscreen.imagedata.width);
                 // clip bottom (just return if we reach bottom)
                 heightToDraw--;
                 if (heightToDraw<1)
@@ -4607,14 +4762,14 @@ var Demo = new Phaser.Class({
         var sourceIndex=(bytesPerPixel*xOffset) + (zsprite.buffer.width*bytesPerPixel)*yOffset;
         var lastSourceIndex=sourceIndex+(zsprite.buffer.width*zsprite.buffer.height*bytesPerPixel);
         
-        var targetIndex=(this.offscreenCanvasPixels.width*bytesPerPixel)*y+(bytesPerPixel*x);
+        var targetIndex=(this.offscreen.imagedata.width*bytesPerPixel)*y+(bytesPerPixel*x);
         
 
 
         var heightToDraw = height;
         // clip bottom
-        if (y+heightToDraw>this.offscreenCanvasPixels.height)
-            heightToDraw=this.offscreenCanvasPixels.height-y;
+        if (y+heightToDraw>this.offscreen.imagedata.height)
+            heightToDraw=this.offscreen.imagedata.height-y;
 
 
 
@@ -4659,14 +4814,14 @@ var Demo = new Phaser.Class({
 
                 if (alpha!=0)
                 {
-                    this.offscreenCanvasPixels.data[targetIndex]=red;
-                    this.offscreenCanvasPixels.data[targetIndex+1]=green;
-                    this.offscreenCanvasPixels.data[targetIndex+2]=blue;
-                    //this.offscreenCanvasPixels.data[targetIndex+3]=alpha;
+                    this.offscreen.imagedata.data[targetIndex]=red;
+                    this.offscreen.imagedata.data[targetIndex+1]=green;
+                    this.offscreen.imagedata.data[targetIndex+2]=blue;
+                    //this.offscreen.imagedata.data[targetIndex+3]=alpha;
                 }
 
 
-                targetIndex+=(bytesPerPixel*this.offscreenCanvasPixels.width);
+                targetIndex+=(bytesPerPixel*this.offscreen.imagedata.width);
                 // clip bottom (just return if we reach bottom)
                 heightToDraw--;
                 if (heightToDraw<1)
@@ -4740,12 +4895,14 @@ var soundfx_enabled = false;
 var keys;
 var cursors;
 
-var objectGangs = [];//'flybugs','plantedrocks','blueorbs','neonorbs','ferns','classictrees','barerocks','plants','shrooms','fancytrees','oddtrees','gems',
+var objectGangs = [];//'flybugs','blueorbs','neonorbs','ferns','classictrees','barerocks','plants','shrooms','fancytrees','oddtrees','gems',
                     //'frogs','pinkblobs','redwings','octos','cydrones','ufos','firtrees','redtrees','palmtrees','baretrees','brightflowers','elegantflowers',
 var og_index = 0;
 var wallCastMask = false;
 
 var gamedisplayImage;
+var transitionTween;
+var oginitflag=false;
 
 var tilt_mode = false;
 var drive_mode = false;
