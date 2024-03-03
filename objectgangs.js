@@ -1,63 +1,8 @@
-//////////   simple objects
 
-function activate_plantedrocks(thisContext,quantity)
-{
-    objectGangs.push('plantedrocks');
-
-    for (var i = 0; i < quantity; i++)
-    {
-        a_zsprite = thisContext.add.image();
-        a_zsprite.label = 'plantedrocks';
-        a_zsprite.type = 'target';
-        a_zsprite.hitcount = 0;
-        a_zsprite.explosioncolor= 'red';
-
-        var f_index = Phaser.Math.Between(1,4);
-
-        a_zsprite.img = thisContext.textures.get('rock'+f_index+'.png').getSourceImage();
-
-        a_zsprite.animationData = thisContext.animationData['rock'+f_index+'.png'];
-
-        a_zsprite.x = Phaser.Math.Between(100,1180);
-        a_zsprite.y = Phaser.Math.Between(100,1180);
-        a_zsprite.animated = false;
-        a_zsprite.inplay = true;
-
-        // where the object visually touches the ground based on 1/2 the height in pixels as standard
-        a_zsprite.base_elevation = Math.floor(a_zsprite.img.height/2)-4;//32;
-
-        // starting 
-        a_zsprite.elevation_delta = 0;//Phaser.Math.Between(-50,70);
-
-        // this.tweens.add({
-        // targets: a_zsprite,
-        // elevation_delta: 0,//32-this.fPlayerElevation,//Phaser.Math.Between(-64,64),
-        // ease: 'Sine.easeInOut',
-        // duration: 1500,
-        // yoyo: true,
-        // repeat: -1
-        // });
-        a_zsprite.move = function()
-        {
-            //
-        };
-
-        var randomKey = Math.random().toString();
-        a_zsprite.buffer = thisContext.textures.createCanvas(randomKey, a_zsprite.img.width, a_zsprite.img.height);
-        a_zsprite.buffer.getContext('2d', {willReadFrequently:true}).drawImage(a_zsprite.img, 0, 0);        
-        var imageData = a_zsprite.buffer.getContext('2d', {willReadFrequently:true}).getImageData(0, 0, a_zsprite.img.width, a_zsprite.img.height);
-
-        a_zsprite.imagedata = imageData;
-
-        a_zsprite.pixels = imageData.data;
-
-        thisContext.zspritesgroup.add(a_zsprite);
-    }
-}
 
 function activate_flybugs(thisContext,quantity)
 {
-    objectGangs.push('flybugs');
+    active_objectGangs.push('flybugs');
     //animation test sprite 4
         for (var j=0;j<quantity;j++)
         {
@@ -402,648 +347,802 @@ function activate_flybugs(thisContext,quantity)
             thisContext.zspritesgroup.add(a_zsprite);
         }
 }
+
+
+
+//////////   simple objects
+
+function activate_plantedrocks(thisContext,quantity)
+{
+    active_objectGangs.push('plantedrocks');
+
+    for (var i = 0; i < quantity; i++)
+    {
+        a_zsprite = thisContext.add.image();
+        a_zsprite.label = 'plantedrocks';
+        a_zsprite.type = 'target';
+        a_zsprite.hitcount = 0;
+        a_zsprite.explosioncolor= 'red';
+
+        var f_index = Phaser.Math.Between(1,4);
+
+        a_zsprite.img = thisContext.textures.get('rock'+f_index+'.png').getSourceImage();
+
+        a_zsprite.animationData = thisContext.animationData['rock'+f_index+'.png'];
+
+        a_zsprite.x = Phaser.Math.Between(100,1180);
+        a_zsprite.y = Phaser.Math.Between(100,1180);
+        a_zsprite.animated = false;
+        a_zsprite.inplay = true;
+
+        // where the object visually touches the ground based on 1/2 the height in pixels as standard
+        a_zsprite.base_elevation = Math.floor(a_zsprite.img.height/2)-4;//32;
+
+        // starting 
+        a_zsprite.elevation_delta = 0;//Phaser.Math.Between(-50,70);
+
+        // this.tweens.add({
+        // targets: a_zsprite,
+        // elevation_delta: 0,//32-this.fPlayerElevation,//Phaser.Math.Between(-64,64),
+        // ease: 'Sine.easeInOut',
+        // duration: 1500,
+        // yoyo: true,
+        // repeat: -1
+        // });
+        a_zsprite.move = function()
+        {
+            //
+        };
+
+        var randomKey = Math.random().toString();
+        a_zsprite.buffer = thisContext.textures.createCanvas(randomKey, a_zsprite.img.width, a_zsprite.img.height);
+        a_zsprite.buffer.getContext('2d', {willReadFrequently:true}).drawImage(a_zsprite.img, 0, 0);        
+        var imageData = a_zsprite.buffer.getContext('2d', {willReadFrequently:true}).getImageData(0, 0, a_zsprite.img.width, a_zsprite.img.height);
+
+        a_zsprite.imagedata = imageData;
+
+        a_zsprite.pixels = imageData.data;
+
+        thisContext.zspritesgroup.add(a_zsprite);
+    }
+}
+
+function activate_barerocks(thisContext,quantity)
+{
+    active_objectGangs.push('barerocks');
+
+    for (var i = 0; i < quantity; i++)
+    {
+        a_zsprite = thisContext.add.image();
+        a_zsprite.label = 'barerocks';
+        a_zsprite.type = 'target';
+        a_zsprite.hitcount = 0;
+        a_zsprite.explosioncolor= 'red';
+
+        var f_index = Phaser.Math.Between(5,8);
+
+        a_zsprite.img = thisContext.textures.get('rock'+f_index+'.png').getSourceImage();
+
+        a_zsprite.animationData = thisContext.animationData['rock'+f_index+'.png'];
+
+        a_zsprite.x = Phaser.Math.Between(100,1180);
+        a_zsprite.y = Phaser.Math.Between(100,1180);
+        a_zsprite.animated = false;
+        //a_zsprite.flying = false;
+        a_zsprite.inplay = false;
+
+        // where the object visually touches the ground based on 1/2 the height in pixels as standard
+        a_zsprite.base_elevation = Math.floor(a_zsprite.img.height/2);//32;
+
+        // starting 
+        a_zsprite.elevation_delta = 0;//Phaser.Math.Between(-50,70);
+
+        // this.Context.tweens.add({
+        // targets: a_zsprite,
+        // elevation_delta: 0,//32-this.Context.fPlayerElevation,//Phaser.Math.Between(-64,64),
+        // ease: 'Sine.easeInOut',
+        // duration: 1500,
+        // yoyo: true,
+        // repeat: -1
+        // });
+        a_zsprite.move = function()
+        {
+            //
+        };
+
+        var randomKey = Math.random().toString();
+        a_zsprite.buffer = thisContext.textures.createCanvas(randomKey, a_zsprite.img.width, a_zsprite.img.height);
+        a_zsprite.buffer.getContext('2d', {willReadFrequently:true}).drawImage(a_zsprite.img, 0, 0);        
+        var imageData = a_zsprite.buffer.getContext('2d', {willReadFrequently:true}).getImageData(0, 0, a_zsprite.img.width, a_zsprite.img.height);
+
+        a_zsprite.imagedata = imageData;
+
+        a_zsprite.pixels = imageData.data;
+
+        a_zsprite.waveData = Phaser.Math.SinCosTableGenerator(256, 3, 3, 32);
+
+        thisContext.zspritesgroup.add(a_zsprite);
+    }
+}
+
+function activate_elegantflowers(thisContext,quantity)
+{
+    active_objectGangs.push('elegantflowers');
+
+    for (var i = 0; i < quantity; i++)
+    {
+        a_zsprite = thisContext.add.image();
+        a_zsprite.label = 'elegantflowers';
+        a_zsprite.type = 'target';
+        a_zsprite.hitcount = 0;
+        a_zsprite.explosioncolor= 'red';
+
+        var f_index = Phaser.Math.Between(1,3);
+
+        a_zsprite.img = thisContext.textures.get('flower'+f_index+'.png').getSourceImage();
+
+        a_zsprite.animationData = thisContext.animationData['flower'+f_index+'.png'];
+
+        a_zsprite.x = Phaser.Math.Between(100,1180);
+        a_zsprite.y = Phaser.Math.Between(100,1180);
+        a_zsprite.animated = false;
+        //a_zsprite.flying = false;
+        a_zsprite.inplay = false;
+
+        // where the object visually touches the ground based on 1/2 the height in pixels as standard
+        a_zsprite.base_elevation = Math.floor(a_zsprite.img.height/2);//32;
+
+        // starting 
+        a_zsprite.elevation_delta = 0;//Phaser.Math.Between(-50,70);
+
+        // thisContext.tweens.add({
+        // targets: a_zsprite,
+        // elevation_delta: 0,//32-thisContext.fPlayerElevation,//Phaser.Math.Between(-64,64),
+        // ease: 'Sine.easeInOut',
+        // duration: 1500,
+        // yoyo: true,
+        // repeat: -1
+        // });
+        a_zsprite.move = function()
+        {
+            //
+        };
+
+        var randomKey = Math.random().toString();
+        a_zsprite.buffer = thisContext.textures.createCanvas(randomKey, a_zsprite.img.width, a_zsprite.img.height);
+        a_zsprite.buffer.getContext('2d', {willReadFrequently:true}).drawImage(a_zsprite.img, 0, 0);        
+        var imageData = a_zsprite.buffer.getContext('2d', {willReadFrequently:true}).getImageData(0, 0, a_zsprite.img.width, a_zsprite.img.height);
+
+        a_zsprite.imagedata = imageData;
+
+        a_zsprite.pixels = imageData.data;
+
+        thisContext.zspritesgroup.add(a_zsprite);
+    }
+}
+
+function activate_brightflowers(thisContext,quantity)
+{
+    active_objectGangs.push('brightflowers');
+
+    for (var i = 0; i < quantity; i++)
+    {
+        a_zsprite = thisContext.add.image();
+        a_zsprite.label = 'brightflowers';
+        a_zsprite.type = 'target';
+        a_zsprite.hitcount = 0;
+        a_zsprite.explosioncolor= 'red';
+
+        var f_index = Phaser.Math.Between(4,8);
+
+        a_zsprite.img = thisContext.textures.get('flower'+f_index+'.png').getSourceImage();
+
+        a_zsprite.animationData = thisContext.animationData['flower'+f_index+'.png'];
+
+        a_zsprite.x = Phaser.Math.Between(100,1180);
+        a_zsprite.y = Phaser.Math.Between(100,1180);
+        a_zsprite.animated = false;
+        //a_zsprite.flying = false;
+        a_zsprite.inplay = false;
+
+        // where the object visually touches the ground based on 1/2 the height in pixels as standard
+        a_zsprite.base_elevation = Math.floor(a_zsprite.img.height/2);//32;
+
+        // starting 
+        a_zsprite.elevation_delta = 0;//Phaser.Math.Between(-50,70);
+
+        // thisContext.tweens.add({
+        // targets: a_zsprite,
+        // elevation_delta: 0,//32-thisContext.fPlayerElevation,//Phaser.Math.Between(-64,64),
+        // ease: 'Sine.easeInOut',
+        // duration: 1500,
+        // yoyo: true,
+        // repeat: -1
+        // });
+        a_zsprite.move = function()
+        {
+            //
+        };
+
+        var randomKey = Math.random().toString();
+        a_zsprite.buffer = thisContext.textures.createCanvas(randomKey, a_zsprite.img.width, a_zsprite.img.height);
+        a_zsprite.buffer.getContext('2d', {willReadFrequently:true}).drawImage(a_zsprite.img, 0, 0);        
+        var imageData = a_zsprite.buffer.getContext('2d', {willReadFrequently:true}).getImageData(0, 0, a_zsprite.img.width, a_zsprite.img.height);
+
+        a_zsprite.imagedata = imageData;
+
+        a_zsprite.pixels = imageData.data;
+
+        thisContext.zspritesgroup.add(a_zsprite);
+    }
+}
+
+function activate_gems(thisContext,quantity)
+{
+    active_objectGangs.push('gems');
+
+    for (var i = 0; i < quantity; i++)
+    {
+        a_zsprite = thisContext.add.image();
+        a_zsprite.label = 'gems';
+        a_zsprite.type = 'target';
+        a_zsprite.hitcount = 0;
+        a_zsprite.explosioncolor= 'green';
+
+        var f_index = Phaser.Math.Between(1,6);
+
+        a_zsprite.img = thisContext.textures.get('gem'+f_index+'.png').getSourceImage();
+
+        a_zsprite.animationData = thisContext.animationData['gem'+f_index+'.png'];
+
+        a_zsprite.x = Phaser.Math.Between(100,1180);
+        a_zsprite.y = Phaser.Math.Between(100,1180);
+        a_zsprite.animated = false;
+        //a_zsprite.flying = false;
+        a_zsprite.inplay = false;
+
+        // where the object visually touches the ground based on 1/2 the height in pixels as standard
+        a_zsprite.base_elevation = Math.floor(a_zsprite.img.height/2);//32;
+
+        // starting 
+        a_zsprite.elevation_delta = 16;//Phaser.Math.Between(-50,70);
+
+        // thisContext.tweens.add({
+        // targets: a_zsprite,
+        // elevation_delta: 0,//32-thisContext.fPlayerElevation,//Phaser.Math.Between(-64,64),
+        // ease: 'Sine.easeInOut',
+        // duration: 1500,
+        // yoyo: true,
+        // repeat: -1
+        // });
+        a_zsprite.move = function()
+        {
+            //
+        };
+
+        var randomKey = Math.random().toString();
+        a_zsprite.buffer = thisContext.textures.createCanvas(randomKey, a_zsprite.img.width, a_zsprite.img.height);
+        a_zsprite.buffer.getContext('2d', {willReadFrequently:true}).drawImage(a_zsprite.img, 0, 0);        
+        var imageData = a_zsprite.buffer.getContext('2d', {willReadFrequently:true}).getImageData(0, 0, a_zsprite.img.width, a_zsprite.img.height);
+
+        a_zsprite.imagedata = imageData;
+
+        a_zsprite.pixels = imageData.data;
+
+        thisContext.zspritesgroup.add(a_zsprite);
+    }
+}
+
+function activate_shrooms(thisContext,quantity)
+{
+    active_objectGangs.push('shrooms');
+
+    for (var i = 0; i < quantity; i++)
+    {
+        a_zsprite = thisContext.add.image();
+        a_zsprite.label = 'shrooms';
+        a_zsprite.type = 'target';
+        a_zsprite.hitcount = 0;
+        a_zsprite.explosioncolor= 'green';
+
+        var f_index = Phaser.Math.Between(1,4);
+
+        a_zsprite.img = thisContext.textures.get('shroom'+f_index+'.png').getSourceImage();
+
+        a_zsprite.animationData = thisContext.animationData['shroom'+f_index+'.png'];
+
+        a_zsprite.x = Phaser.Math.Between(100,1180);
+        a_zsprite.y = Phaser.Math.Between(100,1180);
+        a_zsprite.animated = false;
+        //a_zsprite.flying = false;
+        a_zsprite.inplay = false;
+
+        // where the object visually touches the ground based on 1/2 the height in pixels as standard
+        a_zsprite.base_elevation = Math.floor(a_zsprite.img.height/2);//32;
+
+        // starting 
+        a_zsprite.elevation_delta = 0;//Phaser.Math.Between(-50,70);
+
+        // thisContext.tweens.add({
+        // targets: a_zsprite,
+        // elevation_delta: 0,//32-thisContext.fPlayerElevation,//Phaser.Math.Between(-64,64),
+        // ease: 'Sine.easeInOut',
+        // duration: 1500,
+        // yoyo: true,
+        // repeat: -1
+        // });
+        a_zsprite.move = function()
+        {
+            //
+        };
+
+        var randomKey = Math.random().toString();
+        a_zsprite.buffer = thisContext.textures.createCanvas(randomKey, a_zsprite.img.width, a_zsprite.img.height);
+        a_zsprite.buffer.getContext('2d', {willReadFrequently:true}).drawImage(a_zsprite.img, 0, 0);        
+        var imageData = a_zsprite.buffer.getContext('2d', {willReadFrequently:true}).getImageData(0, 0, a_zsprite.img.width, a_zsprite.img.height);
+
+        a_zsprite.imagedata = imageData;
+
+        a_zsprite.pixels = imageData.data;
+
+        thisContext.zspritesgroup.add(a_zsprite);
+    }
+}
+
+function activate_plants(thisContext,quantity)
+{
+    active_objectGangs.push('plants');
+
+    for (var i = 0; i < quantity; i++)
+    {
+        a_zsprite = thisContext.add.image();
+        a_zsprite.label = 'plants';
+        a_zsprite.type = 'target';
+        a_zsprite.hitcount = 0;
+        a_zsprite.explosioncolor= 'green';
+
+        var f_index = Phaser.Math.Between(3,6);
+
+        a_zsprite.img = thisContext.textures.get('plant'+f_index+'.png').getSourceImage();
+
+        a_zsprite.animationData = thisContext.animationData['plant'+f_index+'.png'];
+
+        a_zsprite.x = Phaser.Math.Between(100,1180);
+        a_zsprite.y = Phaser.Math.Between(100,1180);
+        a_zsprite.animated = false;
+        //a_zsprite.flying = false;
+        a_zsprite.inplay = false;
+
+        // where the object visually touches the ground based on 1/2 the height in pixels as standard
+        a_zsprite.base_elevation = Math.floor(a_zsprite.img.height/2);//32;
+
+        // starting 
+        a_zsprite.elevation_delta = 0;//Phaser.Math.Between(-50,70);
+
+        // thisContext.tweens.add({
+        // targets: a_zsprite,
+        // elevation_delta: 0,//32-thisContext.fPlayerElevation,//Phaser.Math.Between(-64,64),
+        // ease: 'Sine.easeInOut',
+        // duration: 1500,
+        // yoyo: true,
+        // repeat: -1
+        // });
+        a_zsprite.move = function()
+        {
+            //
+        };
+
+        var randomKey = Math.random().toString();
+        a_zsprite.buffer = thisContext.textures.createCanvas(randomKey, a_zsprite.img.width, a_zsprite.img.height);
+        a_zsprite.buffer.getContext('2d', {willReadFrequently:true}).drawImage(a_zsprite.img, 0, 0);        
+        var imageData = a_zsprite.buffer.getContext('2d', {willReadFrequently:true}).getImageData(0, 0, a_zsprite.img.width, a_zsprite.img.height);
+
+        a_zsprite.imagedata = imageData;
+
+        a_zsprite.pixels = imageData.data;
+
+        thisContext.zspritesgroup.add(a_zsprite);
+    }
+}
+
+function activate_ferns(thisContext,quantity)
+{
+    active_objectGangs.push('ferns');
+
+    for (var i = 0; i < quantity; i++)
+    {
+        a_zsprite = thisContext.add.image();
+        a_zsprite.label = 'ferns';
+        a_zsprite.type = 'target';
+        a_zsprite.hitcount = 0;
+        a_zsprite.explosioncolor= 'green';
+
+        var f_index = Phaser.Math.Between(1,8);
+
+        a_zsprite.img = thisContext.textures.get('fern'+f_index+'.png').getSourceImage();
+
+        a_zsprite.animationData = thisContext.animationData['fern'+f_index+'.png'];
+
+
+        a_zsprite.x = Phaser.Math.Between(100,1180);
+        a_zsprite.y = Phaser.Math.Between(100,1180);
+        a_zsprite.animated = false;
+        //a_zsprite.flying = false;
+        a_zsprite.inplay = false;
+
+        // where the object visually touches the ground based on 1/2 the height in pixels as standard
+        a_zsprite.base_elevation = Math.floor(a_zsprite.img.height/2)-10;//32;
+
+        // starting 
+        a_zsprite.elevation_delta = 0;//Phaser.Math.Between(-50,70);
+
+        // thisContext.tweens.add({
+        // targets: a_zsprite,
+        // elevation_delta: 0,//32-thisContext.fPlayerElevation,//Phaser.Math.Between(-64,64),
+        // ease: 'Sine.easeInOut',
+        // duration: 1500,
+        // yoyo: true,
+        // repeat: -1
+        // });
+        a_zsprite.move = function()
+        {
+            //
+        };
+
+        var randomKey = Math.random().toString();
+        a_zsprite.buffer = thisContext.textures.createCanvas(randomKey, a_zsprite.img.width, a_zsprite.img.height);
+        a_zsprite.buffer.getContext('2d', {willReadFrequently:true}).drawImage(a_zsprite.img, 0, 0);        
+        var imageData = a_zsprite.buffer.getContext('2d', {willReadFrequently:true}).getImageData(0, 0, a_zsprite.img.width, a_zsprite.img.height);
+
+        a_zsprite.imagedata = imageData;
+
+        a_zsprite.pixels = imageData.data;
+
+        thisContext.zspritesgroup.add(a_zsprite);
+    }
+}
+
+function activate_firtrees(thisContext,quantity)
+{
+    active_objectGangs.push('firtrees');
+
+    for (var i = 0; i < quantity; i++)
+    {
+        a_zsprite = thisContext.add.image();
+        a_zsprite.label = 'firtrees';
+        a_zsprite.type = 'target';
+        a_zsprite.hitcount = 0;
+        a_zsprite.explosioncolor= 'green';
+
         
 
-        // for (var i = 0; i < 32; i++)
-        // {
-        //     a_zsprite = this.add.image();
-        //     a_zsprite.label = 'barerocks';
-        //     a_zsprite.type = 'target';
-        //     a_zsprite.hitcount = 0;
-        //     a_zsprite.explosioncolor= 'red';
-
-        //     var f_index = Phaser.Math.Between(5,8);
-
-        //     a_zsprite.img = this.textures.get('rock'+f_index+'.png').getSourceImage();
-        //     a_zsprite.x = Phaser.Math.Between(100,1180);
-        //     a_zsprite.y = Phaser.Math.Between(100,1180);
-        //     a_zsprite.animated = false;
-        //     //a_zsprite.flying = false;
-        //     a_zsprite.inplay = false;
-
-        //     // where the object visually touches the ground based on 1/2 the height in pixels as standard
-        //     a_zsprite.base_elevation = Math.floor(a_zsprite.img.height/2);//32;
-
-        //     // starting 
-        //     a_zsprite.elevation_delta = 0;//Phaser.Math.Between(-50,70);
-
-        //     // this.tweens.add({
-        //     // targets: a_zsprite,
-        //     // elevation_delta: 0,//32-this.fPlayerElevation,//Phaser.Math.Between(-64,64),
-        //     // ease: 'Sine.easeInOut',
-        //     // duration: 1500,
-        //     // yoyo: true,
-        //     // repeat: -1
-        //     // });
-        //     a_zsprite.move = function()
-        //     {
-        //         //
-        //     };
-
-        //     var randomKey = Math.random().toString();
-        //     a_zsprite.buffer = this.textures.createCanvas(randomKey, a_zsprite.img.width, a_zsprite.img.height);
-        //     a_zsprite.buffer.getContext('2d', {willReadFrequently:true}).drawImage(a_zsprite.img, 0, 0);        
-        //     var imageData = a_zsprite.buffer.getContext('2d', {willReadFrequently:true}).getImageData(0, 0, a_zsprite.img.width, a_zsprite.img.height);
-
-        //     a_zsprite.imagedata = imageData;
-
-        //     a_zsprite.pixels = imageData.data;
-
-        //     a_zsprite.waveData = Phaser.Math.SinCosTableGenerator(256, 3, 3, 32);
-
-        //     this.zspritesgroup.add(a_zsprite);
-        // }
-
-
-
-        // for (var i = 0; i < 2; i++)
-        // {
-        //     a_zsprite = this.add.image();
-        //     a_zsprite.label = 'elegantflowers';
-        //     a_zsprite.type = 'target';
-        //     a_zsprite.hitcount = 0;
-        //     a_zsprite.explosioncolor= 'red';
-
-        //     var f_index = Phaser.Math.Between(1,3);
-
-        //     a_zsprite.img = this.textures.get('flower'+f_index+'.png').getSourceImage();
-        //     a_zsprite.x = Phaser.Math.Between(100,1180);
-        //     a_zsprite.y = Phaser.Math.Between(100,1180);
-        //     a_zsprite.animated = false;
-        //     //a_zsprite.flying = false;
-        //     a_zsprite.inplay = false;
-
-        //     // where the object visually touches the ground based on 1/2 the height in pixels as standard
-        //     a_zsprite.base_elevation = Math.floor(a_zsprite.img.height/2);//32;
-
-        //     // starting 
-        //     a_zsprite.elevation_delta = 0;//Phaser.Math.Between(-50,70);
-
-        //     // this.tweens.add({
-        //     // targets: a_zsprite,
-        //     // elevation_delta: 0,//32-this.fPlayerElevation,//Phaser.Math.Between(-64,64),
-        //     // ease: 'Sine.easeInOut',
-        //     // duration: 1500,
-        //     // yoyo: true,
-        //     // repeat: -1
-        //     // });
-        //     a_zsprite.move = function()
-        //     {
-        //         //
-        //     };
-
-        //     var randomKey = Math.random().toString();
-        //     a_zsprite.buffer = this.textures.createCanvas(randomKey, a_zsprite.img.width, a_zsprite.img.height);
-        //     a_zsprite.buffer.getContext('2d', {willReadFrequently:true}).drawImage(a_zsprite.img, 0, 0);        
-        //     var imageData = a_zsprite.buffer.getContext('2d', {willReadFrequently:true}).getImageData(0, 0, a_zsprite.img.width, a_zsprite.img.height);
-
-        //     a_zsprite.imagedata = imageData;
-
-        //     a_zsprite.pixels = imageData.data;
-
-        //     this.zspritesgroup.add(a_zsprite);
-        // }
-
-
-        // for (var i = 0; i < 32; i++)
-        // {
-        //     a_zsprite = this.add.image();
-        //     a_zsprite.label = 'brightflowers';
-        //     a_zsprite.type = 'target';
-        //     a_zsprite.hitcount = 0;
-        //     a_zsprite.explosioncolor= 'red';
-
-        //     var f_index = Phaser.Math.Between(4,8);
-
-        //     a_zsprite.img = this.textures.get('flower'+f_index+'.png').getSourceImage();
-        //     a_zsprite.x = Phaser.Math.Between(100,1180);
-        //     a_zsprite.y = Phaser.Math.Between(100,1180);
-        //     a_zsprite.animated = false;
-        //     //a_zsprite.flying = false;
-        //     a_zsprite.inplay = false;
-
-        //     // where the object visually touches the ground based on 1/2 the height in pixels as standard
-        //     a_zsprite.base_elevation = Math.floor(a_zsprite.img.height/2);//32;
-
-        //     // starting 
-        //     a_zsprite.elevation_delta = 0;//Phaser.Math.Between(-50,70);
-
-        //     // this.tweens.add({
-        //     // targets: a_zsprite,
-        //     // elevation_delta: 0,//32-this.fPlayerElevation,//Phaser.Math.Between(-64,64),
-        //     // ease: 'Sine.easeInOut',
-        //     // duration: 1500,
-        //     // yoyo: true,
-        //     // repeat: -1
-        //     // });
-        //     a_zsprite.move = function()
-        //     {
-        //         //
-        //     };
-
-        //     var randomKey = Math.random().toString();
-        //     a_zsprite.buffer = this.textures.createCanvas(randomKey, a_zsprite.img.width, a_zsprite.img.height);
-        //     a_zsprite.buffer.getContext('2d', {willReadFrequently:true}).drawImage(a_zsprite.img, 0, 0);        
-        //     var imageData = a_zsprite.buffer.getContext('2d', {willReadFrequently:true}).getImageData(0, 0, a_zsprite.img.width, a_zsprite.img.height);
-
-        //     a_zsprite.imagedata = imageData;
-
-        //     a_zsprite.pixels = imageData.data;
-
-        //     this.zspritesgroup.add(a_zsprite);
-        // }
-
-        // for (var i = 0; i < 70; i++)
-        // {
-        //     a_zsprite = this.add.image();
-        //     a_zsprite.label = 'gems';
-        //     a_zsprite.type = 'target';
-        //     a_zsprite.hitcount = 0;
-        //     a_zsprite.explosioncolor= 'green';
-
-        //     var f_index = Phaser.Math.Between(1,6);
-
-        //     a_zsprite.img = this.textures.get('gem'+f_index+'.png').getSourceImage();
-        //     a_zsprite.x = Phaser.Math.Between(100,1180);
-        //     a_zsprite.y = Phaser.Math.Between(100,1180);
-        //     a_zsprite.animated = false;
-        //     //a_zsprite.flying = false;
-        //     a_zsprite.inplay = false;
-
-        //     // where the object visually touches the ground based on 1/2 the height in pixels as standard
-        //     a_zsprite.base_elevation = Math.floor(a_zsprite.img.height/2);//32;
-
-        //     // starting 
-        //     a_zsprite.elevation_delta = 16;//Phaser.Math.Between(-50,70);
-
-        //     // this.tweens.add({
-        //     // targets: a_zsprite,
-        //     // elevation_delta: 0,//32-this.fPlayerElevation,//Phaser.Math.Between(-64,64),
-        //     // ease: 'Sine.easeInOut',
-        //     // duration: 1500,
-        //     // yoyo: true,
-        //     // repeat: -1
-        //     // });
-        //     a_zsprite.move = function()
-        //     {
-        //         //
-        //     };
-
-        //     var randomKey = Math.random().toString();
-        //     a_zsprite.buffer = this.textures.createCanvas(randomKey, a_zsprite.img.width, a_zsprite.img.height);
-        //     a_zsprite.buffer.getContext('2d', {willReadFrequently:true}).drawImage(a_zsprite.img, 0, 0);        
-        //     var imageData = a_zsprite.buffer.getContext('2d', {willReadFrequently:true}).getImageData(0, 0, a_zsprite.img.width, a_zsprite.img.height);
-
-        //     a_zsprite.imagedata = imageData;
-
-        //     a_zsprite.pixels = imageData.data;
-
-        //     this.zspritesgroup.add(a_zsprite);
-        // }
-
-        // for (var i = 0; i < 70; i++)
-        // {
-        //     a_zsprite = this.add.image();
-        //     a_zsprite.label = 'shrooms';
-        //     a_zsprite.type = 'target';
-        //     a_zsprite.hitcount = 0;
-        //     a_zsprite.explosioncolor= 'green';
-
-        //     var f_index = Phaser.Math.Between(1,4);
-
-        //     a_zsprite.img = this.textures.get('shroom'+f_index+'.png').getSourceImage();
-        //     a_zsprite.x = Phaser.Math.Between(100,1180);
-        //     a_zsprite.y = Phaser.Math.Between(100,1180);
-        //     a_zsprite.animated = false;
-        //     //a_zsprite.flying = false;
-        //     a_zsprite.inplay = false;
-
-        //     // where the object visually touches the ground based on 1/2 the height in pixels as standard
-        //     a_zsprite.base_elevation = Math.floor(a_zsprite.img.height/2);//32;
-
-        //     // starting 
-        //     a_zsprite.elevation_delta = 0;//Phaser.Math.Between(-50,70);
-
-        //     // this.tweens.add({
-        //     // targets: a_zsprite,
-        //     // elevation_delta: 0,//32-this.fPlayerElevation,//Phaser.Math.Between(-64,64),
-        //     // ease: 'Sine.easeInOut',
-        //     // duration: 1500,
-        //     // yoyo: true,
-        //     // repeat: -1
-        //     // });
-        //     a_zsprite.move = function()
-        //     {
-        //         //
-        //     };
-
-        //     var randomKey = Math.random().toString();
-        //     a_zsprite.buffer = this.textures.createCanvas(randomKey, a_zsprite.img.width, a_zsprite.img.height);
-        //     a_zsprite.buffer.getContext('2d', {willReadFrequently:true}).drawImage(a_zsprite.img, 0, 0);        
-        //     var imageData = a_zsprite.buffer.getContext('2d', {willReadFrequently:true}).getImageData(0, 0, a_zsprite.img.width, a_zsprite.img.height);
-
-        //     a_zsprite.imagedata = imageData;
-
-        //     a_zsprite.pixels = imageData.data;
-
-        //     this.zspritesgroup.add(a_zsprite);
-        // }
-
-        // for (var i = 0; i < 30; i++)
-        // {
-        //     a_zsprite = this.add.image();
-        //     a_zsprite.label = 'plants';
-        //     a_zsprite.type = 'target';
-        //     a_zsprite.hitcount = 0;
-        //     a_zsprite.explosioncolor= 'green';
-
-        //     var f_index = Phaser.Math.Between(3,6);
-
-        //     a_zsprite.img = this.textures.get('plant'+f_index+'.png').getSourceImage();
-        //     a_zsprite.x = Phaser.Math.Between(100,1180);
-        //     a_zsprite.y = Phaser.Math.Between(100,1180);
-        //     a_zsprite.animated = false;
-        //     //a_zsprite.flying = false;
-        //     a_zsprite.inplay = false;
-
-        //     // where the object visually touches the ground based on 1/2 the height in pixels as standard
-        //     a_zsprite.base_elevation = Math.floor(a_zsprite.img.height/2);//32;
-
-        //     // starting 
-        //     a_zsprite.elevation_delta = 0;//Phaser.Math.Between(-50,70);
-
-        //     // this.tweens.add({
-        //     // targets: a_zsprite,
-        //     // elevation_delta: 0,//32-this.fPlayerElevation,//Phaser.Math.Between(-64,64),
-        //     // ease: 'Sine.easeInOut',
-        //     // duration: 1500,
-        //     // yoyo: true,
-        //     // repeat: -1
-        //     // });
-        //     a_zsprite.move = function()
-        //     {
-        //         //
-        //     };
-
-        //     var randomKey = Math.random().toString();
-        //     a_zsprite.buffer = this.textures.createCanvas(randomKey, a_zsprite.img.width, a_zsprite.img.height);
-        //     a_zsprite.buffer.getContext('2d', {willReadFrequently:true}).drawImage(a_zsprite.img, 0, 0);        
-        //     var imageData = a_zsprite.buffer.getContext('2d', {willReadFrequently:true}).getImageData(0, 0, a_zsprite.img.width, a_zsprite.img.height);
-
-        //     a_zsprite.imagedata = imageData;
-
-        //     a_zsprite.pixels = imageData.data;
-
-        //     this.zspritesgroup.add(a_zsprite);
-        // }
-
-        // for (var i = 0; i < 70; i++)
-        // {
-        //     a_zsprite = this.add.image();
-        //     a_zsprite.label = 'ferns';
-        //     a_zsprite.type = 'target';
-        //     a_zsprite.hitcount = 0;
-        //     a_zsprite.explosioncolor= 'green';
-
-        //     var f_index = Phaser.Math.Between(1,8);
-
-        //     a_zsprite.img = this.textures.get('fern'+f_index+'.png').getSourceImage();
-        //     a_zsprite.x = Phaser.Math.Between(100,1180);
-        //     a_zsprite.y = Phaser.Math.Between(100,1180);
-        //     a_zsprite.animated = false;
-        //     //a_zsprite.flying = false;
-        //     a_zsprite.inplay = false;
-
-        //     // where the object visually touches the ground based on 1/2 the height in pixels as standard
-        //     a_zsprite.base_elevation = Math.floor(a_zsprite.img.height/2)-10;//32;
-
-        //     // starting 
-        //     a_zsprite.elevation_delta = 0;//Phaser.Math.Between(-50,70);
-
-        //     // this.tweens.add({
-        //     // targets: a_zsprite,
-        //     // elevation_delta: 0,//32-this.fPlayerElevation,//Phaser.Math.Between(-64,64),
-        //     // ease: 'Sine.easeInOut',
-        //     // duration: 1500,
-        //     // yoyo: true,
-        //     // repeat: -1
-        //     // });
-        //     a_zsprite.move = function()
-        //     {
-        //         //
-        //     };
-
-        //     var randomKey = Math.random().toString();
-        //     a_zsprite.buffer = this.textures.createCanvas(randomKey, a_zsprite.img.width, a_zsprite.img.height);
-        //     a_zsprite.buffer.getContext('2d', {willReadFrequently:true}).drawImage(a_zsprite.img, 0, 0);        
-        //     var imageData = a_zsprite.buffer.getContext('2d', {willReadFrequently:true}).getImageData(0, 0, a_zsprite.img.width, a_zsprite.img.height);
-
-        //     a_zsprite.imagedata = imageData;
-
-        //     a_zsprite.pixels = imageData.data;
-
-        //     this.zspritesgroup.add(a_zsprite);
-        // }
-
-        // for (var i = 0; i < 30; i++)
-        // {
-        //     a_zsprite = this.add.image();
-        //     a_zsprite.label = 'firtrees';
-        //     a_zsprite.type = 'target';
-        //     a_zsprite.hitcount = 0;
-        //     a_zsprite.explosioncolor= 'green';
-
-            
-
-        //     a_zsprite.img = this.textures.get('tree13.png').getSourceImage();
-        //     a_zsprite.x = Phaser.Math.Between(100,1180);
-        //     a_zsprite.y = Phaser.Math.Between(100,1180);
-        //     a_zsprite.animated = false;
-        //     //a_zsprite.flying = false;
-        //     a_zsprite.inplay = false;
-
-        //     // where the object visually touches the ground based on 1/2 the height in pixels as standard
-        //     a_zsprite.base_elevation = Math.floor(a_zsprite.img.height/2)-6;//32;
-
-        //     // starting 
-        //     a_zsprite.elevation_delta = 0;//Phaser.Math.Between(-50,70);
-
-        //     // this.tweens.add({
-        //     // targets: a_zsprite,
-        //     // elevation_delta: 0,//32-this.fPlayerElevation,//Phaser.Math.Between(-64,64),
-        //     // ease: 'Sine.easeInOut',
-        //     // duration: 1500,
-        //     // yoyo: true,
-        //     // repeat: -1
-        //     // });
-        //     a_zsprite.move = function()
-        //     {
-        //         //
-        //     };
-
-        //     var randomKey = Math.random().toString();
-        //     a_zsprite.buffer = this.textures.createCanvas(randomKey, a_zsprite.img.width, a_zsprite.img.height);
-        //     a_zsprite.buffer.getContext('2d', {willReadFrequently:true}).drawImage(a_zsprite.img, 0, 0);        
-        //     var imageData = a_zsprite.buffer.getContext('2d', {willReadFrequently:true}).getImageData(0, 0, a_zsprite.img.width, a_zsprite.img.height);
-
-        //     a_zsprite.imagedata = imageData;
-
-        //     a_zsprite.pixels = imageData.data;
-
-        //     this.zspritesgroup.add(a_zsprite);
-        // }
-
-        // for (var i = 0; i < 30; i++)
-        // {
-        //     a_zsprite = this.add.image();
-        //     a_zsprite.label = 'baretrees';
-        //     a_zsprite.type = 'target';
-        //     a_zsprite.hitcount = 0;
-        //     a_zsprite.explosioncolor= 'green';
-
-            
-
-        //     a_zsprite.img = this.textures.get('tree14.png').getSourceImage();
-        //     a_zsprite.x = Phaser.Math.Between(100,1180);
-        //     a_zsprite.y = Phaser.Math.Between(100,1180);
-        //     a_zsprite.animated = false;
-        //     //a_zsprite.flying = false;
-        //     a_zsprite.inplay = false;
-
-        //     // where the object visually touches the ground based on 1/2 the height in pixels as standard
-        //     a_zsprite.base_elevation = Math.floor(a_zsprite.img.height/2)-10;//32;
-
-        //     // starting 
-        //     a_zsprite.elevation_delta = 0;//Phaser.Math.Between(-50,70);
-
-        //     // this.tweens.add({
-        //     // targets: a_zsprite,
-        //     // elevation_delta: 0,//32-this.fPlayerElevation,//Phaser.Math.Between(-64,64),
-        //     // ease: 'Sine.easeInOut',
-        //     // duration: 1500,
-        //     // yoyo: true,
-        //     // repeat: -1
-        //     // });
-        //     a_zsprite.move = function()
-        //     {
-        //         //
-        //     };
-
-        //     var randomKey = Math.random().toString();
-        //     a_zsprite.buffer = this.textures.createCanvas(randomKey, a_zsprite.img.width, a_zsprite.img.height);
-        //     a_zsprite.buffer.getContext('2d', {willReadFrequently:true}).drawImage(a_zsprite.img, 0, 0);        
-        //     var imageData = a_zsprite.buffer.getContext('2d', {willReadFrequently:true}).getImageData(0, 0, a_zsprite.img.width, a_zsprite.img.height);
-
-        //     a_zsprite.imagedata = imageData;
-
-        //     a_zsprite.pixels = imageData.data;
-
-        //     this.zspritesgroup.add(a_zsprite);
-        // }
-
-        // for (var i = 0; i < 30; i++)
-        // {
-        //     a_zsprite = this.add.image();
-        //     a_zsprite.label = 'redtrees';
-        //     a_zsprite.type = 'target';
-        //     a_zsprite.hitcount = 0;
-        //     a_zsprite.explosioncolor= 'green';
-
-            
-
-        //     a_zsprite.img = this.textures.get('tree15.png').getSourceImage();
-        //     a_zsprite.x = Phaser.Math.Between(100,1180);
-        //     a_zsprite.y = Phaser.Math.Between(100,1180);
-        //     a_zsprite.animated = false;
-        //     //a_zsprite.flying = false;
-        //     a_zsprite.inplay = false;
-
-        //     // where the object visually touches the ground based on 1/2 the height in pixels as standard
-        //     a_zsprite.base_elevation = Math.floor(a_zsprite.img.height/2)-12;//32;
-
-        //     // starting 
-        //     a_zsprite.elevation_delta = 0;//Phaser.Math.Between(-50,70);
-
-        //     // this.tweens.add({
-        //     // targets: a_zsprite,
-        //     // elevation_delta: 0,//32-this.fPlayerElevation,//Phaser.Math.Between(-64,64),
-        //     // ease: 'Sine.easeInOut',
-        //     // duration: 1500,
-        //     // yoyo: true,
-        //     // repeat: -1
-        //     // });
-        //     a_zsprite.move = function()
-        //     {
-        //         //
-        //     };
-
-        //     var randomKey = Math.random().toString();
-        //     a_zsprite.buffer = this.textures.createCanvas(randomKey, a_zsprite.img.width, a_zsprite.img.height);
-        //     a_zsprite.buffer.getContext('2d', {willReadFrequently:true}).drawImage(a_zsprite.img, 0, 0);        
-        //     var imageData = a_zsprite.buffer.getContext('2d', {willReadFrequently:true}).getImageData(0, 0, a_zsprite.img.width, a_zsprite.img.height);
-
-        //     a_zsprite.imagedata = imageData;
-
-        //     a_zsprite.pixels = imageData.data;
-
-        //     this.zspritesgroup.add(a_zsprite);
-        // }
-
-        // for (var i = 0; i < 30; i++)
-        // {
-        //     a_zsprite = this.add.image();
-        //     a_zsprite.label = 'palmtrees';
-        //     a_zsprite.type = 'target';
-        //     a_zsprite.hitcount = 0;
-        //     a_zsprite.explosioncolor= 'green';
-
-            
-
-        //     a_zsprite.img = this.textures.get('tree16.png').getSourceImage();
-        //     a_zsprite.x = Phaser.Math.Between(100,1180);
-        //     a_zsprite.y = Phaser.Math.Between(100,1180);
-        //     a_zsprite.animated = false;
-        //     //a_zsprite.flying = false;
-        //     a_zsprite.inplay = false;
-
-        //     // where the object visually touches the ground based on 1/2 the height in pixels as standard
-        //     a_zsprite.base_elevation = Math.floor(a_zsprite.img.height/2)-4;//32;
-
-        //     // starting 
-        //     a_zsprite.elevation_delta = 0;//Phaser.Math.Between(-50,70);
-
-        //     // this.tweens.add({
-        //     // targets: a_zsprite,
-        //     // elevation_delta: 0,//32-this.fPlayerElevation,//Phaser.Math.Between(-64,64),
-        //     // ease: 'Sine.easeInOut',
-        //     // duration: 1500,
-        //     // yoyo: true,
-        //     // repeat: -1
-        //     // });
-        //     a_zsprite.move = function()
-        //     {
-        //         //
-        //     };
-
-        //     var randomKey = Math.random().toString();
-        //     a_zsprite.buffer = this.textures.createCanvas(randomKey, a_zsprite.img.width, a_zsprite.img.height);
-        //     a_zsprite.buffer.getContext('2d', {willReadFrequently:true}).drawImage(a_zsprite.img, 0, 0);        
-        //     var imageData = a_zsprite.buffer.getContext('2d', {willReadFrequently:true}).getImageData(0, 0, a_zsprite.img.width, a_zsprite.img.height);
-
-        //     a_zsprite.imagedata = imageData;
-
-        //     a_zsprite.pixels = imageData.data;
-
-        //     this.zspritesgroup.add(a_zsprite);
-        // }
-
-        // for (var i = 0; i < 1; i++)
-        // {
-        //     a_zsprite = this.add.image();
-        //     a_zsprite.label = 'fancytrees';
-        //     a_zsprite.type = 'target';
-        //     a_zsprite.hitcount = 0;
-        //     a_zsprite.explosioncolor= 'green';
-
-        //     var f_index = Phaser.Math.Between(1,4);
-
-        //     a_zsprite.img = this.textures.get('tree'+f_index+'.png').getSourceImage();
-        //     a_zsprite.x = Phaser.Math.Between(100,1180);
-        //     a_zsprite.y = Phaser.Math.Between(100,1180);
-        //     a_zsprite.animated = false;
-        //     //a_zsprite.flying = false;
-        //     a_zsprite.inplay = false;
-
-        //     // where the object visually touches the ground based on 1/2 the height in pixels as standard
-        //     a_zsprite.base_elevation = Math.floor(a_zsprite.img.height/2)-16;//32;
-
-        //     // starting 
-        //     a_zsprite.elevation_delta = 0;//Phaser.Math.Between(-50,70);
-
-        //     // this.tweens.add({
-        //     // targets: a_zsprite,
-        //     // elevation_delta: 0,//32-this.fPlayerElevation,//Phaser.Math.Between(-64,64),
-        //     // ease: 'Sine.easeInOut',
-        //     // duration: 1500,
-        //     // yoyo: true,
-        //     // repeat: -1
-        //     // });
-        //     a_zsprite.move = function()
-        //     {
-        //         //
-        //     };
-
-        //     var randomKey = Math.random().toString();
-        //     a_zsprite.buffer = this.textures.createCanvas(randomKey, a_zsprite.img.width, a_zsprite.img.height);
-        //     a_zsprite.buffer.getContext('2d', {willReadFrequently:true}).drawImage(a_zsprite.img, 0, 0);        
-        //     var imageData = a_zsprite.buffer.getContext('2d', {willReadFrequently:true}).getImageData(0, 0, a_zsprite.img.width, a_zsprite.img.height);
-
-        //     a_zsprite.imagedata = imageData;
-
-        //     a_zsprite.pixels = imageData.data;
-
-        //     a_zsprite.waveData = Phaser.Math.SinCosTableGenerator(256, 3, 3, 32);
-
-        //     this.zspritesgroup.add(a_zsprite);
-        // }
-        function activate_classictrees(thisContext,quantity)
+        a_zsprite.img = thisContext.textures.get('tree13.png').getSourceImage();
+
+        a_zsprite.animationData = thisContext.animationData['tree13.png'];
+
+        a_zsprite.x = Phaser.Math.Between(100,1180);
+        a_zsprite.y = Phaser.Math.Between(100,1180);
+        a_zsprite.animated = false;
+        //a_zsprite.flying = false;
+        a_zsprite.inplay = false;
+
+        // where the object visually touches the ground based on 1/2 the height in pixels as standard
+        a_zsprite.base_elevation = Math.floor(a_zsprite.img.height/2)-6;//32;
+
+        // starting 
+        a_zsprite.elevation_delta = 0;//Phaser.Math.Between(-50,70);
+
+        // thisContext.tweens.add({
+        // targets: a_zsprite,
+        // elevation_delta: 0,//32-thisContext.fPlayerElevation,//Phaser.Math.Between(-64,64),
+        // ease: 'Sine.easeInOut',
+        // duration: 1500,
+        // yoyo: true,
+        // repeat: -1
+        // });
+        a_zsprite.move = function()
         {
-            objectGangs.push('classictrees');
-            for (var i = 0; i < quantity; i++)
-            {
-                a_zsprite = thisContext.add.image();
-                a_zsprite.label = 'classictrees';
-                a_zsprite.type = 'target';
-                a_zsprite.hitcount = 0;
-                a_zsprite.explosioncolor= 'green';
+            //
+        };
 
-                var f_index = Phaser.Math.Between(5,10);
+        var randomKey = Math.random().toString();
+        a_zsprite.buffer = thisContext.textures.createCanvas(randomKey, a_zsprite.img.width, a_zsprite.img.height);
+        a_zsprite.buffer.getContext('2d', {willReadFrequently:true}).drawImage(a_zsprite.img, 0, 0);        
+        var imageData = a_zsprite.buffer.getContext('2d', {willReadFrequently:true}).getImageData(0, 0, a_zsprite.img.width, a_zsprite.img.height);
 
-                a_zsprite.img = thisContext.textures.get('tree'+f_index+'.png').getSourceImage();
+        a_zsprite.imagedata = imageData;
 
-                a_zsprite.animationData = thisContext.animationData['tree'+f_index+'.png'];
+        a_zsprite.pixels = imageData.data;
+
+        thisContext.zspritesgroup.add(a_zsprite);
+    }
+}
+
+function activate_baretrees(thisContext,quantity)
+{
+    active_objectGangs.push('baretrees');
+
+    for (var i = 0; i < quantity; i++)
+    {
+        a_zsprite = thisContext.add.image();
+        a_zsprite.label = 'baretrees';
+        a_zsprite.type = 'target';
+        a_zsprite.hitcount = 0;
+        a_zsprite.explosioncolor= 'green';
+
+        
+
+        a_zsprite.img = thisContext.textures.get('tree14.png').getSourceImage();
+
+        a_zsprite.animationData = thisContext.animationData['tree14.png'];
+
+        a_zsprite.x = Phaser.Math.Between(100,1180);
+        a_zsprite.y = Phaser.Math.Between(100,1180);
+        a_zsprite.animated = false;
+        //a_zsprite.flying = false;
+        a_zsprite.inplay = false;
+
+        // where the object visually touches the ground based on 1/2 the height in pixels as standard
+        a_zsprite.base_elevation = Math.floor(a_zsprite.img.height/2)-10;//32;
+
+        // starting 
+        a_zsprite.elevation_delta = 0;//Phaser.Math.Between(-50,70);
+
+        // thisContext.tweens.add({
+        // targets: a_zsprite,
+        // elevation_delta: 0,//32-thisContext.fPlayerElevation,//Phaser.Math.Between(-64,64),
+        // ease: 'Sine.easeInOut',
+        // duration: 1500,
+        // yoyo: true,
+        // repeat: -1
+        // });
+        a_zsprite.move = function()
+        {
+            //
+        };
+
+        var randomKey = Math.random().toString();
+        a_zsprite.buffer = thisContext.textures.createCanvas(randomKey, a_zsprite.img.width, a_zsprite.img.height);
+        a_zsprite.buffer.getContext('2d', {willReadFrequently:true}).drawImage(a_zsprite.img, 0, 0);        
+        var imageData = a_zsprite.buffer.getContext('2d', {willReadFrequently:true}).getImageData(0, 0, a_zsprite.img.width, a_zsprite.img.height);
+
+        a_zsprite.imagedata = imageData;
+
+        a_zsprite.pixels = imageData.data;
+
+        thisContext.zspritesgroup.add(a_zsprite);
+    }
+}
+
+function activate_redtrees(thisContext,quantity)
+{
+    active_objectGangs.push('redtrees');
+
+    for (var i = 0; i < quantity; i++)
+    {
+        a_zsprite = thisContext.add.image();
+        a_zsprite.label = 'redtrees';
+        a_zsprite.type = 'target';
+        a_zsprite.hitcount = 0;
+        a_zsprite.explosioncolor= 'green';
+
+        
+
+        a_zsprite.img = thisContext.textures.get('tree15.png').getSourceImage();
+
+        a_zsprite.animationData = thisContext.animationData['tree15.png'];
+
+        a_zsprite.x = Phaser.Math.Between(100,1180);
+        a_zsprite.y = Phaser.Math.Between(100,1180);
+        a_zsprite.animated = false;
+        //a_zsprite.flying = false;
+        a_zsprite.inplay = false;
+
+        // where the object visually touches the ground based on 1/2 the height in pixels as standard
+        a_zsprite.base_elevation = Math.floor(a_zsprite.img.height/2)-12;//32;
+
+        // starting 
+        a_zsprite.elevation_delta = 0;//Phaser.Math.Between(-50,70);
+
+        // thisContext.tweens.add({
+        // targets: a_zsprite,
+        // elevation_delta: 0,//32-thisContext.fPlayerElevation,//Phaser.Math.Between(-64,64),
+        // ease: 'Sine.easeInOut',
+        // duration: 1500,
+        // yoyo: true,
+        // repeat: -1
+        // });
+        a_zsprite.move = function()
+        {
+            //
+        };
+
+        var randomKey = Math.random().toString();
+        a_zsprite.buffer = thisContext.textures.createCanvas(randomKey, a_zsprite.img.width, a_zsprite.img.height);
+        a_zsprite.buffer.getContext('2d', {willReadFrequently:true}).drawImage(a_zsprite.img, 0, 0);        
+        var imageData = a_zsprite.buffer.getContext('2d', {willReadFrequently:true}).getImageData(0, 0, a_zsprite.img.width, a_zsprite.img.height);
+
+        a_zsprite.imagedata = imageData;
+
+        a_zsprite.pixels = imageData.data;
+
+        thisContext.zspritesgroup.add(a_zsprite);
+    }
+}
+
+function activate_palmtrees(thisContext,quantity)
+{
+    active_objectGangs.push('palmtrees');
+
+    for (var i = 0; i < quantity; i++)
+    {
+        a_zsprite = thisContext.add.image();
+        a_zsprite.label = 'palmtrees';
+        a_zsprite.type = 'target';
+        a_zsprite.hitcount = 0;
+        a_zsprite.explosioncolor= 'green';
+
+        
+
+        a_zsprite.img = thisContext.textures.get('tree16.png').getSourceImage();
+
+        a_zsprite.animationData = thisContext.animationData['tree16.png'];
 
 
-                a_zsprite.x = Phaser.Math.Between(100,1180);
-                a_zsprite.y = Phaser.Math.Between(100,1180);
-                a_zsprite.animated = false;
-                //a_zsprite.flying = false;
-                a_zsprite.inplay = false;
+        a_zsprite.x = Phaser.Math.Between(100,1180);
+        a_zsprite.y = Phaser.Math.Between(100,1180);
+        a_zsprite.animated = false;
+        //a_zsprite.flying = false;
+        a_zsprite.inplay = false;
 
-                // where the object visually touches the ground based on 1/2 the height in pixels as standard
-                a_zsprite.base_elevation = Math.floor(a_zsprite.img.height/2);//32;
+        // where the object visually touches the ground based on 1/2 the height in pixels as standard
+        a_zsprite.base_elevation = Math.floor(a_zsprite.img.height/2)-4;//32;
 
-                // starting 
-                a_zsprite.elevation_delta = 0;//Phaser.Math.Between(-50,70);
+        // starting 
+        a_zsprite.elevation_delta = 0;//Phaser.Math.Between(-50,70);
 
-                // thisContext.tweens.add({
-                // targets: a_zsprite,
-                // elevation_delta: 0,//32-thisContext.fPlayerElevation,//Phaser.Math.Between(-64,64),
-                // ease: 'Sine.easeInOut',
-                // duration: 1500,
-                // yoyo: true,
-                // repeat: -1
-                // });
-                a_zsprite.move = function()
-                {
-                    //
-                };
+        // thisContext.tweens.add({
+        // targets: a_zsprite,
+        // elevation_delta: 0,//32-thisContext.fPlayerElevation,//Phaser.Math.Between(-64,64),
+        // ease: 'Sine.easeInOut',
+        // duration: 1500,
+        // yoyo: true,
+        // repeat: -1
+        // });
+        a_zsprite.move = function()
+        {
+            //
+        };
 
-                var randomKey = Math.random().toString();
-                a_zsprite.buffer = thisContext.textures.createCanvas(randomKey, a_zsprite.img.width, a_zsprite.img.height);
-                a_zsprite.buffer.getContext('2d', {willReadFrequently:true}).drawImage(a_zsprite.img, 0, 0);        
-                var imageData = a_zsprite.buffer.getContext('2d', {willReadFrequently:true}).getImageData(0, 0, a_zsprite.img.width, a_zsprite.img.height);
+        var randomKey = Math.random().toString();
+        a_zsprite.buffer = thisContext.textures.createCanvas(randomKey, a_zsprite.img.width, a_zsprite.img.height);
+        a_zsprite.buffer.getContext('2d', {willReadFrequently:true}).drawImage(a_zsprite.img, 0, 0);        
+        var imageData = a_zsprite.buffer.getContext('2d', {willReadFrequently:true}).getImageData(0, 0, a_zsprite.img.width, a_zsprite.img.height);
 
-                a_zsprite.imagedata = imageData;
+        a_zsprite.imagedata = imageData;
 
-                a_zsprite.pixels = imageData.data;
+        a_zsprite.pixels = imageData.data;
 
-                a_zsprite.waveData = Phaser.Math.SinCosTableGenerator(256, 3, 3, 32);
+        thisContext.zspritesgroup.add(a_zsprite);
+    }
+}
 
-                thisContext.zspritesgroup.add(a_zsprite);
-            }
+function activate_fancytrees(thisContext,quantity)
+{
+    active_objectGangs.push('fancytrees');
 
-        }
+    for (var i = 0; i < quantity; i++)
+    {
+        a_zsprite = thisContext.add.image();
+        a_zsprite.label = 'fancytrees';
+        a_zsprite.type = 'target';
+        a_zsprite.hitcount = 0;
+        a_zsprite.explosioncolor= 'green';
+
+        var f_index = Phaser.Math.Between(1,4);
+
+        a_zsprite.img = thisContext.textures.get('tree'+f_index+'.png').getSourceImage();
+
+        a_zsprite.animationData = thisContext.animationData['tree'+f_index+'.png'];
+
+        a_zsprite.x = Phaser.Math.Between(100,1180);
+        a_zsprite.y = Phaser.Math.Between(100,1180);
+        a_zsprite.animated = false;
+        //a_zsprite.flying = false;
+        a_zsprite.inplay = false;
+
+        // where the object visually touches the ground based on 1/2 the height in pixels as standard
+        a_zsprite.base_elevation = Math.floor(a_zsprite.img.height/2)-16;//32;
+
+        // starting 
+        a_zsprite.elevation_delta = 0;//Phaser.Math.Between(-50,70);
+
+        // thisContext.tweens.add({
+        // targets: a_zsprite,
+        // elevation_delta: 0,//32-thisContext.fPlayerElevation,//Phaser.Math.Between(-64,64),
+        // ease: 'Sine.easeInOut',
+        // duration: 1500,
+        // yoyo: true,
+        // repeat: -1
+        // });
+        a_zsprite.move = function()
+        {
+            //
+        };
+
+        var randomKey = Math.random().toString();
+        a_zsprite.buffer = thisContext.textures.createCanvas(randomKey, a_zsprite.img.width, a_zsprite.img.height);
+        a_zsprite.buffer.getContext('2d', {willReadFrequently:true}).drawImage(a_zsprite.img, 0, 0);        
+        var imageData = a_zsprite.buffer.getContext('2d', {willReadFrequently:true}).getImageData(0, 0, a_zsprite.img.width, a_zsprite.img.height);
+
+        a_zsprite.imagedata = imageData;
+
+        a_zsprite.pixels = imageData.data;
+
+        a_zsprite.waveData = Phaser.Math.SinCosTableGenerator(256, 3, 3, 32);
+
+        thisContext.zspritesgroup.add(a_zsprite);
+    }
+}
+
+function activate_classictrees(thisContext,quantity)
+{
+    active_objectGangs.push('classictrees');
+
+    for (var i = 0; i < quantity; i++)
+    {
+        a_zsprite = thisContext.add.image();
+        a_zsprite.label = 'classictrees';
+        a_zsprite.type = 'target';
+        a_zsprite.hitcount = 0;
+        a_zsprite.explosioncolor= 'green';
+
+        var f_index = Phaser.Math.Between(5,10);
+
+        a_zsprite.img = thisContext.textures.get('tree'+f_index+'.png').getSourceImage();
+
+        a_zsprite.animationData = thisContext.animationData['tree'+f_index+'.png'];
+
+
+        a_zsprite.x = Phaser.Math.Between(100,1180);
+        a_zsprite.y = Phaser.Math.Between(100,1180);
+        a_zsprite.animated = false;
+        //a_zsprite.flying = false;
+        a_zsprite.inplay = false;
+
+        // where the object visually touches the ground based on 1/2 the height in pixels as standard
+        a_zsprite.base_elevation = Math.floor(a_zsprite.img.height/2);//32;
+
+        // starting 
+        a_zsprite.elevation_delta = 0;//Phaser.Math.Between(-50,70);
+
+        // thisContext.tweens.add({
+        // targets: a_zsprite,
+        // elevation_delta: 0,//32-thisContext.fPlayerElevation,//Phaser.Math.Between(-64,64),
+        // ease: 'Sine.easeInOut',
+        // duration: 1500,
+        // yoyo: true,
+        // repeat: -1
+        // });
+        a_zsprite.move = function()
+        {
+            //
+        };
+
+        var randomKey = Math.random().toString();
+        a_zsprite.buffer = thisContext.textures.createCanvas(randomKey, a_zsprite.img.width, a_zsprite.img.height);
+        a_zsprite.buffer.getContext('2d', {willReadFrequently:true}).drawImage(a_zsprite.img, 0, 0);        
+        var imageData = a_zsprite.buffer.getContext('2d', {willReadFrequently:true}).getImageData(0, 0, a_zsprite.img.width, a_zsprite.img.height);
+
+        a_zsprite.imagedata = imageData;
+
+        a_zsprite.pixels = imageData.data;
+
+        a_zsprite.waveData = Phaser.Math.SinCosTableGenerator(256, 3, 3, 32);
+
+        thisContext.zspritesgroup.add(a_zsprite);
+    }
+}
 
         //     for (var i = 0; i < 30; i++)
         //     {

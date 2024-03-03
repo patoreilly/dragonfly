@@ -2267,7 +2267,14 @@ var Demo = new Phaser.Class({
 
         this.input.keyboard.on('keydown-THREE', function (event) 
             {
-                if (!menu_mode) {thisContext.changeObjectgang();}
+                if (!menu_mode) 
+                {
+                    active_og_index++;
+                    if (active_og_index>=active_objectGangs.length) active_og_index=0;
+                    var new_objectgang = active_objectGangs[active_og_index];
+
+                    thisContext.changeObjectgang(new_objectgang);
+                ;}
             }
         );
 
@@ -2352,7 +2359,13 @@ var Demo = new Phaser.Class({
                 // this.fProjectionPlaneYCenter = 100;
                 
                 this.displayHideMenu();
-                this.initDemo();
+
+                og_index++;
+                if (og_index>=objectGangs.length) og_index=0;
+                var new_objectgang = objectGangs[og_index];
+
+                this.changeLevel(new_objectgang);
+                //console.log( 'menu cmd:' +new_objectgang);
             }, 
         this);
 
@@ -2489,7 +2502,7 @@ var Demo = new Phaser.Class({
 
         //activate_flybugs(thisContext,3);
 
-        activate_plantedrocks(thisContext,50);
+        activate_plantedrocks(thisContext,30);
 
         ////////////////////////////////////////////
 
@@ -2545,7 +2558,7 @@ var Demo = new Phaser.Class({
         this.demoBot.bg_index = 0;
         this.demoBot.wall_index = 0;
         this.demoBot.floor_index = 0;
-        this.demoBot.og_index = 0;
+        this.demoBot.active_og_index = 0;
         //this.demoBot.current_objectgang = 'ufo';
         this.demoBot.startX = 99;
         this.demoBot.startY = 99;
@@ -2573,7 +2586,15 @@ var Demo = new Phaser.Class({
             duration: this.demoBot.tracksprite.path_duration,
             delay: this.demoBot.tracksprite.path_delay+1500,
             yoyo: 0,
-            repeat: -1
+            repeat: -1,
+            onRepeat: function()
+            {
+                og_index++;
+                if (og_index>=objectGangs.length) og_index=0;
+                var new_objectgang = objectGangs[og_index];
+
+                thisContext.changeLevel(new_objectgang);
+            }
         });
 
 
@@ -2582,77 +2603,103 @@ var Demo = new Phaser.Class({
             scale: 10,
             alpha: 0,
             ease: 'Expo.easeIn',
-            duration: 800,
+            duration: 700,
             delay: 100,
             yoyo: 1,
             repeat: 0,
             paused: true,
             onStart: function ()
             {
-                if (!objectGangs.includes('flybugs')) 
-                {
-                    activate_flybugs(thisContext,3);
-                }
-                if (!objectGangs.includes('classictrees')) 
-                {
-                    activate_classictrees(thisContext,3);
-                }
+                
+                //
+
+                
             },
             onYoYo: function ()
             {
                 oginitflag=false;
             },
             onUpdate: function () 
-                { 
-                    if (this.totalProgress>.5)
-                    {                    
-                        if (!oginitflag)
-                        {
-                            oginitflag=true;
-                            thisContext.changeObjectgang();
+            { 
+                if (this.totalProgress>=.5)
+                {                    
+                    if (!oginitflag)
+                    {
+                        oginitflag=true;
+                        thisContext.changeObjectgang(this.goto_level);
 
-                            thisContext.background.currentIndex = Phaser.Math.Between(0,thisContext.background.length-1);
-                            //if (thisContext.background.currentIndex==thisContext.background.length) {thisContext.background.currentIndex=0}
+                        thisContext.background.currentIndex = Phaser.Math.Between(0,thisContext.background.length-1);
+                        //if (thisContext.background.currentIndex==thisContext.background.length) {thisContext.background.currentIndex=0}
 
-                            thisContext.floor.currentIndex = Phaser.Math.Between(0,thisContext.floor.length-1);
-                            //if (thisContext.floor.currentIndex==thisContext.floor.length) {thisContext.floor.currentIndex=0}
-                        }
-                    }                   
-                },
+                        thisContext.floor.currentIndex = Phaser.Math.Between(0,thisContext.floor.length-1);
+                        //if (thisContext.floor.currentIndex==thisContext.floor.length) {thisContext.floor.currentIndex=0}
+                    }
+                }                   
+            },
             onComplete: function ()
-                {
-                    thisContext.resetbuffer(thisContext.floor[thisContext.floor.currentIndex]);
+            {
+                thisContext.resetbuffer(thisContext.floor[thisContext.floor.currentIndex]);
 
-                    thisContext.resetbuffer(thisContext.wall[6]);
+                thisContext.resetbuffer(thisContext.wall[6]);
 
-                    thisContext.resetbuffer(thisContext.wall[4]);
+                thisContext.resetbuffer(thisContext.wall[4]);
 
-                    thisContext.zspritesgroup.children.iterate( 
-                    function(_sprite)
-                    { 
-                        if (_sprite != undefined)
-                        {
-                            // if (_sprite.inplay) 
-                            // {                                
-                            //     if (_sprite.animationData != undefined)
-                            //     {
-                                    
-                                    thisContext.resetbuffer(_sprite);
+                thisContext.zspritesgroup.children.iterate( 
+                function(_sprite)
+                { 
+                    if (_sprite != undefined)
+                    {
+                        // if (_sprite.inplay) 
+                        // {                                
+                        //     if (_sprite.animationData != undefined)
+                        //     {
+                                
+                                thisContext.resetbuffer(_sprite);
 
-                            //     }                                
-                            // }
-                        }    
-                    } );
-                }
+                        //     }                                
+                        // }
+                    }    
+                } );
+            }
         });
+        transitionTween.goto_level;
 
     }, ////// END OF create()
 
 
-    initDemo: function()
+    changeLevel: function(level)
     {
-        transitionTween.play();
+        
+        if(!active_objectGangs.includes(level))
+        {
+            switch (level)
+            {
+                case 'flybugs': activate_flybugs(this,4); break;
+                case 'classictrees': activate_classictrees(this,13); break;
+                case 'fancytrees': activate_fancytrees(this,3); break;
+                case 'palmtrees': activate_palmtrees(this,30); break;
+                case 'redtrees': activate_redtrees(this,20); break;
+                case 'baretrees': activate_baretrees(this,24); break;
+                case 'firtrees': activate_firtrees(this,24); break;
+                case 'ferns': activate_ferns(this,30); break;
+                case 'plants': activate_plants(this,36); break;
+                case 'shrooms': activate_shrooms(this,70); break;
+                case 'gems': activate_gems(this,50); break;
+                case 'brightflowers': activate_brightflowers(this,45); break;
+                case 'elegantflowers': activate_elegantflowers(this,3); break;
+                case 'barerocks': activate_barerocks(this,30); break;
+                case 'plantedrocks': activate_plantedrocks(this,30); break;
 
+            }    
+    
+        }
+
+        active_og_index++;
+        if (active_og_index>=active_objectGangs.length) active_og_index=0;
+                
+        transitionTween.goto_level = level;
+        
+        transitionTween.play();
         
     },
 
@@ -2898,18 +2945,16 @@ var Demo = new Phaser.Class({
 
     },
 
-    changeObjectgang: function ()
+    changeObjectgang: function (new_objectgang)
     {
-        og_index++;
-        if (og_index>=objectGangs.length) og_index=0;
-        var new_objectgang = objectGangs[og_index];
+        
 
         this.zspritesgroup.children.iterate( 
                 function(_sprite)
                 { 
                     if (_sprite != undefined)
                     {
-                        if (objectGangs.includes(_sprite.label))
+                        if (active_objectGangs.includes(_sprite.label))
                         {
                             if (_sprite.label != new_objectgang)
                             {
@@ -4895,9 +4940,13 @@ var soundfx_enabled = false;
 var keys;
 var cursors;
 
-var objectGangs = [];//'flybugs','blueorbs','neonorbs','ferns','classictrees','barerocks','plants','shrooms','fancytrees','oddtrees','gems',
-                    //'frogs','pinkblobs','redwings','octos','cydrones','ufos','firtrees','redtrees','palmtrees','baretrees','brightflowers','elegantflowers',
+var active_objectGangs = [];
+var active_og_index = 0;
+var objectGangs = ['plantedrocks','flybugs','classictrees','ferns','barerocks','plants','shrooms',
+                    'gems','fancytrees','firtrees','redtrees','palmtrees','baretrees','brightflowers','elegantflowers'];//,'blueorbs','neonorbs',,'oddtrees',,
+                    //'frogs','pinkblobs','redwings','octos','cydrones','ufos',
 var og_index = 0;
+
 var wallCastMask = false;
 
 var gamedisplayImage;
@@ -4906,7 +4955,7 @@ var oginitflag=false;
 
 var tilt_mode = false;
 var drive_mode = false;
-var demo_mode = false;
+var demo_mode = true;
 var menu_mode = true;
 var game_mode = false;
 
