@@ -1842,7 +1842,7 @@ var Demo = new Phaser.Class({
         //this.demoBot.path.ellipseTo(1200,1200,360,0,true,180);
 
         
-        this.mariocart.path.splineTo([ 160,136,440,280,640,56,870,194,1240,56,1160,536,1200,736,840,896,800,536,480,816,80,776,400,496,100,250 ]);
+        this.mariocart.path.splineTo([ 160,100,440,100,640,100,870,194,1240,56,1160,536,1200,736,840,896,800,536,480,816,80,776,400,496,100,250 ]);
         this.mariocart.path.closePath();
 
         this.tweens.add({
@@ -2566,7 +2566,7 @@ var Demo = new Phaser.Class({
         this.demoBot.followerdata = 0;
         this.demoBot.path = new Phaser.Curves.Path(this.demoBot.startX, this.demoBot.startY);
         //this.demoBot.path.ellipseTo(1200,1200,360,0,true,180);        
-        this.demoBot.path.splineTo([ 160,136,440,280,640,56,870,194,1240,56,1160,536,1200,736,840,896,800,536,480,816,80,776,400,496,100,250 ]);
+        this.demoBot.path.splineTo([ 160,100,440,100,640,100,870,194,1240,56,1160,536,1200,736,840,896,800,536,480,816,80,776,400,496,100,250 ]);
         this.demoBot.path.closePath();
 
         // this.tweens.add({
