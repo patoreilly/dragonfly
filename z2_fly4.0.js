@@ -2321,7 +2321,13 @@ var Demo = new Phaser.Class({
         var text10 = this.add.dynamicBitmapText(0, 0, 'Menu', 'tilt off').setOrigin(0.5).setScale(1).setCenterAlign().setPosition(160,120).setInteractive();
         var text11 = this.add.dynamicBitmapText(0, 0, 'Menu', 'tilt on').setOrigin(0.5).setScale(1).setCenterAlign().setPosition(160,120).setInteractive().setVisible(false);
 
-        var text9 = this.add.dynamicBitmapText(0, 0, 'Menu', 'done').setOrigin(0.5).setScale(1).setCenterAlign().setPosition(160,140).setInteractive();
+        var text12 = this.add.dynamicBitmapText(0, 0, 'Menu', 'fullscreen off').setOrigin(0.5).setScale(1).setCenterAlign().setPosition(160,140).setInteractive();
+        var text13 = this.add.dynamicBitmapText(0, 0, 'Menu', 'fullscreen on').setOrigin(0.5).setScale(1).setCenterAlign().setPosition(160,140).setInteractive().setVisible(false);
+
+        var text14 = this.add.dynamicBitmapText(0, 0, 'Menu', 'fly mode').setOrigin(0.5).setScale(1).setCenterAlign().setPosition(160,160).setInteractive();
+        var text15 = this.add.dynamicBitmapText(0, 0, 'Menu', 'drive mode').setOrigin(0.5).setScale(1).setCenterAlign().setPosition(160,160).setInteractive().setVisible(false);
+
+        var text9 = this.add.dynamicBitmapText(0, 0, 'Menu', 'done').setOrigin(0.5).setScale(1).setCenterAlign().setPosition(160,180).setInteractive();
 
 
         text3.on('pointerup', function () //options
@@ -2353,18 +2359,21 @@ var Demo = new Phaser.Class({
 
         text3a.on('pointerup', function () //demo
             { 
-                // demo_mode = true; 
-                // drive_mode = false;
-
-                // this.fProjectionPlaneYCenter = 100;
                 
-                this.displayHideMenu();
-
                 og_index++;
                 if (og_index>=objectGangs.length) og_index=0;
                 var new_objectgang = objectGangs[og_index];
 
                 this.changeLevel(new_objectgang);
+
+                demo_mode = true; 
+                drive_mode = false;
+
+                this.fProjectionPlaneYCenter = 100;
+                
+                this.displayHideMenu();
+
+                
                 //console.log( 'menu cmd:' +new_objectgang);
             }, 
         this);
@@ -2379,8 +2388,8 @@ var Demo = new Phaser.Class({
 
         text2.on('pointerup', function () //new game
             { 
-                // demo_mode = false; 
-                drive_mode = true;
+                demo_mode = false; 
+                
                 
 
                 this.displayHideMenu();
@@ -2392,13 +2401,24 @@ var Demo = new Phaser.Class({
 
 
         text5.on('pointerup', function () { soundfx_enabled=true; text5.visible=false; text6.visible=true; }, this);
-        text6.on('pointerup', function () { soundfx_enabled=false; text6.visible=false; text5.visible=true;}, this);
+        text6.on('pointerup', function () { soundfx_enabled=false; text6.visible=false; text5.visible=true; }, this);
 
         text7.on('pointerup', function () { music.play(); text7.visible=false; text8.visible=true; }, this);
-        text8.on('pointerup', function () { music.stop(); text8.visible=false; text7.visible=true;}, this);
+        text8.on('pointerup', function () { music.stop(); text8.visible=false; text7.visible=true; }, this);
 
         text10.on('pointerup', function () { tilt_mode=true; gamedisplayImage.setScale(1.17); text10.visible=false; text11.visible=true; }, this);
-        text11.on('pointerup', function () { tilt_mode=false; gamedisplayImage.setScale(1.0); text11.visible=false; text10.visible=true;}, this);
+        text11.on('pointerup', function () { tilt_mode=false; gamedisplayImage.setScale(1.0); text11.visible=false; text10.visible=true; }, this);
+
+        text12.on('pointerup', function () { this.scale.startFullscreen(); text12.visible=false; text13.visible=true; }, this);
+        text13.on('pointerup', function () { this.scale.stopFullscreen(); text13.visible=false; text12.visible=true; }, this);
+
+        text14.on('pointerup', function () 
+            {
+                // only allow drive_mode if not in demo_mode
+                if (!demo_mode) {drive_mode=true; this.fProjectionPlaneYCenter = 100; text14.visible=false; text15.visible=true;}
+                 
+            }, this);
+        text15.on('pointerup', function () { drive_mode=false; text15.visible=false; text14.visible=true; }, this);
 
 
 
@@ -2418,7 +2438,7 @@ var Demo = new Phaser.Class({
         menu1_cont.add([this.titlegen.displayimg,text2,text3,text3a,text4]);// 
 
         menu2_cont = this.add.container();
-        menu2_cont.add([text5,text6,text7,text8,text9,text10,text11]);
+        menu2_cont.add([text5,text6,text7,text8,text9,text10,text11,text12,text13,text14,text15]);
         menu2_cont.visible = false;
 
         // editor_cont = this.add.container();
@@ -2589,11 +2609,15 @@ var Demo = new Phaser.Class({
             repeat: -1,
             onRepeat: function()
             {
-                og_index++;
-                if (og_index>=objectGangs.length) og_index=0;
-                var new_objectgang = objectGangs[og_index];
+                if (demo_mode)
+                {
+                    og_index++;
+                    if (og_index>=objectGangs.length) og_index=0;
+                    var new_objectgang = objectGangs[og_index];
 
-                thisContext.changeLevel(new_objectgang);
+                    thisContext.changeLevel(new_objectgang);
+                }
+                
             }
         });
 
@@ -4904,7 +4928,7 @@ var config = {
         gamepad: true
     },
     scale: {
-        mode: Phaser.Scale.EXACT,
+        mode: Phaser.Scale.FIT,
         parent: 'phaser-example',
         autoCenter: Phaser.Scale.CENTER_BOTH,
         width: 320,
