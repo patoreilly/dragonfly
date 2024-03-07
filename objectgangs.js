@@ -1144,1049 +1144,1102 @@ function activate_classictrees(thisContext,quantity)
     }
 }
 
-        //     for (var i = 0; i < 30; i++)
-        //     {
-        //         a_zsprite = this.add.image();
-        //         a_zsprite.label = 'oddtrees';
-        //         a_zsprite.type = 'target';
-        //         a_zsprite.hitcount = 0;
-        //         a_zsprite.explosioncolor= 'green';
+function activate_oddtrees(thisContext,quantity)
+{
+    active_objectGangs.push('oddtrees');
 
-        //         var f_index = Phaser.Math.Between(11,16);
+    for (var i = 0; i < quantity; i++)
+    {
+        a_zsprite = thisContext.add.image();
+        a_zsprite.label = 'oddtrees';
+        a_zsprite.type = 'target';
+        a_zsprite.hitcount = 0;
+        a_zsprite.explosioncolor= 'green';
 
-        //         a_zsprite.img = this.textures.get('tree'+f_index+'.png').getSourceImage();
-        //         a_zsprite.x = Phaser.Math.Between(100,1180);
-        //         a_zsprite.y = Phaser.Math.Between(100,1180);
-        //         a_zsprite.animated = false;
-        //         //a_zsprite.flying = false;
-        //         a_zsprite.inplay = false;
+        var f_index = Phaser.Math.Between(11,16);
 
-        //         // where the object visually touches the ground based on 1/2 the height in pixels as standard
-        //         a_zsprite.base_elevation = Math.floor(a_zsprite.img.height/2)-10;//32;
+        a_zsprite.img = thisContext.textures.get('tree'+f_index+'.png').getSourceImage();
 
-        //         // starting 
-        //         a_zsprite.elevation_delta = 0;//Phaser.Math.Between(-50,70);
+        a_zsprite.animationData = thisContext.animationData['tree'+f_index+'.png'];
 
-        //         // this.tweens.add({
-        //         // targets: a_zsprite,
-        //         // elevation_delta: 0,//32-this.fPlayerElevation,//Phaser.Math.Between(-64,64),
-        //         // ease: 'Sine.easeInOut',
-        //         // duration: 1500,
-        //         // yoyo: true,
-        //         // repeat: -1
-        //         // });
-        //         a_zsprite.move = function()
-        //         {
-        //             //
-        //         };
+        a_zsprite.x = Phaser.Math.Between(100,1180);
+        a_zsprite.y = Phaser.Math.Between(100,1180);
+        a_zsprite.animated = false;
+        //a_zsprite.flying = false;
+        a_zsprite.inplay = false;
 
-        //         var randomKey = Math.random().toString();
-        //         a_zsprite.buffer = this.textures.createCanvas(randomKey, a_zsprite.img.width, a_zsprite.img.height);
-        //         a_zsprite.buffer.getContext('2d', {willReadFrequently:true}).drawImage(a_zsprite.img, 0, 0);        
-        //         var imageData = a_zsprite.buffer.getContext('2d', {willReadFrequently:true}).getImageData(0, 0, a_zsprite.img.width, a_zsprite.img.height);
+        // where the object visually touches the ground based on 1/2 the height in pixels as standard
+        a_zsprite.base_elevation = Math.floor(a_zsprite.img.height/2)-10;//32;
 
-        //         a_zsprite.imagedata = imageData;
+        // starting 
+        a_zsprite.elevation_delta = 0;//Phaser.Math.Between(-50,70);
 
-        //         a_zsprite.pixels = imageData.data;
+        // thisContext.tweens.add({
+        // targets: a_zsprite,
+        // elevation_delta: 0,//32-thisContext.fPlayerElevation,//Phaser.Math.Between(-64,64),
+        // ease: 'Sine.easeInOut',
+        // duration: 1500,
+        // yoyo: true,
+        // repeat: -1
+        // });
+        a_zsprite.move = function()
+        {
+            //
+        };
 
-        //         this.zspritesgroup.add(a_zsprite);
-        //     }
+        var randomKey = Math.random().toString();
+        a_zsprite.buffer = thisContext.textures.createCanvas(randomKey, a_zsprite.img.width, a_zsprite.img.height);
+        a_zsprite.buffer.getContext('2d', {willReadFrequently:true}).drawImage(a_zsprite.img, 0, 0);        
+        var imageData = a_zsprite.buffer.getContext('2d', {willReadFrequently:true}).getImageData(0, 0, a_zsprite.img.width, a_zsprite.img.height);
+
+        a_zsprite.imagedata = imageData;
+
+        a_zsprite.pixels = imageData.data;
+
+        thisContext.zspritesgroup.add(a_zsprite);
+    }
+}       
+
+
+
+function activate_frogs(thisContext,quantity)
+{
+    active_objectGangs.push('frogs');
+
+    //animation test sprite 6
+    for (var j=0;j<quantity;j++)
+    {   
+        // //  animated sprite set up for 2d display purpose 
+        // //  must be loaded as .spritesheet with frame params and added as .sprite
+        // var randomKey3 = Math.random().toString();
+
+        // this.anims.create({
+        //     key: randomKey3,
+        //     frames: this.anims.generateFrameNumbers('atest5'),
+        //     frameRate: 60,
+        //     repeat: -1
+        //     //yoyo: true
+        // });
+
+    
+        // a_zsprite = this.add.sprite(0, 0, 'atest5').play(randomKey3).setOrigin(0).setScale(1);
+        // //////////////////////////////
+
+        // console.log(a_zsprite);
+
+
+
+        a_zsprite = thisContext.add.image();
+
+
+        a_zsprite.label = 'frogs';
+        a_zsprite.type = 'target';
+        a_zsprite.hitcount = 0;
+        a_zsprite.explosioncolor= 'green';
+
+
+        a_zsprite.img = thisContext.textures.get('frog_anim_26x24x23.png').getSourceImage();
+
+        a_zsprite.animationData = thisContext.animationData['frog_anim_26x24x23.png'];
+
+        var randomKey = Math.random().toString();
+        a_zsprite.buffer = thisContext.textures.createCanvas(randomKey, a_zsprite.img.width, a_zsprite.img.height);
+        a_zsprite.buffer.getContext('2d', {willReadFrequently:true}).drawImage(a_zsprite.img, 0, 0);        
+        var imageData = a_zsprite.buffer.getContext('2d', {willReadFrequently:true}).getImageData(0, 0, a_zsprite.img.width, a_zsprite.img.height);
+        a_zsprite.pixels = imageData.data;
+
+        a_zsprite.x = Phaser.Math.Between(0,1280);
+        a_zsprite.y = Phaser.Math.Between(0,1280);
+        a_zsprite.dx = Phaser.Math.RND.realInRange(-2.5, 3.5);
+        a_zsprite.dy = Phaser.Math.RND.realInRange(-2.5, 3.5);
+        a_zsprite.animated = true;
+        a_zsprite.animationtimecheck=0;
+        a_zsprite.frametimer = 0;
+        a_zsprite.inplay = false;
+        a_zsprite.numframes = 23;
+        a_zsprite.framewidth = 26;
+        a_zsprite.frameindex = 0;
+
+        a_zsprite.elevation_delta = Phaser.Math.Between(-64,100);
+        a_zsprite.base_elevation = 64;
+
+
+        thisContext.tweens.add({
+            targets: a_zsprite,
+            elevation_delta: 0,
+            ease: 'Sine.easeInOut',
+            duration: 2000,
+            yoyo: true,
+            repeat: -1
+        });
+
+        a_zsprite.move = function()
+        {
+            this.x+=this.dx;
+            if ( this.x<thisContext.TILE_SIZE || this.x>(thisContext.MAP_WIDTH-1)*thisContext.TILE_SIZE ) this.dx*=-1;
+
+            this.y+=this.dy;
+            if ( this.y<thisContext.TILE_SIZE || this.y>(thisContext.MAP_HEIGHT-1)*thisContext.TILE_SIZE ) this.dy*=-1;
+
+            // CHECK COLLISION AGAINST WALLS
+            // compute cell position
+
+
+            var playerXCell = Math.floor(this.x/thisContext.TILE_SIZE);
+            var playerYCell = Math.floor(this.y/thisContext.TILE_SIZE);
+
+            // compute position relative to cell (ie: how many pixel from edge of cell)
+            var playerXCellOffset = this.x % thisContext.TILE_SIZE;
+            var playerYCellOffset = this.y % thisContext.TILE_SIZE;
+
+            var minDistanceToWall=20;
+            
+            // make sure the player don't bump into walls
+            if (this.dx>0)
+            {
+                // moving right
+                if ((thisContext.fMap.charAt((playerYCell*thisContext.MAP_WIDTH)+playerXCell+1)!='-')&&
+                    (playerXCellOffset > (thisContext.TILE_SIZE-minDistanceToWall)))
+                {
+                    // reverse x dir
+                    this.dx*=-1;
+                }               
+            }
+            else
+            {
+                // moving left
+                if ((thisContext.fMap.charAt((playerYCell*thisContext.MAP_WIDTH)+playerXCell-1)!='-')&&
+                    (playerXCellOffset < (minDistanceToWall)))
+                {
+                    /// reverse x dir
+                    this.dx*=-1;
+                } 
+            } 
+
+            if (this.dy<0)
+            {
+                // moving up
+                if ((thisContext.fMap.charAt(((playerYCell-1)*thisContext.MAP_HEIGHT)+playerXCell)!='-')&&
+                    (playerYCellOffset < (minDistanceToWall)))
+                {
+                    // reverse y dir
+                    this.dy*=-1;
+                }
+            }
+            else
+            {
+                // moving down                                  
+                if ((thisContext.fMap.charAt(((playerYCell+1)*thisContext.MAP_HEIGHT)+playerXCell)!='-')&&
+                    (playerYCellOffset > (thisContext.TILE_SIZE-minDistanceToWall)))
+                {
+                    // reverse y dir
+                    this.dy*=-1;
+                }
+            }
+
+        };                 
         
-        // //animation test sprite 6
-        // for (var j=0;j<10;j++)
-        // {
+        thisContext.zspritesgroup.add(a_zsprite);
+    }
+}
+
+function activate_octos(thisContext,quantity)
+{
+    active_objectGangs.push('octos');
+    //octo creature animation (type 1)
+    for (var j=0;j<quantity;j++)
+    {
+        a_zsprite = thisContext.add.image();
+        a_zsprite.label = 'octos';
+        a_zsprite.type = 'target';
+        a_zsprite.hitcount = 0;
+        a_zsprite.explosioncolor= 'cyan';
+
+        a_zsprite.img = thisContext.textures.get('octo_anim_29x27x4.png').getSourceImage();
+
+        a_zsprite.animationData = thisContext.animationData['octo_anim_29x27x4.png'];
+
+        var randomKey = Math.random().toString();
+            a_zsprite.buffer = thisContext.textures.createCanvas(randomKey, a_zsprite.img.width, a_zsprite.img.height);
+            a_zsprite.buffer.getContext('2d', {willReadFrequently:true}).drawImage(a_zsprite.img, 0, 0);        
+            var imageData = a_zsprite.buffer.getContext('2d', {willReadFrequently:true}).getImageData(0, 0, a_zsprite.img.width, a_zsprite.img.height);
+            a_zsprite.pixels = imageData.data;
 
 
-           
 
-        //     // //  animated sprite set up for 2d display purpose 
-        //     // //  must be loaded as .spritesheet with frame params and added as .sprite
-        //     // var randomKey3 = Math.random().toString();
+        a_zsprite.x = Phaser.Math.Between(100,668);
+        a_zsprite.y = Phaser.Math.Between(100,1180);
+        a_zsprite.animated = true;
+        //a_zsprite.flying = true;
+        a_zsprite.animationtimecheck=0;
+        a_zsprite.frametimer = 200;
+        a_zsprite.inplay = false;
+        a_zsprite.numframes = 4;
+        a_zsprite.framewidth = 29;
+        a_zsprite.frameindex = 0;
+        a_zsprite.dx = Phaser.Math.RND.realInRange(2.5, 4.5);
+        a_zsprite.dy = Phaser.Math.RND.realInRange(2.5, 4.5);
 
-        //     // this.anims.create({
-        //     //     key: randomKey3,
-        //     //     frames: this.anims.generateFrameNumbers('atest5'),
-        //     //     frameRate: 60,
-        //     //     repeat: -1
-        //     //     //yoyo: true
-        //     // });
+        a_zsprite.elevation_delta = Phaser.Math.Between(-64,64);
+        a_zsprite.base_elevation = 64;//Phaser.Math.Between(0,64);
 
+        thisContext.tweens.add({
+            targets: a_zsprite,
+            elevation_delta: 0,
+            ease: 'Sine.easeInOut',
+            duration: 2000,
+            yoyo: true,
+            repeat: -1
+        });
         
-        //     // a_zsprite = this.add.sprite(0, 0, 'atest5').play(randomKey3).setOrigin(0).setScale(1);
-        //     // //////////////////////////////
-
-        //     // console.log(a_zsprite);
-
-
-
-        //     a_zsprite = this.add.image();
-
-
-        //     a_zsprite.label = "frogs";
-        //     a_zsprite.type = 'target';
-        //     a_zsprite.hitcount = 0;
-        //     a_zsprite.explosioncolor= 'green';
-
-
-        //     a_zsprite.img = this.textures.get('frog_anim_26x24x23.png').getSourceImage();
-
-        //     var randomKey = Math.random().toString();
-        //     a_zsprite.buffer = this.textures.createCanvas(randomKey, a_zsprite.img.width, a_zsprite.img.height);
-        //     a_zsprite.buffer.getContext('2d', {willReadFrequently:true}).drawImage(a_zsprite.img, 0, 0);        
-        //     var imageData = a_zsprite.buffer.getContext('2d', {willReadFrequently:true}).getImageData(0, 0, a_zsprite.img.width, a_zsprite.img.height);
-        //     a_zsprite.pixels = imageData.data;
-
-        //     a_zsprite.x = Phaser.Math.Between(0,1280);
-        //     a_zsprite.y = Phaser.Math.Between(0,1280);
-        //     a_zsprite.dx = Phaser.Math.RND.realInRange(-2.5, 3.5);
-        //     a_zsprite.dy = Phaser.Math.RND.realInRange(-2.5, 3.5);
-        //     a_zsprite.animated = true;
-        //     a_zsprite.animationtimecheck=0;
-        //     a_zsprite.frametimer = 0;
-        //     a_zsprite.inplay = false;
-        //     a_zsprite.numframes = 23;
-        //     a_zsprite.framewidth = 26;
-        //     a_zsprite.frameindex = 0;
-
-        //     a_zsprite.elevation_delta = Phaser.Math.Between(-64,100);;
-        //     a_zsprite.base_elevation = 64;
-
-
-        //     this.tweens.add({
-        //         targets: a_zsprite,
-        //         elevation_delta: 0,
-        //         ease: 'Sine.easeInOut',
-        //         duration: 2000,
-        //         yoyo: true,
-        //         repeat: -1
-        //     });
-
-        //     a_zsprite.move = function()
-        //     {
-        //         this.x+=this.dx;
-        //         if ( this.x<thisContext.TILE_SIZE || this.x>(thisContext.MAP_WIDTH-1)*thisContext.TILE_SIZE ) this.dx*=-1;
-
-        //         this.y+=this.dy;
-        //         if ( this.y<thisContext.TILE_SIZE || this.y>(thisContext.MAP_HEIGHT-1)*thisContext.TILE_SIZE ) this.dy*=-1;
-
-        //         // CHECK COLLISION AGAINST WALLS
-        //         // compute cell position
-
-
-        //         var playerXCell = Math.floor(this.x/thisContext.TILE_SIZE);
-        //         var playerYCell = Math.floor(this.y/thisContext.TILE_SIZE);
-
-        //         // compute position relative to cell (ie: how many pixel from edge of cell)
-        //         var playerXCellOffset = this.x % thisContext.TILE_SIZE;
-        //         var playerYCellOffset = this.y % thisContext.TILE_SIZE;
-
-        //         var minDistanceToWall=20;
-                
-        //         // make sure the player don't bump into walls
-        //         if (this.dx>0)
-        //         {
-        //             // moving right
-        //             if ((thisContext.fMap.charAt((playerYCell*thisContext.MAP_WIDTH)+playerXCell+1)!='-')&&
-        //                 (playerXCellOffset > (thisContext.TILE_SIZE-minDistanceToWall)))
-        //             {
-        //                 // reverse x dir
-        //                 this.dx*=-1;
-        //             }               
-        //         }
-        //         else
-        //         {
-        //             // moving left
-        //             if ((thisContext.fMap.charAt((playerYCell*thisContext.MAP_WIDTH)+playerXCell-1)!='-')&&
-        //                 (playerXCellOffset < (minDistanceToWall)))
-        //             {
-        //                 /// reverse x dir
-        //                 this.dx*=-1;
-        //             } 
-        //         } 
-
-        //         if (this.dy<0)
-        //         {
-        //             // moving up
-        //             if ((thisContext.fMap.charAt(((playerYCell-1)*thisContext.MAP_HEIGHT)+playerXCell)!='-')&&
-        //                 (playerYCellOffset < (minDistanceToWall)))
-        //             {
-        //                 // reverse y dir
-        //                 this.dy*=-1;
-        //             }
-        //         }
-        //         else
-        //         {
-        //             // moving down                                  
-        //             if ((thisContext.fMap.charAt(((playerYCell+1)*thisContext.MAP_HEIGHT)+playerXCell)!='-')&&
-        //                 (playerYCellOffset > (thisContext.TILE_SIZE-minDistanceToWall)))
-        //             {
-        //                 // reverse y dir
-        //                 this.dy*=-1;
-        //             }
-        //         }
-
-        //     };                 
-            
-        //     this.zspritesgroup.add(a_zsprite);
-        // }
-
-        // //octo creature animation (type 1)
-        // for (var j=0;j<24;j++)
-        // {
-        //     a_zsprite = this.add.image();
-        //     a_zsprite.label = "octos";
-        //     a_zsprite.type = 'target';
-        //     a_zsprite.hitcount = 0;
-        //     a_zsprite.explosioncolor= 'cyan';
-
-        //     a_zsprite.img = this.textures.get('octo_anim_29x27x4.png').getSourceImage();
-
-        //     var randomKey = Math.random().toString();
-        //         a_zsprite.buffer = this.textures.createCanvas(randomKey, a_zsprite.img.width, a_zsprite.img.height);
-        //         a_zsprite.buffer.getContext('2d', {willReadFrequently:true}).drawImage(a_zsprite.img, 0, 0);        
-        //         var imageData = a_zsprite.buffer.getContext('2d', {willReadFrequently:true}).getImageData(0, 0, a_zsprite.img.width, a_zsprite.img.height);
-        //         a_zsprite.pixels = imageData.data;
-
-
-
-        //     a_zsprite.x = Phaser.Math.Between(100,668);
-        //     a_zsprite.y = Phaser.Math.Between(100,1180);
-        //     a_zsprite.animated = true;
-        //     //a_zsprite.flying = true;
-        //     a_zsprite.animationtimecheck=0;
-        //     a_zsprite.frametimer = 200;
-        //     a_zsprite.inplay = false;
-        //     a_zsprite.numframes = 4;
-        //     a_zsprite.framewidth = 29;
-        //     a_zsprite.frameindex = 0;
-        //     a_zsprite.dx = Phaser.Math.RND.realInRange(2.5, 4.5);
-        //     a_zsprite.dy = Phaser.Math.RND.realInRange(2.5, 4.5);
-
-        //     a_zsprite.elevation_delta = Phaser.Math.Between(-64,64);
-        //     a_zsprite.base_elevation = 64;//Phaser.Math.Between(0,64);
-
-        //     this.tweens.add({
-        //         targets: a_zsprite,
-        //         elevation_delta: 0,
-        //         ease: 'Sine.easeInOut',
-        //         duration: 2000,
-        //         yoyo: true,
-        //         repeat: -1
-        //     });
-            
-            
-            
-
-        //     a_zsprite.move = function()
-        //     {
-        //         this.x+=this.dx;
-        //         if ( this.x<thisContext.TILE_SIZE || this.x>(thisContext.MAP_WIDTH-1)*thisContext.TILE_SIZE ) this.dx*=-1;
-
-        //         this.y+=this.dy;
-        //         if ( this.y<thisContext.TILE_SIZE || this.y>(thisContext.MAP_HEIGHT-1)*thisContext.TILE_SIZE ) this.dy*=-1;
-
-        //         // CHECK COLLISION AGAINST WALLS
-        //         // compute cell position
-
-
-        //         var playerXCell = Math.floor(this.x/thisContext.TILE_SIZE);
-        //         var playerYCell = Math.floor(this.y/thisContext.TILE_SIZE);
-
-        //         // compute position relative to cell (ie: how many pixel from edge of cell)
-        //         var playerXCellOffset = this.x % thisContext.TILE_SIZE;
-        //         var playerYCellOffset = this.y % thisContext.TILE_SIZE;
-
-        //         var minDistanceToWall=20;
-                
-        //         // make sure the player don't bump into walls
-        //         if (this.dx>0)
-        //         {
-        //             // moving right
-        //             if ((thisContext.fMap.charAt((playerYCell*thisContext.MAP_WIDTH)+playerXCell+1)!='-')&&
-        //                 (playerXCellOffset > (thisContext.TILE_SIZE-minDistanceToWall)))
-        //             {
-        //                 // reverse x dir
-        //                 this.dx*=-1;
-        //             }               
-        //         }
-        //         else
-        //         {
-        //             // moving left
-        //             if ((thisContext.fMap.charAt((playerYCell*thisContext.MAP_WIDTH)+playerXCell-1)!='-')&&
-        //                 (playerXCellOffset < (minDistanceToWall)))
-        //             {
-        //                 /// reverse x dir
-        //                 this.dx*=-1;
-        //             } 
-        //         } 
-
-        //         if (this.dy<0)
-        //         {
-        //             // moving up
-        //             if ((thisContext.fMap.charAt(((playerYCell-1)*thisContext.MAP_HEIGHT)+playerXCell)!='-')&&
-        //                 (playerYCellOffset < (minDistanceToWall)))
-        //             {
-        //                 // reverse y dir
-        //                 this.dy*=-1;
-        //             }
-        //         }
-        //         else
-        //         {
-        //             // moving down                                  
-        //             if ((thisContext.fMap.charAt(((playerYCell+1)*thisContext.MAP_HEIGHT)+playerXCell)!='-')&&
-        //                 (playerYCellOffset > (thisContext.TILE_SIZE-minDistanceToWall)))
-        //             {
-        //                 // reverse y dir
-        //                 this.dy*=-1;
-        //             }
-        //         }
-
-                
-        //     };
-
-        //     this.zspritesgroup.add(a_zsprite);
-        // }
-
-        // //cydrone creature animation (type 1)
-        // for (var j=0;j<24;j++)
-        // {
-        //     a_zsprite = this.add.image();
-        //     a_zsprite.label = "cydrones";
-        //     a_zsprite.type = 'target';
-        //     a_zsprite.hitcount = 0;
-        //     a_zsprite.explosioncolor= 'cyan';
-
-        //     a_zsprite.img = this.textures.get('cydrone_anim_20x26x4.png').getSourceImage();
-
-        //     var randomKey = Math.random().toString();
-        //         a_zsprite.buffer = this.textures.createCanvas(randomKey, a_zsprite.img.width, a_zsprite.img.height);
-        //         a_zsprite.buffer.getContext('2d', {willReadFrequently:true}).drawImage(a_zsprite.img, 0, 0);        
-        //         var imageData = a_zsprite.buffer.getContext('2d', {willReadFrequently:true}).getImageData(0, 0, a_zsprite.img.width, a_zsprite.img.height);
-        //         a_zsprite.pixels = imageData.data;
-
-
-
-        //     a_zsprite.x = Phaser.Math.Between(100,668);
-        //     a_zsprite.y = Phaser.Math.Between(100,1180);
-        //     a_zsprite.animated = true;
-        //     //a_zsprite.flying = true;
-        //     a_zsprite.animationtimecheck=0;
-        //     a_zsprite.frametimer = 200;
-        //     a_zsprite.inplay = false;
-        //     a_zsprite.numframes = 4;
-        //     a_zsprite.framewidth = 20;
-        //     a_zsprite.frameindex = 0;
-        //     a_zsprite.dx = Phaser.Math.RND.realInRange(2.5, 4.5);
-        //     a_zsprite.dy = Phaser.Math.RND.realInRange(2.5, 4.5);
-
-        //     a_zsprite.elevation_delta = Phaser.Math.Between(-64,64);
-        //     a_zsprite.base_elevation = 64;//Phaser.Math.Between(0,64);
-
-        //     this.tweens.add({
-        //         targets: a_zsprite,
-        //         elevation_delta: 0,
-        //         ease: 'Sine.easeInOut',
-        //         duration: 2000,
-        //         yoyo: true,
-        //         repeat: -1
-        //     });
-            
-            
-            
-
-        //     a_zsprite.move = function()
-        //     {
-        //         this.x+=this.dx;
-        //         if ( this.x<thisContext.TILE_SIZE || this.x>(thisContext.MAP_WIDTH-1)*thisContext.TILE_SIZE ) this.dx*=-1;
-
-        //         this.y+=this.dy;
-        //         if ( this.y<thisContext.TILE_SIZE || this.y>(thisContext.MAP_HEIGHT-1)*thisContext.TILE_SIZE ) this.dy*=-1;
-
-        //         // CHECK COLLISION AGAINST WALLS
-        //         // compute cell position
-
-
-        //         var playerXCell = Math.floor(this.x/thisContext.TILE_SIZE);
-        //         var playerYCell = Math.floor(this.y/thisContext.TILE_SIZE);
-
-        //         // compute position relative to cell (ie: how many pixel from edge of cell)
-        //         var playerXCellOffset = this.x % thisContext.TILE_SIZE;
-        //         var playerYCellOffset = this.y % thisContext.TILE_SIZE;
-
-        //         var minDistanceToWall=20;
-                
-        //         // make sure the player don't bump into walls
-        //         if (this.dx>0)
-        //         {
-        //             // moving right
-        //             if ((thisContext.fMap.charAt((playerYCell*thisContext.MAP_WIDTH)+playerXCell+1)!='-')&&
-        //                 (playerXCellOffset > (thisContext.TILE_SIZE-minDistanceToWall)))
-        //             {
-        //                 // reverse x dir
-        //                 this.dx*=-1;
-        //             }               
-        //         }
-        //         else
-        //         {
-        //             // moving left
-        //             if ((thisContext.fMap.charAt((playerYCell*thisContext.MAP_WIDTH)+playerXCell-1)!='-')&&
-        //                 (playerXCellOffset < (minDistanceToWall)))
-        //             {
-        //                 /// reverse x dir
-        //                 this.dx*=-1;
-        //             } 
-        //         } 
-
-        //         if (this.dy<0)
-        //         {
-        //             // moving up
-        //             if ((thisContext.fMap.charAt(((playerYCell-1)*thisContext.MAP_HEIGHT)+playerXCell)!='-')&&
-        //                 (playerYCellOffset < (minDistanceToWall)))
-        //             {
-        //                 // reverse y dir
-        //                 this.dy*=-1;
-        //             }
-        //         }
-        //         else
-        //         {
-        //             // moving down                                  
-        //             if ((thisContext.fMap.charAt(((playerYCell+1)*thisContext.MAP_HEIGHT)+playerXCell)!='-')&&
-        //                 (playerYCellOffset > (thisContext.TILE_SIZE-minDistanceToWall)))
-        //             {
-        //                 // reverse y dir
-        //                 this.dy*=-1;
-        //             }
-        //         }
-
-                        
-        //     };
-
-        //     this.zspritesgroup.add(a_zsprite);
-        // }
-
-        // //animation test sprite - type 1
-        // for (var j=0;j<24;j++)
-        // {
-        //     a_zsprite = this.add.image();
-        //     a_zsprite.label = "redwings";
-        //     a_zsprite.type = 'target';
-        //     a_zsprite.hitcount = 0;
-        //     a_zsprite.explosioncolor= 'cyan';
-
-        //     a_zsprite.img = this.textures.get('redwing_anim_32x24x4.png').getSourceImage();
-
-        //     var randomKey = Math.random().toString();
-        //         a_zsprite.buffer = this.textures.createCanvas(randomKey, a_zsprite.img.width, a_zsprite.img.height);
-        //         a_zsprite.buffer.getContext('2d', {willReadFrequently:true}).drawImage(a_zsprite.img, 0, 0);        
-        //         var imageData = a_zsprite.buffer.getContext('2d', {willReadFrequently:true}).getImageData(0, 0, a_zsprite.img.width, a_zsprite.img.height);
-        //         a_zsprite.pixels = imageData.data;
-
-
-
-        //     a_zsprite.x = Phaser.Math.Between(100,668);
-        //     a_zsprite.y = Phaser.Math.Between(100,1180);
-        //     a_zsprite.animated = true;
-        //     //a_zsprite.flying = true;
-        //     a_zsprite.animationtimecheck=0;
-        //     a_zsprite.frametimer = 200;
-        //     a_zsprite.inplay = false;
-        //     a_zsprite.numframes = 4;
-        //     a_zsprite.framewidth = 32;
-        //     a_zsprite.frameindex = 0;
-        //     a_zsprite.dx = Phaser.Math.RND.realInRange(2.5, 4.5);
-        //     a_zsprite.dy = Phaser.Math.RND.realInRange(2.5, 4.5);
-
-        //     a_zsprite.elevation_delta = Phaser.Math.Between(-64,64);
-        //     a_zsprite.base_elevation = 64;//Phaser.Math.Between(0,64);
-
-        //     this.tweens.add({
-        //         targets: a_zsprite,
-        //         elevation_delta: 0,
-        //         ease: 'Sine.easeInOut',
-        //         duration: 2000,
-        //         yoyo: true,
-        //         repeat: -1
-        //     });
-            
-            
-            
-
-        //     a_zsprite.move = function()
-        //     {
-        //         this.x+=this.dx;
-        //         if ( this.x<thisContext.TILE_SIZE || this.x>(thisContext.MAP_WIDTH-1)*thisContext.TILE_SIZE ) this.dx*=-1;
-
-        //         this.y+=this.dy;
-        //         if ( this.y<thisContext.TILE_SIZE || this.y>(thisContext.MAP_HEIGHT-1)*thisContext.TILE_SIZE ) this.dy*=-1;
-
-        //         // CHECK COLLISION AGAINST WALLS
-        //         // compute cell position
-
-
-        //         var playerXCell = Math.floor(this.x/thisContext.TILE_SIZE);
-        //         var playerYCell = Math.floor(this.y/thisContext.TILE_SIZE);
-
-        //         // compute position relative to cell (ie: how many pixel from edge of cell)
-        //         var playerXCellOffset = this.x % thisContext.TILE_SIZE;
-        //         var playerYCellOffset = this.y % thisContext.TILE_SIZE;
-
-        //         var minDistanceToWall=20;
-                
-        //         // make sure the player don't bump into walls
-        //         if (this.dx>0)
-        //         {
-        //             // moving right
-        //             if ((thisContext.fMap.charAt((playerYCell*thisContext.MAP_WIDTH)+playerXCell+1)!='-')&&
-        //                 (playerXCellOffset > (thisContext.TILE_SIZE-minDistanceToWall)))
-        //             {
-        //                 // reverse x dir
-        //                 this.dx*=-1;
-        //             }               
-        //         }
-        //         else
-        //         {
-        //             // moving left
-        //             if ((thisContext.fMap.charAt((playerYCell*thisContext.MAP_WIDTH)+playerXCell-1)!='-')&&
-        //                 (playerXCellOffset < (minDistanceToWall)))
-        //             {
-        //                 /// reverse x dir
-        //                 this.dx*=-1;
-        //             } 
-        //         } 
-
-        //         if (this.dy<0)
-        //         {
-        //             // moving up
-        //             if ((thisContext.fMap.charAt(((playerYCell-1)*thisContext.MAP_HEIGHT)+playerXCell)!='-')&&
-        //                 (playerYCellOffset < (minDistanceToWall)))
-        //             {
-        //                 // reverse y dir
-        //                 this.dy*=-1;
-        //             }
-        //         }
-        //         else
-        //         {
-        //             // moving down                                  
-        //             if ((thisContext.fMap.charAt(((playerYCell+1)*thisContext.MAP_HEIGHT)+playerXCell)!='-')&&
-        //                 (playerYCellOffset > (thisContext.TILE_SIZE-minDistanceToWall)))
-        //             {
-        //                 // reverse y dir
-        //                 this.dy*=-1;
-        //             }
-        //         }
-
-                        
-        //     };
-
-        //     this.zspritesgroup.add(a_zsprite);
-        // }
+        
         
 
+        a_zsprite.move = function()
+        {
+            this.x+=this.dx;
+            if ( this.x<thisContext.TILE_SIZE || this.x>(thisContext.MAP_WIDTH-1)*thisContext.TILE_SIZE ) this.dx*=-1;
+
+            this.y+=this.dy;
+            if ( this.y<thisContext.TILE_SIZE || this.y>(thisContext.MAP_HEIGHT-1)*thisContext.TILE_SIZE ) this.dy*=-1;
+
+            // CHECK COLLISION AGAINST WALLS
+            // compute cell position
 
 
-        // //animation test sprite 2
-        // for (var j=0;j<20;j++)
-        // {
+            var playerXCell = Math.floor(this.x/thisContext.TILE_SIZE);
+            var playerYCell = Math.floor(this.y/thisContext.TILE_SIZE);
 
-        //     a_zsprite = this.add.image();
-        //     a_zsprite.label = "pinkblobs";
-        //     a_zsprite.type = 'target';
-        //     a_zsprite.hitcount = 0;
-        //     a_zsprite.explosioncolor= 'violet';
+            // compute position relative to cell (ie: how many pixel from edge of cell)
+            var playerXCellOffset = this.x % thisContext.TILE_SIZE;
+            var playerYCellOffset = this.y % thisContext.TILE_SIZE;
 
-
-        //     a_zsprite.img = this.textures.get('pinkblob_anim_28x32x12.png').getSourceImage();
-
-        //     var randomKey = Math.random().toString();
-        //         a_zsprite.buffer = this.textures.createCanvas(randomKey, a_zsprite.img.width, a_zsprite.img.height);
-        //         a_zsprite.buffer.getContext('2d', {willReadFrequently:true}).drawImage(a_zsprite.img, 0, 0);        
-        //         var imageData = a_zsprite.buffer.getContext('2d', {willReadFrequently:true}).getImageData(0, 0, a_zsprite.img.width, a_zsprite.img.height);
-        //         a_zsprite.pixels = imageData.data;
-
-        //     a_zsprite.x = 300+(j*5);
-        //     a_zsprite.y = 250+(j*5);
-        //     a_zsprite.animated = true;
-        //     //a_zsprite.flying = true;
-        //     a_zsprite.animationtimecheck=0;
-        //     a_zsprite.frametimer = 200;
-        //     a_zsprite.inplay = false;
-        //     a_zsprite.numframes = 12;
-        //     a_zsprite.framewidth = 28;
-        //     a_zsprite.frameindex = 0;
-
-        //     a_zsprite.elevation_delta = 32;//Phaser.Math.Between(0,100);
-        //     a_zsprite.base_elevation = 32;
-
-
-        //     this.tweens.add({
-        //         targets: a_zsprite,
-        //         elevation_delta: 96,
-        //         ease: 'Sine.easeInOut',
-        //         duration: 1000,
-        //         delay: j*100,
-        //         yoyo: true,
-        //         repeat: -1
-        //     });
-
-
-
-
-
-        //     a_zsprite.followerdata = 0;
-
-        //     var _path = new Phaser.Curves.Path(100, 100);
-
-        //     _path.splineTo([ 160,136,440,280,640,56,870,194,1240,56,1160,536,1200,736,840,896,800,536,480,816,80,776,400,496,100,250 ]);
-        //     _path.closePath();
-
-        //     // _path.splineTo([ 164, 446, 274, 542, 412, 457, 522, 541, 664, 464 ]);
-
-        //     // _path.lineTo(700, 300);
-
-        //     // _path.lineTo(600, 350);
-
-        //     // _path.ellipseTo(200, 100, 100, 250, false, 0);
-
-        //     // _path.cubicBezierTo(222, 119, 308, 107, 208, 368);
-
-        //     // _path.ellipseTo(60, 60, 0, 360, true);
-
-        //     a_zsprite.path = _path;
-
-        //     this.tweens.add({
-        //         targets: a_zsprite,
-        //         followerdata: 1,
-        //         ease: 'none',
-        //         duration: 14000,
-        //         delay: j*120,
-        //         yoyo: false,
-        //         repeat: -1
-        //     });
-
-        //     a_zsprite.move = function()
-        //     {
-        //         this.x=this.path.getPoint(this.followerdata).x;
-        //         this.y=this.path.getPoint(this.followerdata).y;
-        //     };                        
+            var minDistanceToWall=20;
             
-        //     this.zspritesgroup.add(a_zsprite);
-        // }
+            // make sure the player don't bump into walls
+            if (this.dx>0)
+            {
+                // moving right
+                if ((thisContext.fMap.charAt((playerYCell*thisContext.MAP_WIDTH)+playerXCell+1)!='-')&&
+                    (playerXCellOffset > (thisContext.TILE_SIZE-minDistanceToWall)))
+                {
+                    // reverse x dir
+                    this.dx*=-1;
+                }               
+            }
+            else
+            {
+                // moving left
+                if ((thisContext.fMap.charAt((playerYCell*thisContext.MAP_WIDTH)+playerXCell-1)!='-')&&
+                    (playerXCellOffset < (minDistanceToWall)))
+                {
+                    /// reverse x dir
+                    this.dx*=-1;
+                } 
+            } 
+
+            if (this.dy<0)
+            {
+                // moving up
+                if ((thisContext.fMap.charAt(((playerYCell-1)*thisContext.MAP_HEIGHT)+playerXCell)!='-')&&
+                    (playerYCellOffset < (minDistanceToWall)))
+                {
+                    // reverse y dir
+                    this.dy*=-1;
+                }
+            }
+            else
+            {
+                // moving down                                  
+                if ((thisContext.fMap.charAt(((playerYCell+1)*thisContext.MAP_HEIGHT)+playerXCell)!='-')&&
+                    (playerYCellOffset > (thisContext.TILE_SIZE-minDistanceToWall)))
+                {
+                    // reverse y dir
+                    this.dy*=-1;
+                }
+            }
+
+            
+        };
+
+        thisContext.zspritesgroup.add(a_zsprite);
+    }
+}
 
 
-        // //animation test sprite 3
-        // for (var j=0;j<12;j++)
-        // {
+function activate_cydrones(thisContext,quantity)
+{
+    active_objectGangs.push('cydrones');
 
-        //     a_zsprite = this.add.image();
-        //     a_zsprite.label = "ufos";
-        //     a_zsprite.type = 'target';
-        //     a_zsprite.hitcount = 0;
-        //     a_zsprite.explosioncolor= 'violet';
+    //cydrone creature animation (type 1)
+    for (var j=0;j<quantity;j++)
+    {
+        a_zsprite = thisContext.add.image();
+        a_zsprite.label = 'cydrones';
+        a_zsprite.type = 'target';
+        a_zsprite.hitcount = 0;
+        a_zsprite.explosioncolor= 'cyan';
+
+        a_zsprite.img = thisContext.textures.get('cydrone_anim_20x26x4.png').getSourceImage();
+
+        a_zsprite.animationData = thisContext.animationData['cydrone_anim_20x26x4.png'];
+
+        var randomKey = Math.random().toString();
+            a_zsprite.buffer = thisContext.textures.createCanvas(randomKey, a_zsprite.img.width, a_zsprite.img.height);
+            a_zsprite.buffer.getContext('2d', {willReadFrequently:true}).drawImage(a_zsprite.img, 0, 0);        
+            var imageData = a_zsprite.buffer.getContext('2d', {willReadFrequently:true}).getImageData(0, 0, a_zsprite.img.width, a_zsprite.img.height);
+            a_zsprite.pixels = imageData.data;
 
 
-        //     a_zsprite.img = this.textures.get('ufo_anim_29x26x40.png').getSourceImage();
 
-        //     var randomKey = Math.random().toString();
-        //         a_zsprite.buffer = this.textures.createCanvas(randomKey, a_zsprite.img.width, a_zsprite.img.height);
-        //         a_zsprite.buffer.getContext('2d', {willReadFrequently:true}).drawImage(a_zsprite.img, 0, 0);        
-        //         var imageData = a_zsprite.buffer.getContext('2d', {willReadFrequently:true}).getImageData(0, 0, a_zsprite.img.width, a_zsprite.img.height);
-        //         a_zsprite.pixels = imageData.data;
+        a_zsprite.x = Phaser.Math.Between(100,668);
+        a_zsprite.y = Phaser.Math.Between(100,1180);
+        a_zsprite.animated = true;
+        //a_zsprite.flying = true;
+        a_zsprite.animationtimecheck=0;
+        a_zsprite.frametimer = 200;
+        a_zsprite.inplay = false;
+        a_zsprite.numframes = 4;
+        a_zsprite.framewidth = 20;
+        a_zsprite.frameindex = 0;
+        a_zsprite.dx = Phaser.Math.RND.realInRange(2.5, 4.5);
+        a_zsprite.dy = Phaser.Math.RND.realInRange(2.5, 4.5);
 
-        //     a_zsprite.x = Phaser.Math.Between(100, 668);
-        //     a_zsprite.y = Phaser.Math.Between(100, 1180);
-        //     // a_zsprite.xincr = Phaser.Math.RND.realInRange(4.5, 8.5);
-        //     // a_zsprite.yincr = Phaser.Math.RND.realInRange(4.5, 8.5);
-        //     a_zsprite.animated = true;
-        //     //a_zsprite.flying = false;
-        //     a_zsprite.animationtimecheck=0;
-        //     a_zsprite.frametimer = 0;
-        //     a_zsprite.inplay = false;
-        //     a_zsprite.numframes = 40;
-        //     a_zsprite.framewidth = 29;
-        //     a_zsprite.frameindex = 0;
+        a_zsprite.elevation_delta = Phaser.Math.Between(-64,64);
+        a_zsprite.base_elevation = 64;//Phaser.Math.Between(0,64);
 
-        //     a_zsprite.elevation_delta = 0;
-        //     a_zsprite.base_elevation = 32;
+        thisContext.tweens.add({
+            targets: a_zsprite,
+            elevation_delta: 0,
+            ease: 'Sine.easeInOut',
+            duration: 2000,
+            yoyo: true,
+            repeat: -1
+        });
+        
+        
+        
 
-        //     this.tweens.timeline({
+        a_zsprite.move = function()
+        {
+            this.x+=this.dx;
+            if ( this.x<thisContext.TILE_SIZE || this.x>(thisContext.MAP_WIDTH-1)*thisContext.TILE_SIZE ) this.dx*=-1;
+
+            this.y+=this.dy;
+            if ( this.y<thisContext.TILE_SIZE || this.y>(thisContext.MAP_HEIGHT-1)*thisContext.TILE_SIZE ) this.dy*=-1;
+
+            // CHECK COLLISION AGAINST WALLS
+            // compute cell position
+
+
+            var playerXCell = Math.floor(this.x/thisContext.TILE_SIZE);
+            var playerYCell = Math.floor(this.y/thisContext.TILE_SIZE);
+
+            // compute position relative to cell (ie: how many pixel from edge of cell)
+            var playerXCellOffset = this.x % thisContext.TILE_SIZE;
+            var playerYCellOffset = this.y % thisContext.TILE_SIZE;
+
+            var minDistanceToWall=20;
+            
+            // make sure the player don't bump into walls
+            if (this.dx>0)
+            {
+                // moving right
+                if ((thisContext.fMap.charAt((playerYCell*thisContext.MAP_WIDTH)+playerXCell+1)!='-')&&
+                    (playerXCellOffset > (thisContext.TILE_SIZE-minDistanceToWall)))
+                {
+                    // reverse x dir
+                    this.dx*=-1;
+                }               
+            }
+            else
+            {
+                // moving left
+                if ((thisContext.fMap.charAt((playerYCell*thisContext.MAP_WIDTH)+playerXCell-1)!='-')&&
+                    (playerXCellOffset < (minDistanceToWall)))
+                {
+                    /// reverse x dir
+                    this.dx*=-1;
+                } 
+            } 
+
+            if (this.dy<0)
+            {
+                // moving up
+                if ((thisContext.fMap.charAt(((playerYCell-1)*thisContext.MAP_HEIGHT)+playerXCell)!='-')&&
+                    (playerYCellOffset < (minDistanceToWall)))
+                {
+                    // reverse y dir
+                    this.dy*=-1;
+                }
+            }
+            else
+            {
+                // moving down                                  
+                if ((thisContext.fMap.charAt(((playerYCell+1)*thisContext.MAP_HEIGHT)+playerXCell)!='-')&&
+                    (playerYCellOffset > (thisContext.TILE_SIZE-minDistanceToWall)))
+                {
+                    // reverse y dir
+                    this.dy*=-1;
+                }
+            }
+
+                    
+        };
+
+        thisContext.zspritesgroup.add(a_zsprite);
+    }
+}
+
+function activate_redwings(thisContext,quantity)
+{
+    active_objectGangs.push('redwings');
+    //animation test sprite - type 1
+    for (var j=0;j<quantity;j++)
+    {
+        a_zsprite = thisContext.add.image();
+        a_zsprite.label = 'redwings';
+        a_zsprite.type = 'target';
+        a_zsprite.hitcount = 0;
+        a_zsprite.explosioncolor= 'cyan';
+
+        a_zsprite.img = thisContext.textures.get('redwing_anim_32x24x4.png').getSourceImage();
+
+        a_zsprite.animationData = thisContext.animationData['redwing_anim_32x24x4.png'];
+
+        var randomKey = Math.random().toString();
+            a_zsprite.buffer = thisContext.textures.createCanvas(randomKey, a_zsprite.img.width, a_zsprite.img.height);
+            a_zsprite.buffer.getContext('2d', {willReadFrequently:true}).drawImage(a_zsprite.img, 0, 0);        
+            var imageData = a_zsprite.buffer.getContext('2d', {willReadFrequently:true}).getImageData(0, 0, a_zsprite.img.width, a_zsprite.img.height);
+            a_zsprite.pixels = imageData.data;
+
+
+
+        a_zsprite.x = Phaser.Math.Between(100,668);
+        a_zsprite.y = Phaser.Math.Between(100,1180);
+        a_zsprite.animated = true;
+        //a_zsprite.flying = true;
+        a_zsprite.animationtimecheck=0;
+        a_zsprite.frametimer = 200;
+        a_zsprite.inplay = false;
+        a_zsprite.numframes = 4;
+        a_zsprite.framewidth = 32;
+        a_zsprite.frameindex = 0;
+        a_zsprite.dx = Phaser.Math.RND.realInRange(2.5, 4.5);
+        a_zsprite.dy = Phaser.Math.RND.realInRange(2.5, 4.5);
+
+        a_zsprite.elevation_delta = Phaser.Math.Between(-64,64);
+        a_zsprite.base_elevation = 64;//Phaser.Math.Between(0,64);
+
+        thisContext.tweens.add({
+            targets: a_zsprite,
+            elevation_delta: 0,
+            ease: 'Sine.easeInOut',
+            duration: 2000,
+            yoyo: true,
+            repeat: -1
+        });
+        
+        
+        
+
+        a_zsprite.move = function()
+        {
+            this.x+=this.dx;
+            if ( this.x<thisContext.TILE_SIZE || this.x>(thisContext.MAP_WIDTH-1)*thisContext.TILE_SIZE ) this.dx*=-1;
+
+            this.y+=this.dy;
+            if ( this.y<thisContext.TILE_SIZE || this.y>(thisContext.MAP_HEIGHT-1)*thisContext.TILE_SIZE ) this.dy*=-1;
+
+            // CHECK COLLISION AGAINST WALLS
+            // compute cell position
+
+
+            var playerXCell = Math.floor(this.x/thisContext.TILE_SIZE);
+            var playerYCell = Math.floor(this.y/thisContext.TILE_SIZE);
+
+            // compute position relative to cell (ie: how many pixel from edge of cell)
+            var playerXCellOffset = this.x % thisContext.TILE_SIZE;
+            var playerYCellOffset = this.y % thisContext.TILE_SIZE;
+
+            var minDistanceToWall=20;
+            
+            // make sure the player don't bump into walls
+            if (this.dx>0)
+            {
+                // moving right
+                if ((thisContext.fMap.charAt((playerYCell*thisContext.MAP_WIDTH)+playerXCell+1)!='-')&&
+                    (playerXCellOffset > (thisContext.TILE_SIZE-minDistanceToWall)))
+                {
+                    // reverse x dir
+                    this.dx*=-1;
+                }               
+            }
+            else
+            {
+                // moving left
+                if ((thisContext.fMap.charAt((playerYCell*thisContext.MAP_WIDTH)+playerXCell-1)!='-')&&
+                    (playerXCellOffset < (minDistanceToWall)))
+                {
+                    /// reverse x dir
+                    this.dx*=-1;
+                } 
+            } 
+
+            if (this.dy<0)
+            {
+                // moving up
+                if ((thisContext.fMap.charAt(((playerYCell-1)*thisContext.MAP_HEIGHT)+playerXCell)!='-')&&
+                    (playerYCellOffset < (minDistanceToWall)))
+                {
+                    // reverse y dir
+                    this.dy*=-1;
+                }
+            }
+            else
+            {
+                // moving down                                  
+                if ((thisContext.fMap.charAt(((playerYCell+1)*thisContext.MAP_HEIGHT)+playerXCell)!='-')&&
+                    (playerYCellOffset > (thisContext.TILE_SIZE-minDistanceToWall)))
+                {
+                    // reverse y dir
+                    this.dy*=-1;
+                }
+            }
+
+                    
+        };
+
+        thisContext.zspritesgroup.add(a_zsprite);
+    }
+}        
+
+function activate_pinkblobs(thisContext,quantity)
+{
+    active_objectGangs.push('pinkblobs');
+
+    //animation test sprite 2
+    for (var j=0;j<quantity;j++)
+    {
+
+        a_zsprite = thisContext.add.image();
+        a_zsprite.label = 'pinkblobs';
+        a_zsprite.type = 'target';
+        a_zsprite.hitcount = 0;
+        a_zsprite.explosioncolor= 'violet';
+
+
+        a_zsprite.img = thisContext.textures.get('pinkblob_anim_28x32x12.png').getSourceImage();
+
+        a_zsprite.animationData = thisContext.animationData['pinkblob_anim_28x32x12.png'];
+
+        var randomKey = Math.random().toString();
+            a_zsprite.buffer = thisContext.textures.createCanvas(randomKey, a_zsprite.img.width, a_zsprite.img.height);
+            a_zsprite.buffer.getContext('2d', {willReadFrequently:true}).drawImage(a_zsprite.img, 0, 0);        
+            var imageData = a_zsprite.buffer.getContext('2d', {willReadFrequently:true}).getImageData(0, 0, a_zsprite.img.width, a_zsprite.img.height);
+            a_zsprite.pixels = imageData.data;
+
+        a_zsprite.x = 300+(j*5);
+        a_zsprite.y = 250+(j*5);
+        a_zsprite.animated = true;
+        //a_zsprite.flying = true;
+        a_zsprite.animationtimecheck=0;
+        a_zsprite.frametimer = 200;
+        a_zsprite.inplay = false;
+        a_zsprite.numframes = 12;
+        a_zsprite.framewidth = 28;
+        a_zsprite.frameindex = 0;
+
+        a_zsprite.elevation_delta = 32;//Phaser.Math.Between(0,100);
+        a_zsprite.base_elevation = 32;
+
+
+        thisContext.tweens.add({
+            targets: a_zsprite,
+            elevation_delta: 96,
+            ease: 'Sine.easeInOut',
+            duration: 1000,
+            delay: j*100,
+            yoyo: true,
+            repeat: -1
+        });
+
+
+
+
+
+        a_zsprite.followerdata = 0;
+
+        var _path = new Phaser.Curves.Path(100, 100);
+
+        _path.splineTo([ 160,136,440,280,640,56,870,194,1240,56,1160,536,1200,736,840,896,800,536,480,816,80,776,400,496,100,250 ]);
+        _path.closePath();
+
+        // _path.splineTo([ 164, 446, 274, 542, 412, 457, 522, 541, 664, 464 ]);
+
+        // _path.lineTo(700, 300);
+
+        // _path.lineTo(600, 350);
+
+        // _path.ellipseTo(200, 100, 100, 250, false, 0);
+
+        // _path.cubicBezierTo(222, 119, 308, 107, 208, 368);
+
+        // _path.ellipseTo(60, 60, 0, 360, true);
+
+        a_zsprite.path = _path;
+
+        thisContext.tweens.add({
+            targets: a_zsprite,
+            followerdata: 1,
+            ease: 'none',
+            duration: 14000,
+            delay: j*120,
+            yoyo: false,
+            repeat: -1
+        });
+
+        a_zsprite.move = function()
+        {
+            this.x=this.path.getPoint(this.followerdata).x;
+            this.y=this.path.getPoint(this.followerdata).y;
+        };                        
+        
+        thisContext.zspritesgroup.add(a_zsprite);
+    }
+}
+
+function activate_ufos(thisContext,quantity)
+{
+    active_objectGangs.push('ufos');
+    //animation test sprite 3
+    for (var j=0;j<quantity;j++)
+    {
+
+        a_zsprite = thisContext.add.image();
+        a_zsprite.label = 'ufos';
+        a_zsprite.type = 'target';
+        a_zsprite.hitcount = 0;
+        a_zsprite.explosioncolor= 'violet';
+
+
+        a_zsprite.img = thisContext.textures.get('ufo_anim_29x26x40.png').getSourceImage();
+
+        a_zsprite.animationData = thisContext.animationData['ufo_anim_29x26x40.png'];
+
+        var randomKey = Math.random().toString();
+            a_zsprite.buffer = thisContext.textures.createCanvas(randomKey, a_zsprite.img.width, a_zsprite.img.height);
+            a_zsprite.buffer.getContext('2d', {willReadFrequently:true}).drawImage(a_zsprite.img, 0, 0);        
+            var imageData = a_zsprite.buffer.getContext('2d', {willReadFrequently:true}).getImageData(0, 0, a_zsprite.img.width, a_zsprite.img.height);
+            a_zsprite.pixels = imageData.data;
+
+        a_zsprite.x = Phaser.Math.Between(100, 668);
+        a_zsprite.y = Phaser.Math.Between(100, 1180);
+        // a_zsprite.xincr = Phaser.Math.RND.realInRange(4.5, 8.5);
+        // a_zsprite.yincr = Phaser.Math.RND.realInRange(4.5, 8.5);
+        a_zsprite.animated = true;
+        //a_zsprite.flying = false;
+        a_zsprite.animationtimecheck=0;
+        a_zsprite.frametimer = 0;
+        a_zsprite.inplay = false;
+        a_zsprite.numframes = 40;
+        a_zsprite.framewidth = 29;
+        a_zsprite.frameindex = 0;
+
+        a_zsprite.elevation_delta = 0;
+        a_zsprite.base_elevation = 32;
+
+        thisContext.tweens.timeline({
+
+        targets: a_zsprite,
+        ease: 'Expo.easeInOut',
+        
+        delay: Phaser.Math.Between(100, 500),
+        loop: -1,
+
+        tweens: [{
+            
+            x: Phaser.Math.Between(100, 668),
+            base_elevation: Phaser.Math.Between(0, 96),
+            duration: 1000
+        },
+        {
+            
+            y: Phaser.Math.Between(100, 1180),
+            base_elevation: Phaser.Math.Between(0, 96),
+            duration: 1000
+        },
+        {
+            
+            x: a_zsprite.x,
+            base_elevation: Phaser.Math.Between(0, 96),
+            duration: 1000
+        },
+        {
+            
+            y: a_zsprite.y,
+            base_elevation: Phaser.Math.Between(0, 96),
+            duration: 1000
+        }]
+
+        });
+        // thisContext.tweens.add({
+        //     targets: a_zsprite,
+        //     elevation_delta: Phaser.Math.Between(0, 64),
+        //     // x: Phaser.Math.Between(100, 668),
+        //     // y: Phaser.Math.Between(100, 1180),
+        //     ease: 'Quad.easeInOut',
+        //     duration: 1000,
+        //     yoyo: true,
+        //     repeat: -1
+        // });
+
+        a_zsprite.move = function()
+        {
+            // this.x+=this.dx;
+            // if ( this.x<thisContext.TILE_SIZE || this.x>(thisContext.MAP_WIDTH-1)*thisContext.TILE_SIZE ) this.dx*=-1;
+
+            // this.y+=this.dy;
+            // if ( this.y<thisContext.TILE_SIZE || this.y>(thisContext.MAP_HEIGHT-1)*thisContext.TILE_SIZE ) this.dy*=-1;
+
+            // // CHECK COLLISION AGAINST WALLS
+            // // compute cell position
+
+
+            // var playerXCell = Math.floor(this.x/thisContext.TILE_SIZE);
+            // var playerYCell = Math.floor(this.y/thisContext.TILE_SIZE);
+
+            // // compute position relative to cell (ie: how many pixel from edge of cell)
+            // var playerXCellOffset = this.x % thisContext.TILE_SIZE;
+            // var playerYCellOffset = this.y % thisContext.TILE_SIZE;
+
+            // var minDistanceToWall=20;
+            
+            // // make sure the player don't bump into walls
+            // if (this.dx>0)
+            // {
+            //     // moving right
+            //     if ((thisContext.fMap.charAt((playerYCell*thisContext.MAP_WIDTH)+playerXCell+1)!='-')&&
+            //         (playerXCellOffset > (thisContext.TILE_SIZE-minDistanceToWall)))
+            //     {
+            //         // reverse x dir
+            //         this.dx*=-1;
+            //     }               
+            // }
+            // else
+            // {
+            //     // moving left
+            //     if ((thisContext.fMap.charAt((playerYCell*thisContext.MAP_WIDTH)+playerXCell-1)!='-')&&
+            //         (playerXCellOffset < (minDistanceToWall)))
+            //     {
+            //         /// reverse x dir
+            //         this.dx*=-1;
+            //     } 
+            // } 
+
+            // if (this.dy<0)
+            // {
+            //     // moving up
+            //     if ((thisContext.fMap.charAt(((playerYCell-1)*thisContext.MAP_HEIGHT)+playerXCell)!='-')&&
+            //         (playerYCellOffset < (minDistanceToWall)))
+            //     {
+            //         // reverse y dir
+            //         this.dy*=-1;
+            //     }
+            // }
+            // else
+            // {
+            //     // moving down                                  
+            //     if ((thisContext.fMap.charAt(((playerYCell+1)*thisContext.MAP_HEIGHT)+playerXCell)!='-')&&
+            //         (playerYCellOffset > (thisContext.TILE_SIZE-minDistanceToWall)))
+            //     {
+            //         // reverse y dir
+            //         this.dy*=-1;
+            //     }
+            // }
+
+        };                        
+        
+        thisContext.zspritesgroup.add(a_zsprite);
+    }
+}
+
+function activate_neonorbs(thisContext,quantity)
+{
+    active_objectGangs.push('neonorbs');
+    //animation test sprite 5
+    for (var j=0;j<quantity;j++)
+    {
+
+        a_zsprite = thisContext.add.image();
+        a_zsprite.label = 'neonorbs';
+        a_zsprite.type = 'target';
+        a_zsprite.hitcount = 0;
+        a_zsprite.explosioncolor= 'violet';
+
+        var b_index = Phaser.Math.Between(1,3);
+        a_zsprite.img = thisContext.textures.get('ball'+b_index+'.png').getSourceImage();
+
+        a_zsprite.animationData = thisContext.animationData['ball'+b_index+'.png'];
+
+
+        var randomKey = Math.random().toString();
+            a_zsprite.buffer = thisContext.textures.createCanvas(randomKey, a_zsprite.img.width, a_zsprite.img.height);
+            a_zsprite.buffer.getContext('2d', {willReadFrequently:true}).drawImage(a_zsprite.img, 0, 0);        
+            var imageData = a_zsprite.buffer.getContext('2d', {willReadFrequently:true}).getImageData(0, 0, a_zsprite.img.width, a_zsprite.img.height);
+            a_zsprite.pixels = imageData.data;
+
+        a_zsprite.x = Phaser.Math.Between(100,1180);
+        a_zsprite.y = Phaser.Math.Between(100,1180);
+        a_zsprite.dx = Phaser.Math.RND.realInRange(3, 7);
+        a_zsprite.dy = Phaser.Math.RND.realInRange(-3, -7);
+        a_zsprite.animated = false;
+        // a_zsprite.animationtimecheck=0;
+        // a_zsprite.frametimer = 50;
+        a_zsprite.inplay = false;
+        // a_zsprite.numframes = 3;
+        // a_zsprite.framewidth = 52;
+        // a_zsprite.frameindex = 0;
+
+        a_zsprite.elevation_delta = 0;
+        a_zsprite.base_elevation = 0;
+
+
+        thisContext.tweens.add({
+            targets: a_zsprite,
+            delay: Phaser.Math.Between(500,1500),
+            elevation_delta: Phaser.Math.Between(50,120),
+            ease: 'Sine.easeOut',
+            duration: Phaser.Math.Between(400,600),
+            yoyo: true,
+            repeat: -1,
+            
+        });
+
+        // thisContext.tweens.timeline({
 
         //     targets: a_zsprite,
-        //     ease: 'Expo.easeInOut',
+        //     delay: Phaser.Math.Between(500,1500),
+        //     ease: 'Sine.easeOut',
+        //     duration: 500,
+        //     yoyo: true,
+        //     repeat: -1,
             
-        //     delay: Phaser.Math.Between(100, 500),
-        //     loop: -1,
-
+            
         //     tweens: [{
                 
-        //         x: Phaser.Math.Between(100, 668),
-        //         base_elevation: Phaser.Math.Between(0, 96),
-        //         duration: 1000
-        //     },
-        //     {
+        //         elevation_delta: 100
                 
-        //         y: Phaser.Math.Between(100, 1180),
-        //         base_elevation: Phaser.Math.Between(0, 96),
-        //         duration: 1000
-        //     },
-        //     {
-                
-        //         x: a_zsprite.x,
-        //         base_elevation: Phaser.Math.Between(0, 96),
-        //         duration: 1000
-        //     },
-        //     {
-                
-        //         y: a_zsprite.y,
-        //         base_elevation: Phaser.Math.Between(0, 96),
-        //         duration: 1000
-        //     }]
+        //         }]
 
-        //     });
-        //     // this.tweens.add({
-        //     //     targets: a_zsprite,
-        //     //     elevation_delta: Phaser.Math.Between(0, 64),
-        //     //     // x: Phaser.Math.Between(100, 668),
-        //     //     // y: Phaser.Math.Between(100, 1180),
-        //     //     ease: 'Quad.easeInOut',
-        //     //     duration: 1000,
-        //     //     yoyo: true,
-        //     //     repeat: -1
-        //     // });
+        // });
 
-        //     a_zsprite.move = function()
-        //     {
-        //         // this.x+=this.dx;
-        //         // if ( this.x<thisContext.TILE_SIZE || this.x>(thisContext.MAP_WIDTH-1)*thisContext.TILE_SIZE ) this.dx*=-1;
+        a_zsprite.move = function()
+        {
+            this.x+=this.dx;
+            if ( this.x<thisContext.TILE_SIZE || this.x>(thisContext.MAP_WIDTH-1)*thisContext.TILE_SIZE ) this.dx*=-1;
 
-        //         // this.y+=this.dy;
-        //         // if ( this.y<thisContext.TILE_SIZE || this.y>(thisContext.MAP_HEIGHT-1)*thisContext.TILE_SIZE ) this.dy*=-1;
+            this.y+=this.dy;
+            if ( this.y<thisContext.TILE_SIZE || this.y>(thisContext.MAP_HEIGHT-1)*thisContext.TILE_SIZE ) this.dy*=-1;
 
-        //         // // CHECK COLLISION AGAINST WALLS
-        //         // // compute cell position
+            // CHECK COLLISION AGAINST WALLS
+            // compute cell position
 
 
-        //         // var playerXCell = Math.floor(this.x/thisContext.TILE_SIZE);
-        //         // var playerYCell = Math.floor(this.y/thisContext.TILE_SIZE);
+            var playerXCell = Math.floor(this.x/thisContext.TILE_SIZE);
+            var playerYCell = Math.floor(this.y/thisContext.TILE_SIZE);
 
-        //         // // compute position relative to cell (ie: how many pixel from edge of cell)
-        //         // var playerXCellOffset = this.x % thisContext.TILE_SIZE;
-        //         // var playerYCellOffset = this.y % thisContext.TILE_SIZE;
+            // compute position relative to cell (ie: how many pixel from edge of cell)
+            var playerXCellOffset = this.x % thisContext.TILE_SIZE;
+            var playerYCellOffset = this.y % thisContext.TILE_SIZE;
 
-        //         // var minDistanceToWall=20;
-                
-        //         // // make sure the player don't bump into walls
-        //         // if (this.dx>0)
-        //         // {
-        //         //     // moving right
-        //         //     if ((thisContext.fMap.charAt((playerYCell*thisContext.MAP_WIDTH)+playerXCell+1)!='-')&&
-        //         //         (playerXCellOffset > (thisContext.TILE_SIZE-minDistanceToWall)))
-        //         //     {
-        //         //         // reverse x dir
-        //         //         this.dx*=-1;
-        //         //     }               
-        //         // }
-        //         // else
-        //         // {
-        //         //     // moving left
-        //         //     if ((thisContext.fMap.charAt((playerYCell*thisContext.MAP_WIDTH)+playerXCell-1)!='-')&&
-        //         //         (playerXCellOffset < (minDistanceToWall)))
-        //         //     {
-        //         //         /// reverse x dir
-        //         //         this.dx*=-1;
-        //         //     } 
-        //         // } 
-
-        //         // if (this.dy<0)
-        //         // {
-        //         //     // moving up
-        //         //     if ((thisContext.fMap.charAt(((playerYCell-1)*thisContext.MAP_HEIGHT)+playerXCell)!='-')&&
-        //         //         (playerYCellOffset < (minDistanceToWall)))
-        //         //     {
-        //         //         // reverse y dir
-        //         //         this.dy*=-1;
-        //         //     }
-        //         // }
-        //         // else
-        //         // {
-        //         //     // moving down                                  
-        //         //     if ((thisContext.fMap.charAt(((playerYCell+1)*thisContext.MAP_HEIGHT)+playerXCell)!='-')&&
-        //         //         (playerYCellOffset > (thisContext.TILE_SIZE-minDistanceToWall)))
-        //         //     {
-        //         //         // reverse y dir
-        //         //         this.dy*=-1;
-        //         //     }
-        //         // }
-
-        //     };                        
+            var minDistanceToWall=20;
             
-        //     this.zspritesgroup.add(a_zsprite);
-        // }
+            // make sure the player don't bump into walls
+            if (this.dx>0)
+            {
+                // moving right
+                if ((thisContext.fMap.charAt((playerYCell*thisContext.MAP_WIDTH)+playerXCell+1)!='-')&&
+                    (playerXCellOffset > (thisContext.TILE_SIZE-minDistanceToWall)))
+                {
+                    // reverse x dir
+                    this.dx*=-1;
+                }               
+            }
+            else
+            {
+                // moving left
+                if ((thisContext.fMap.charAt((playerYCell*thisContext.MAP_WIDTH)+playerXCell-1)!='-')&&
+                    (playerXCellOffset < (minDistanceToWall)))
+                {
+                    /// reverse x dir
+                    this.dx*=-1;
+                } 
+            } 
 
-        // //animation test sprite 5
-        // for (var j=0;j<15;j++)
-        // {
+            if (this.dy<0)
+            {
+                // moving up
+                if ((thisContext.fMap.charAt(((playerYCell-1)*thisContext.MAP_HEIGHT)+playerXCell)!='-')&&
+                    (playerYCellOffset < (minDistanceToWall)))
+                {
+                    // reverse y dir
+                    this.dy*=-1;
+                }
+            }
+            else
+            {
+                // moving down                                  
+                if ((thisContext.fMap.charAt(((playerYCell+1)*thisContext.MAP_HEIGHT)+playerXCell)!='-')&&
+                    (playerYCellOffset > (thisContext.TILE_SIZE-minDistanceToWall)))
+                {
+                    // reverse y dir
+                    this.dy*=-1;
+                }
+            }
 
-        //     a_zsprite = this.add.image();
-        //     a_zsprite.label = "neonorbs";
-        //     a_zsprite.type = 'target';
-        //     a_zsprite.hitcount = 0;
-        //     a_zsprite.explosioncolor= 'violet';
+        };                        
+        
+        thisContext.zspritesgroup.add(a_zsprite);
+    }
+}
 
-        //     var b_index = Phaser.Math.Between(1,3);
-        //     a_zsprite.img = this.textures.get('ball'+b_index+'.png').getSourceImage();
+function activate_blueorbs(thisContext,quantity)
+{
+    active_objectGangs.push('blueorbs');
+    //animation test sprite 5
+    for (var j=0;j<quantity;j++)
+    {
 
+        a_zsprite = thisContext.add.image();
+        a_zsprite.label = 'blueorbs';
+        a_zsprite.type = 'target';
+        a_zsprite.hitcount = 0;
+        a_zsprite.explosioncolor= 'violet';
 
-        //     var randomKey = Math.random().toString();
-        //         a_zsprite.buffer = this.textures.createCanvas(randomKey, a_zsprite.img.width, a_zsprite.img.height);
-        //         a_zsprite.buffer.getContext('2d', {willReadFrequently:true}).drawImage(a_zsprite.img, 0, 0);        
-        //         var imageData = a_zsprite.buffer.getContext('2d', {willReadFrequently:true}).getImageData(0, 0, a_zsprite.img.width, a_zsprite.img.height);
-        //         a_zsprite.pixels = imageData.data;
+        
+        a_zsprite.img = thisContext.textures.get('ball4.png').getSourceImage();
 
-        //     a_zsprite.x = Phaser.Math.Between(100,1180);
-        //     a_zsprite.y = Phaser.Math.Between(100,1180);
-        //     a_zsprite.dx = Phaser.Math.RND.realInRange(3, 7);
-        //     a_zsprite.dy = Phaser.Math.RND.realInRange(-3, -7);
-        //     a_zsprite.animated = false;
-        //     // a_zsprite.animationtimecheck=0;
-        //     // a_zsprite.frametimer = 50;
-        //     a_zsprite.inplay = false;
-        //     // a_zsprite.numframes = 3;
-        //     // a_zsprite.framewidth = 52;
-        //     // a_zsprite.frameindex = 0;
-
-        //     a_zsprite.elevation_delta = 0;
-        //     a_zsprite.base_elevation = 0;
-
-
-        //     this.tweens.add({
-        //         targets: a_zsprite,
-        //         delay: Phaser.Math.Between(500,1500),
-        //         elevation_delta: Phaser.Math.Between(50,120),
-        //         ease: 'Sine.easeOut',
-        //         duration: Phaser.Math.Between(400,600),
-        //         yoyo: true,
-        //         repeat: -1,
-                
-        //     });
-
-        //     // this.tweens.timeline({
-
-        //     //     targets: a_zsprite,
-        //     //     delay: Phaser.Math.Between(500,1500),
-        //     //     ease: 'Sine.easeOut',
-        //     //     duration: 500,
-        //     //     yoyo: true,
-        //     //     repeat: -1,
-                
-                
-        //     //     tweens: [{
-                    
-        //     //         elevation_delta: 100
-                    
-        //     //         }]
-
-        //     // });
-
-        //     a_zsprite.move = function()
-        //     {
-        //         this.x+=this.dx;
-        //         if ( this.x<thisContext.TILE_SIZE || this.x>(thisContext.MAP_WIDTH-1)*thisContext.TILE_SIZE ) this.dx*=-1;
-
-        //         this.y+=this.dy;
-        //         if ( this.y<thisContext.TILE_SIZE || this.y>(thisContext.MAP_HEIGHT-1)*thisContext.TILE_SIZE ) this.dy*=-1;
-
-        //         // CHECK COLLISION AGAINST WALLS
-        //         // compute cell position
+        a_zsprite.animationData = thisContext.animationData['ball4.png'];
 
 
-        //         var playerXCell = Math.floor(this.x/thisContext.TILE_SIZE);
-        //         var playerYCell = Math.floor(this.y/thisContext.TILE_SIZE);
+        var randomKey = Math.random().toString();
+            a_zsprite.buffer = thisContext.textures.createCanvas(randomKey, a_zsprite.img.width, a_zsprite.img.height);
+            a_zsprite.buffer.getContext('2d', {willReadFrequently:true}).drawImage(a_zsprite.img, 0, 0);        
+            var imageData = a_zsprite.buffer.getContext('2d', {willReadFrequently:true}).getImageData(0, 0, a_zsprite.img.width, a_zsprite.img.height);
+            a_zsprite.pixels = imageData.data;
 
-        //         // compute position relative to cell (ie: how many pixel from edge of cell)
-        //         var playerXCellOffset = this.x % thisContext.TILE_SIZE;
-        //         var playerYCellOffset = this.y % thisContext.TILE_SIZE;
+        a_zsprite.x = Phaser.Math.Between(100,1180);
+        a_zsprite.y = Phaser.Math.Between(100,1180);
+        a_zsprite.dx = Phaser.Math.RND.realInRange(3, 7);
+        a_zsprite.dy = Phaser.Math.RND.realInRange(-3, -7);
+        a_zsprite.animated = false;
+        // a_zsprite.animationtimecheck=0;
+        // a_zsprite.frametimer = 50;
+        a_zsprite.inplay = false;
+        // a_zsprite.numframes = 3;
+        // a_zsprite.framewidth = 52;
+        // a_zsprite.frameindex = 0;
 
-        //         var minDistanceToWall=20;
-                
-        //         // make sure the player don't bump into walls
-        //         if (this.dx>0)
-        //         {
-        //             // moving right
-        //             if ((thisContext.fMap.charAt((playerYCell*thisContext.MAP_WIDTH)+playerXCell+1)!='-')&&
-        //                 (playerXCellOffset > (thisContext.TILE_SIZE-minDistanceToWall)))
-        //             {
-        //                 // reverse x dir
-        //                 this.dx*=-1;
-        //             }               
-        //         }
-        //         else
-        //         {
-        //             // moving left
-        //             if ((thisContext.fMap.charAt((playerYCell*thisContext.MAP_WIDTH)+playerXCell-1)!='-')&&
-        //                 (playerXCellOffset < (minDistanceToWall)))
-        //             {
-        //                 /// reverse x dir
-        //                 this.dx*=-1;
-        //             } 
-        //         } 
+        a_zsprite.elevation_delta = 0;
+        a_zsprite.base_elevation = 0;
 
-        //         if (this.dy<0)
-        //         {
-        //             // moving up
-        //             if ((thisContext.fMap.charAt(((playerYCell-1)*thisContext.MAP_HEIGHT)+playerXCell)!='-')&&
-        //                 (playerYCellOffset < (minDistanceToWall)))
-        //             {
-        //                 // reverse y dir
-        //                 this.dy*=-1;
-        //             }
-        //         }
-        //         else
-        //         {
-        //             // moving down                                  
-        //             if ((thisContext.fMap.charAt(((playerYCell+1)*thisContext.MAP_HEIGHT)+playerXCell)!='-')&&
-        //                 (playerYCellOffset > (thisContext.TILE_SIZE-minDistanceToWall)))
-        //             {
-        //                 // reverse y dir
-        //                 this.dy*=-1;
-        //             }
-        //         }
 
-        //     };                        
+        thisContext.tweens.add({
+            targets: a_zsprite,
+            //delay: Phaser.Math.Between(500,1500),
+            elevation_delta: 120,
+            ease: 'Sine.easeOut',
+            duration: 500,
+            yoyo: true,
+            repeat: -1,
             
-        //     this.zspritesgroup.add(a_zsprite);
-        // }
+        });
 
+        // thisContext.tweens.timeline({
 
-        // //animation test sprite 5
-        // for (var j=0;j<20;j++)
-        // {
-
-        //     a_zsprite = this.add.image();
-        //     a_zsprite.label = "blueorbs";
-        //     a_zsprite.type = 'target';
-        //     a_zsprite.hitcount = 0;
-        //     a_zsprite.explosioncolor= 'violet';
-
+        //     targets: a_zsprite,
+        //     delay: Phaser.Math.Between(500,1500),
+        //     ease: 'Sine.easeOut',
+        //     duration: 500,
+        //     yoyo: true,
+        //     repeat: -1,
             
-        //     a_zsprite.img = this.textures.get('ball4.png').getSourceImage();
-
-
-        //     var randomKey = Math.random().toString();
-        //         a_zsprite.buffer = this.textures.createCanvas(randomKey, a_zsprite.img.width, a_zsprite.img.height);
-        //         a_zsprite.buffer.getContext('2d', {willReadFrequently:true}).drawImage(a_zsprite.img, 0, 0);        
-        //         var imageData = a_zsprite.buffer.getContext('2d', {willReadFrequently:true}).getImageData(0, 0, a_zsprite.img.width, a_zsprite.img.height);
-        //         a_zsprite.pixels = imageData.data;
-
-        //     a_zsprite.x = Phaser.Math.Between(100,1180);
-        //     a_zsprite.y = Phaser.Math.Between(100,1180);
-        //     a_zsprite.dx = Phaser.Math.RND.realInRange(3, 7);
-        //     a_zsprite.dy = Phaser.Math.RND.realInRange(-3, -7);
-        //     a_zsprite.animated = false;
-        //     // a_zsprite.animationtimecheck=0;
-        //     // a_zsprite.frametimer = 50;
-        //     a_zsprite.inplay = false;
-        //     // a_zsprite.numframes = 3;
-        //     // a_zsprite.framewidth = 52;
-        //     // a_zsprite.frameindex = 0;
-
-        //     a_zsprite.elevation_delta = 0;
-        //     a_zsprite.base_elevation = 0;
-
-
-        //     this.tweens.add({
-        //         targets: a_zsprite,
-        //         //delay: Phaser.Math.Between(500,1500),
-        //         elevation_delta: 120,
-        //         ease: 'Sine.easeOut',
-        //         duration: 500,
-        //         yoyo: true,
-        //         repeat: -1,
-                
-        //     });
-
-        //     // this.tweens.timeline({
-
-        //     //     targets: a_zsprite,
-        //     //     delay: Phaser.Math.Between(500,1500),
-        //     //     ease: 'Sine.easeOut',
-        //     //     duration: 500,
-        //     //     yoyo: true,
-        //     //     repeat: -1,
-                
-                
-        //     //     tweens: [{
-                    
-        //     //         elevation_delta: 100
-                    
-        //     //         }]
-
-        //     // });
-
-        //     a_zsprite.move = function()
-        //     {
-        //         this.x+=this.dx;
-        //         if ( this.x<thisContext.TILE_SIZE || this.x>(thisContext.MAP_WIDTH-1)*thisContext.TILE_SIZE ) this.dx*=-1;
-
-        //         this.y+=this.dy;
-        //         if ( this.y<thisContext.TILE_SIZE || this.y>(thisContext.MAP_HEIGHT-1)*thisContext.TILE_SIZE ) this.dy*=-1;
-
-        //         // CHECK COLLISION AGAINST WALLS
-        //         // compute cell position
-
-
-        //         var playerXCell = Math.floor(this.x/thisContext.TILE_SIZE);
-        //         var playerYCell = Math.floor(this.y/thisContext.TILE_SIZE);
-
-        //         // compute position relative to cell (ie: how many pixel from edge of cell)
-        //         var playerXCellOffset = this.x % thisContext.TILE_SIZE;
-        //         var playerYCellOffset = this.y % thisContext.TILE_SIZE;
-
-        //         var minDistanceToWall=20;
-                
-        //         // make sure the player don't bump into walls
-        //         if (this.dx>0)
-        //         {
-        //             // moving right
-        //             if ((thisContext.fMap.charAt((playerYCell*thisContext.MAP_WIDTH)+playerXCell+1)!='-')&&
-        //                 (playerXCellOffset > (thisContext.TILE_SIZE-minDistanceToWall)))
-        //             {
-        //                 // reverse x dir
-        //                 this.dx*=-1;
-        //             }               
-        //         }
-        //         else
-        //         {
-        //             // moving left
-        //             if ((thisContext.fMap.charAt((playerYCell*thisContext.MAP_WIDTH)+playerXCell-1)!='-')&&
-        //                 (playerXCellOffset < (minDistanceToWall)))
-        //             {
-        //                 /// reverse x dir
-        //                 this.dx*=-1;
-        //             } 
-        //         } 
-
-        //         if (this.dy<0)
-        //         {
-        //             // moving up
-        //             if ((thisContext.fMap.charAt(((playerYCell-1)*thisContext.MAP_HEIGHT)+playerXCell)!='-')&&
-        //                 (playerYCellOffset < (minDistanceToWall)))
-        //             {
-        //                 // reverse y dir
-        //                 this.dy*=-1;
-        //             }
-        //         }
-        //         else
-        //         {
-        //             // moving down                                  
-        //             if ((thisContext.fMap.charAt(((playerYCell+1)*thisContext.MAP_HEIGHT)+playerXCell)!='-')&&
-        //                 (playerYCellOffset > (thisContext.TILE_SIZE-minDistanceToWall)))
-        //             {
-        //                 // reverse y dir
-        //                 this.dy*=-1;
-        //             }
-        //         }
-
-        //     };                        
             
-        //     this.zspritesgroup.add(a_zsprite);
-        // }
+        //     tweens: [{
+                
+        //         elevation_delta: 100
+                
+        //         }]
+
+        // });
+
+        a_zsprite.move = function()
+        {
+            this.x+=this.dx;
+            if ( this.x<thisContext.TILE_SIZE || this.x>(thisContext.MAP_WIDTH-1)*thisContext.TILE_SIZE ) this.dx*=-1;
+
+            this.y+=this.dy;
+            if ( this.y<thisContext.TILE_SIZE || this.y>(thisContext.MAP_HEIGHT-1)*thisContext.TILE_SIZE ) this.dy*=-1;
+
+            // CHECK COLLISION AGAINST WALLS
+            // compute cell position
+
+
+            var playerXCell = Math.floor(this.x/thisContext.TILE_SIZE);
+            var playerYCell = Math.floor(this.y/thisContext.TILE_SIZE);
+
+            // compute position relative to cell (ie: how many pixel from edge of cell)
+            var playerXCellOffset = this.x % thisContext.TILE_SIZE;
+            var playerYCellOffset = this.y % thisContext.TILE_SIZE;
+
+            var minDistanceToWall=20;
+            
+            // make sure the player don't bump into walls
+            if (this.dx>0)
+            {
+                // moving right
+                if ((thisContext.fMap.charAt((playerYCell*thisContext.MAP_WIDTH)+playerXCell+1)!='-')&&
+                    (playerXCellOffset > (thisContext.TILE_SIZE-minDistanceToWall)))
+                {
+                    // reverse x dir
+                    this.dx*=-1;
+                }               
+            }
+            else
+            {
+                // moving left
+                if ((thisContext.fMap.charAt((playerYCell*thisContext.MAP_WIDTH)+playerXCell-1)!='-')&&
+                    (playerXCellOffset < (minDistanceToWall)))
+                {
+                    /// reverse x dir
+                    this.dx*=-1;
+                } 
+            } 
+
+            if (this.dy<0)
+            {
+                // moving up
+                if ((thisContext.fMap.charAt(((playerYCell-1)*thisContext.MAP_HEIGHT)+playerXCell)!='-')&&
+                    (playerYCellOffset < (minDistanceToWall)))
+                {
+                    // reverse y dir
+                    this.dy*=-1;
+                }
+            }
+            else
+            {
+                // moving down                                  
+                if ((thisContext.fMap.charAt(((playerYCell+1)*thisContext.MAP_HEIGHT)+playerXCell)!='-')&&
+                    (playerYCellOffset > (thisContext.TILE_SIZE-minDistanceToWall)))
+                {
+                    // reverse y dir
+                    this.dy*=-1;
+                }
+            }
+
+        };                        
+        
+        thisContext.zspritesgroup.add(a_zsprite);
+    }
+}

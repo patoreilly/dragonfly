@@ -2662,7 +2662,11 @@ var Demo = new Phaser.Class({
             },
             onComplete: function ()
             {
-                thisContext.resetbuffer(thisContext.floor[thisContext.floor.currentIndex]);
+                for (var i=0; i<thisContext.floor.length; i++)
+                {
+                    thisContext.resetbuffer(thisContext.floor[i]);
+                }
+                
 
                 thisContext.resetbuffer(thisContext.wall[6]);
 
@@ -2705,6 +2709,7 @@ var Demo = new Phaser.Class({
                 case 'redtrees': activate_redtrees(this,20); break;
                 case 'baretrees': activate_baretrees(this,24); break;
                 case 'firtrees': activate_firtrees(this,24); break;
+                case 'oddtrees': activate_oddtrees(this,24); break;
                 case 'ferns': activate_ferns(this,30); break;
                 case 'plants': activate_plants(this,36); break;
                 case 'shrooms': activate_shrooms(this,70); break;
@@ -2713,6 +2718,14 @@ var Demo = new Phaser.Class({
                 case 'elegantflowers': activate_elegantflowers(this,3); break;
                 case 'barerocks': activate_barerocks(this,30); break;
                 case 'plantedrocks': activate_plantedrocks(this,30); break;
+                case 'frogs': activate_frogs(this,20); break;
+                case 'octos': activate_octos(this,26); break;
+                case 'cydrones': activate_cydrones(this,26); break;
+                case 'redwings': activate_redwings(this,26); break;
+                case 'pinkblobs': activate_pinkblobs(this,20); break;
+                case 'ufos': activate_ufos(this,20); break;
+                case 'neonorbs': activate_neonorbs(this,30); break;
+                case 'blueorbs': activate_blueorbs(this,20); break;
 
             }    
     
@@ -4928,7 +4941,7 @@ var config = {
         gamepad: true
     },
     scale: {
-        mode: Phaser.Scale.FIT,
+        mode: Phaser.Scale.EXACT,
         parent: 'phaser-example',
         autoCenter: Phaser.Scale.CENTER_BOTH,
         width: 320,
@@ -4967,8 +4980,8 @@ var cursors;
 var active_objectGangs = [];
 var active_og_index = 0;
 var objectGangs = ['plantedrocks','flybugs','classictrees','ferns','barerocks','plants','shrooms',
-                    'gems','fancytrees','firtrees','redtrees','palmtrees','baretrees','brightflowers','elegantflowers'];//,'blueorbs','neonorbs',,'oddtrees',,
-                    //'frogs','pinkblobs','redwings','octos','cydrones','ufos',
+                    'gems','fancytrees','firtrees','redtrees','palmtrees','baretrees','brightflowers','elegantflowers','blueorbs','neonorbs','oddtrees',
+                    'frogs','pinkblobs','redwings','octos','cydrones','ufos'];
 var og_index = 0;
 
 var wallCastMask = false;
