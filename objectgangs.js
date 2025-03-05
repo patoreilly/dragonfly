@@ -1,6 +1,6 @@
 
 
-function activate_flybugs(thisContext,quantity)
+function activate_flybugs(thisContext,quantity,x1,x2,y1,y2)
 {
     active_objectGangs.push('flybugs');
     //animation test sprite 4
@@ -24,8 +24,8 @@ function activate_flybugs(thisContext,quantity)
                 var imageData = a_zsprite.buffer.getContext('2d', {willReadFrequently:true}).getImageData(0, 0, a_zsprite.img.width, a_zsprite.img.height);
                 a_zsprite.pixels = imageData.data;
 
-            a_zsprite.x = 2000;//Phaser.Math.Between(100, 668);
-            a_zsprite.y = 2000;//Phaser.Math.Between(100, 1180);
+            a_zsprite.x = Phaser.Math.Between(x1, x2);
+            a_zsprite.y = Phaser.Math.Between(y1, y2);
             a_zsprite.dx = Phaser.Math.RND.realInRange(-3.5, 3.5);
             a_zsprite.dy = Phaser.Math.RND.realInRange(-3.5, 3.5);
             a_zsprite.animated = true;
@@ -88,7 +88,7 @@ function activate_flybugs(thisContext,quantity)
                 if (this.dx>0)
                 {
                     // moving right
-                    if ((thisContext.fMap.charAt((playerYCell*thisContext.MAP_WIDTH)+playerXCell+1)!='-')&&
+                    if ((thisContext.wMap.charAt((playerYCell*thisContext.MAP_WIDTH)+playerXCell+1)!='-')&&
                         (playerXCellOffset > (thisContext.TILE_SIZE-minDistanceToWall)))
                     {
                         // reverse x dir
@@ -98,7 +98,7 @@ function activate_flybugs(thisContext,quantity)
                 else
                 {
                     // moving left
-                    if ((thisContext.fMap.charAt((playerYCell*thisContext.MAP_WIDTH)+playerXCell-1)!='-')&&
+                    if ((thisContext.wMap.charAt((playerYCell*thisContext.MAP_WIDTH)+playerXCell-1)!='-')&&
                         (playerXCellOffset < (minDistanceToWall)))
                     {
                         /// reverse x dir
@@ -109,7 +109,7 @@ function activate_flybugs(thisContext,quantity)
                 if (this.dy<0)
                 {
                     // moving up
-                    if ((thisContext.fMap.charAt(((playerYCell-1)*thisContext.MAP_HEIGHT)+playerXCell)!='-')&&
+                    if ((thisContext.wMap.charAt(((playerYCell-1)*thisContext.MAP_HEIGHT)+playerXCell)!='-')&&
                         (playerYCellOffset < (minDistanceToWall)))
                     {
                         // reverse y dir
@@ -119,7 +119,7 @@ function activate_flybugs(thisContext,quantity)
                 else
                 {
                     // moving down                                  
-                    if ((thisContext.fMap.charAt(((playerYCell+1)*thisContext.MAP_HEIGHT)+playerXCell)!='-')&&
+                    if ((thisContext.wMap.charAt(((playerYCell+1)*thisContext.MAP_HEIGHT)+playerXCell)!='-')&&
                         (playerYCellOffset > (thisContext.TILE_SIZE-minDistanceToWall)))
                     {
                         // reverse y dir
@@ -290,7 +290,7 @@ function activate_flybugs(thisContext,quantity)
                     if (this.dx>0)
                     {
                         // moving right
-                        if ((thisContext.fMap.charAt((playerYCell*thisContext.MAP_WIDTH)+playerXCell+1)!='-')&&
+                        if ((thisContext.wMap.charAt((playerYCell*thisContext.MAP_WIDTH)+playerXCell+1)!='-')&&
                             (playerXCellOffset > (thisContext.TILE_SIZE-minDistanceToWall)))
                         {
                             // remove sprite
@@ -302,7 +302,7 @@ function activate_flybugs(thisContext,quantity)
                     else
                     {
                         // moving left
-                        if ((thisContext.fMap.charAt((playerYCell*thisContext.MAP_WIDTH)+playerXCell-1)!='-')&&
+                        if ((thisContext.wMap.charAt((playerYCell*thisContext.MAP_WIDTH)+playerXCell-1)!='-')&&
                             (playerXCellOffset < (minDistanceToWall)))
                         {
                             // remove sprite
@@ -315,7 +315,7 @@ function activate_flybugs(thisContext,quantity)
                     if (this.dy<0)
                     {
                         // moving up
-                        if ((thisContext.fMap.charAt(((playerYCell-1)*thisContext.MAP_HEIGHT)+playerXCell)!='-')&&
+                        if ((thisContext.wMap.charAt(((playerYCell-1)*thisContext.MAP_HEIGHT)+playerXCell)!='-')&&
                             (playerYCellOffset < (minDistanceToWall)))
                         {
                             // remove sprite
@@ -327,7 +327,7 @@ function activate_flybugs(thisContext,quantity)
                     else
                     {
                         // moving down                                  
-                        if ((thisContext.fMap.charAt(((playerYCell+1)*thisContext.MAP_HEIGHT)+playerXCell)!='-')&&
+                        if ((thisContext.wMap.charAt(((playerYCell+1)*thisContext.MAP_HEIGHT)+playerXCell)!='-')&&
                             (playerYCellOffset > (thisContext.TILE_SIZE-minDistanceToWall)))
                         {
                             // remove sprite
@@ -352,7 +352,7 @@ function activate_flybugs(thisContext,quantity)
 
 //////////   simple objects
 
-function activate_plantedrocks(thisContext,quantity)
+function activate_plantedrocks(thisContext,quantity,x1,x2,y1,y2)
 {
     active_objectGangs.push('plantedrocks');
 
@@ -370,8 +370,8 @@ function activate_plantedrocks(thisContext,quantity)
 
         a_zsprite.animationData = thisContext.animationData['rock'+f_index+'.png'];
 
-        a_zsprite.x = Phaser.Math.Between(100,1180);
-        a_zsprite.y = Phaser.Math.Between(100,1180);
+        a_zsprite.x = Phaser.Math.Between(x1,x2);
+        a_zsprite.y = Phaser.Math.Between(y1,y2);
         a_zsprite.animated = false;
         a_zsprite.inplay = true;
 
@@ -407,7 +407,7 @@ function activate_plantedrocks(thisContext,quantity)
     }
 }
 
-function activate_barerocks(thisContext,quantity)
+function activate_barerocks(thisContext,quantity,x1,x2,y1,y2)
 {
     active_objectGangs.push('barerocks');
 
@@ -425,8 +425,8 @@ function activate_barerocks(thisContext,quantity)
 
         a_zsprite.animationData = thisContext.animationData['rock'+f_index+'.png'];
 
-        a_zsprite.x = Phaser.Math.Between(100,1180);
-        a_zsprite.y = Phaser.Math.Between(100,1180);
+        a_zsprite.x = Phaser.Math.Between(x1,x2);
+        a_zsprite.y = Phaser.Math.Between(y1,y2);
         a_zsprite.animated = false;
         //a_zsprite.flying = false;
         a_zsprite.inplay = false;
@@ -465,7 +465,7 @@ function activate_barerocks(thisContext,quantity)
     }
 }
 
-function activate_elegantflowers(thisContext,quantity)
+function activate_elegantflowers(thisContext,quantity,x1,x2,y1,y2)
 {
     active_objectGangs.push('elegantflowers');
 
@@ -483,8 +483,8 @@ function activate_elegantflowers(thisContext,quantity)
 
         a_zsprite.animationData = thisContext.animationData['flower'+f_index+'.png'];
 
-        a_zsprite.x = Phaser.Math.Between(100,1180);
-        a_zsprite.y = Phaser.Math.Between(100,1180);
+        a_zsprite.x = Phaser.Math.Between(x1,x2);
+        a_zsprite.y = Phaser.Math.Between(y1,y2);
         a_zsprite.animated = false;
         //a_zsprite.flying = false;
         a_zsprite.inplay = false;
@@ -521,7 +521,7 @@ function activate_elegantflowers(thisContext,quantity)
     }
 }
 
-function activate_brightflowers(thisContext,quantity)
+function activate_brightflowers(thisContext,quantity,x1,x2,y1,y2)
 {
     active_objectGangs.push('brightflowers');
 
@@ -539,8 +539,8 @@ function activate_brightflowers(thisContext,quantity)
 
         a_zsprite.animationData = thisContext.animationData['flower'+f_index+'.png'];
 
-        a_zsprite.x = Phaser.Math.Between(100,1180);
-        a_zsprite.y = Phaser.Math.Between(100,1180);
+        a_zsprite.x = Phaser.Math.Between(x1,x2);
+        a_zsprite.y = Phaser.Math.Between(y1,y2);
         a_zsprite.animated = false;
         //a_zsprite.flying = false;
         a_zsprite.inplay = false;
@@ -577,7 +577,7 @@ function activate_brightflowers(thisContext,quantity)
     }
 }
 
-function activate_gems(thisContext,quantity)
+function activate_gems(thisContext,quantity,x1,x2,y1,y2)
 {
     active_objectGangs.push('gems');
 
@@ -595,8 +595,8 @@ function activate_gems(thisContext,quantity)
 
         a_zsprite.animationData = thisContext.animationData['gem'+f_index+'.png'];
 
-        a_zsprite.x = Phaser.Math.Between(100,1180);
-        a_zsprite.y = Phaser.Math.Between(100,1180);
+        a_zsprite.x = Phaser.Math.Between(x1,x2);
+        a_zsprite.y = Phaser.Math.Between(y1,y2);
         a_zsprite.animated = false;
         //a_zsprite.flying = false;
         a_zsprite.inplay = false;
@@ -633,7 +633,7 @@ function activate_gems(thisContext,quantity)
     }
 }
 
-function activate_shrooms(thisContext,quantity)
+function activate_shrooms(thisContext,quantity,x1,x2,y1,y2)
 {
     active_objectGangs.push('shrooms');
 
@@ -651,8 +651,8 @@ function activate_shrooms(thisContext,quantity)
 
         a_zsprite.animationData = thisContext.animationData['shroom'+f_index+'.png'];
 
-        a_zsprite.x = Phaser.Math.Between(100,1180);
-        a_zsprite.y = Phaser.Math.Between(100,1180);
+        a_zsprite.x = Phaser.Math.Between(x1,x2);
+        a_zsprite.y = Phaser.Math.Between(y1,y2);
         a_zsprite.animated = false;
         //a_zsprite.flying = false;
         a_zsprite.inplay = false;
@@ -689,7 +689,7 @@ function activate_shrooms(thisContext,quantity)
     }
 }
 
-function activate_plants(thisContext,quantity)
+function activate_plants(thisContext,quantity,x1,x2,y1,y2)
 {
     active_objectGangs.push('plants');
 
@@ -707,8 +707,8 @@ function activate_plants(thisContext,quantity)
 
         a_zsprite.animationData = thisContext.animationData['plant'+f_index+'.png'];
 
-        a_zsprite.x = Phaser.Math.Between(100,1180);
-        a_zsprite.y = Phaser.Math.Between(100,1180);
+        a_zsprite.x = Phaser.Math.Between(x1,x2);
+        a_zsprite.y = Phaser.Math.Between(y1,y2);
         a_zsprite.animated = false;
         //a_zsprite.flying = false;
         a_zsprite.inplay = false;
@@ -745,7 +745,7 @@ function activate_plants(thisContext,quantity)
     }
 }
 
-function activate_ferns(thisContext,quantity)
+function activate_ferns(thisContext,quantity,x1,x2,y1,y2)
 {
     active_objectGangs.push('ferns');
 
@@ -764,8 +764,8 @@ function activate_ferns(thisContext,quantity)
         a_zsprite.animationData = thisContext.animationData['fern'+f_index+'.png'];
 
 
-        a_zsprite.x = Phaser.Math.Between(100,1180);
-        a_zsprite.y = Phaser.Math.Between(100,1180);
+        a_zsprite.x = Phaser.Math.Between(x1,x2);
+        a_zsprite.y = Phaser.Math.Between(y1,y2);
         a_zsprite.animated = false;
         //a_zsprite.flying = false;
         a_zsprite.inplay = false;
@@ -802,7 +802,7 @@ function activate_ferns(thisContext,quantity)
     }
 }
 
-function activate_firtrees(thisContext,quantity)
+function activate_firtrees(thisContext,quantity,x1,x2,y1,y2)
 {
     active_objectGangs.push('firtrees');
 
@@ -820,8 +820,8 @@ function activate_firtrees(thisContext,quantity)
 
         a_zsprite.animationData = thisContext.animationData['tree13.png'];
 
-        a_zsprite.x = Phaser.Math.Between(100,1180);
-        a_zsprite.y = Phaser.Math.Between(100,1180);
+        a_zsprite.x = Phaser.Math.Between(x1,x2);
+        a_zsprite.y = Phaser.Math.Between(y1,y2);
         a_zsprite.animated = false;
         //a_zsprite.flying = false;
         a_zsprite.inplay = false;
@@ -858,7 +858,7 @@ function activate_firtrees(thisContext,quantity)
     }
 }
 
-function activate_baretrees(thisContext,quantity)
+function activate_baretrees(thisContext,quantity,x1,x2,y1,y2)
 {
     active_objectGangs.push('baretrees');
 
@@ -876,14 +876,14 @@ function activate_baretrees(thisContext,quantity)
 
         a_zsprite.animationData = thisContext.animationData['tree14.png'];
 
-        a_zsprite.x = Phaser.Math.Between(100,1180);
-        a_zsprite.y = Phaser.Math.Between(100,1180);
+        a_zsprite.x = Phaser.Math.Between(x1,x2);
+        a_zsprite.y = Phaser.Math.Between(y1,y2);
         a_zsprite.animated = false;
         //a_zsprite.flying = false;
         a_zsprite.inplay = false;
 
         // where the object visually touches the ground based on 1/2 the height in pixels as standard
-        a_zsprite.base_elevation = Math.floor(a_zsprite.img.height/2)-10;//32;
+        a_zsprite.base_elevation = Math.floor(a_zsprite.img.height/2)-2;//32;
 
         // starting 
         a_zsprite.elevation_delta = 0;//Phaser.Math.Between(-50,70);
@@ -914,7 +914,7 @@ function activate_baretrees(thisContext,quantity)
     }
 }
 
-function activate_redtrees(thisContext,quantity)
+function activate_redtrees(thisContext,quantity,x1,x2,y1,y2)
 {
     active_objectGangs.push('redtrees');
 
@@ -932,8 +932,8 @@ function activate_redtrees(thisContext,quantity)
 
         a_zsprite.animationData = thisContext.animationData['tree15.png'];
 
-        a_zsprite.x = Phaser.Math.Between(100,1180);
-        a_zsprite.y = Phaser.Math.Between(100,1180);
+        a_zsprite.x = Phaser.Math.Between(x1,x2);
+        a_zsprite.y = Phaser.Math.Between(y1,y2);
         a_zsprite.animated = false;
         //a_zsprite.flying = false;
         a_zsprite.inplay = false;
@@ -970,12 +970,14 @@ function activate_redtrees(thisContext,quantity)
     }
 }
 
-function activate_palmtrees(thisContext,quantity)
+function activate_palmtrees(thisContext,quantity,x1,x2,y1,y2)
 {
     active_objectGangs.push('palmtrees');
 
     for (var i = 0; i < quantity; i++)
     {
+
+
         a_zsprite = thisContext.add.image();
         a_zsprite.label = 'palmtrees';
         a_zsprite.type = 'target';
@@ -989,14 +991,14 @@ function activate_palmtrees(thisContext,quantity)
         a_zsprite.animationData = thisContext.animationData['tree16.png'];
 
 
-        a_zsprite.x = Phaser.Math.Between(100,1180);
-        a_zsprite.y = Phaser.Math.Between(100,1180);
+        a_zsprite.x = Phaser.Math.Between(x1,x2);
+        a_zsprite.y = Phaser.Math.Between(y1,y2);
         a_zsprite.animated = false;
         //a_zsprite.flying = false;
         a_zsprite.inplay = false;
 
         // where the object visually touches the ground based on 1/2 the height in pixels as standard
-        a_zsprite.base_elevation = Math.floor(a_zsprite.img.height/2)-4;//32;
+        a_zsprite.base_elevation = Math.floor(a_zsprite.img.height/2)-4;//
 
         // starting 
         a_zsprite.elevation_delta = 0;//Phaser.Math.Between(-50,70);
@@ -1027,7 +1029,7 @@ function activate_palmtrees(thisContext,quantity)
     }
 }
 
-function activate_fancytrees(thisContext,quantity)
+function activate_fancytrees(thisContext,quantity,x1,x2,y1,y2)
 {
     active_objectGangs.push('fancytrees');
 
@@ -1045,8 +1047,8 @@ function activate_fancytrees(thisContext,quantity)
 
         a_zsprite.animationData = thisContext.animationData['tree'+f_index+'.png'];
 
-        a_zsprite.x = Phaser.Math.Between(100,1180);
-        a_zsprite.y = Phaser.Math.Between(100,1180);
+        a_zsprite.x = Phaser.Math.Between(x1,x2);
+        a_zsprite.y = Phaser.Math.Between(y1,y2);
         a_zsprite.animated = false;
         //a_zsprite.flying = false;
         a_zsprite.inplay = false;
@@ -1085,7 +1087,7 @@ function activate_fancytrees(thisContext,quantity)
     }
 }
 
-function activate_classictrees(thisContext,quantity)
+function activate_classictrees(thisContext,quantity,x1,x2,y1,y2)
 {
     active_objectGangs.push('classictrees');
 
@@ -1104,8 +1106,8 @@ function activate_classictrees(thisContext,quantity)
         a_zsprite.animationData = thisContext.animationData['tree'+f_index+'.png'];
 
 
-        a_zsprite.x = Phaser.Math.Between(100,1180);
-        a_zsprite.y = Phaser.Math.Between(100,1180);
+        a_zsprite.x = Phaser.Math.Between(x1,x2);
+        a_zsprite.y = Phaser.Math.Between(y1,y2);
         a_zsprite.animated = false;
         //a_zsprite.flying = false;
         a_zsprite.inplay = false;
@@ -1144,7 +1146,7 @@ function activate_classictrees(thisContext,quantity)
     }
 }
 
-function activate_oddtrees(thisContext,quantity)
+function activate_oddtrees(thisContext,quantity,x1,x2,y1,y2)
 {
     active_objectGangs.push('oddtrees');
 
@@ -1162,14 +1164,14 @@ function activate_oddtrees(thisContext,quantity)
 
         a_zsprite.animationData = thisContext.animationData['tree'+f_index+'.png'];
 
-        a_zsprite.x = Phaser.Math.Between(100,1180);
-        a_zsprite.y = Phaser.Math.Between(100,1180);
+        a_zsprite.x = Phaser.Math.Between(x1,x2);
+        a_zsprite.y = Phaser.Math.Between(y1,y2);
         a_zsprite.animated = false;
         //a_zsprite.flying = false;
-        a_zsprite.inplay = false;
+        a_zsprite.inplay = true;
 
         // where the object visually touches the ground based on 1/2 the height in pixels as standard
-        a_zsprite.base_elevation = Math.floor(a_zsprite.img.height/2)-10;//32;
+        a_zsprite.base_elevation = Math.floor(a_zsprite.img.height/2);//32;
 
         // starting 
         a_zsprite.elevation_delta = 0;//Phaser.Math.Between(-50,70);
@@ -1202,7 +1204,7 @@ function activate_oddtrees(thisContext,quantity)
 
 
 
-function activate_frogs(thisContext,quantity)
+function activate_frogs(thisContext,quantity,x1,x2,y1,y2)
 {
     active_objectGangs.push('frogs');
 
@@ -1248,14 +1250,14 @@ function activate_frogs(thisContext,quantity)
         var imageData = a_zsprite.buffer.getContext('2d', {willReadFrequently:true}).getImageData(0, 0, a_zsprite.img.width, a_zsprite.img.height);
         a_zsprite.pixels = imageData.data;
 
-        a_zsprite.x = Phaser.Math.Between(0,1280);
-        a_zsprite.y = Phaser.Math.Between(0,1280);
+        a_zsprite.x = Phaser.Math.Between(x1,x2);
+        a_zsprite.y = Phaser.Math.Between(y1,y2);
         a_zsprite.dx = Phaser.Math.RND.realInRange(-2.5, 3.5);
         a_zsprite.dy = Phaser.Math.RND.realInRange(-2.5, 3.5);
         a_zsprite.animated = true;
         a_zsprite.animationtimecheck=0;
         a_zsprite.frametimer = 0;
-        a_zsprite.inplay = false;
+        a_zsprite.inplay = true;
         a_zsprite.numframes = 23;
         a_zsprite.framewidth = 26;
         a_zsprite.frameindex = 0;
@@ -1298,7 +1300,7 @@ function activate_frogs(thisContext,quantity)
             if (this.dx>0)
             {
                 // moving right
-                if ((thisContext.fMap.charAt((playerYCell*thisContext.MAP_WIDTH)+playerXCell+1)!='-')&&
+                if ((thisContext.wMap.charAt((playerYCell*thisContext.MAP_WIDTH)+playerXCell+1)!='-')&&
                     (playerXCellOffset > (thisContext.TILE_SIZE-minDistanceToWall)))
                 {
                     // reverse x dir
@@ -1308,7 +1310,7 @@ function activate_frogs(thisContext,quantity)
             else
             {
                 // moving left
-                if ((thisContext.fMap.charAt((playerYCell*thisContext.MAP_WIDTH)+playerXCell-1)!='-')&&
+                if ((thisContext.wMap.charAt((playerYCell*thisContext.MAP_WIDTH)+playerXCell-1)!='-')&&
                     (playerXCellOffset < (minDistanceToWall)))
                 {
                     /// reverse x dir
@@ -1319,7 +1321,7 @@ function activate_frogs(thisContext,quantity)
             if (this.dy<0)
             {
                 // moving up
-                if ((thisContext.fMap.charAt(((playerYCell-1)*thisContext.MAP_HEIGHT)+playerXCell)!='-')&&
+                if ((thisContext.wMap.charAt(((playerYCell-1)*thisContext.MAP_HEIGHT)+playerXCell)!='-')&&
                     (playerYCellOffset < (minDistanceToWall)))
                 {
                     // reverse y dir
@@ -1329,7 +1331,7 @@ function activate_frogs(thisContext,quantity)
             else
             {
                 // moving down                                  
-                if ((thisContext.fMap.charAt(((playerYCell+1)*thisContext.MAP_HEIGHT)+playerXCell)!='-')&&
+                if ((thisContext.wMap.charAt(((playerYCell+1)*thisContext.MAP_HEIGHT)+playerXCell)!='-')&&
                     (playerYCellOffset > (thisContext.TILE_SIZE-minDistanceToWall)))
                 {
                     // reverse y dir
@@ -1343,7 +1345,7 @@ function activate_frogs(thisContext,quantity)
     }
 }
 
-function activate_octos(thisContext,quantity)
+function activate_octos(thisContext,quantity,x1,x2,y1,y2)
 {
     active_objectGangs.push('octos');
     //octo creature animation (type 1)
@@ -1367,8 +1369,8 @@ function activate_octos(thisContext,quantity)
 
 
 
-        a_zsprite.x = Phaser.Math.Between(100,668);
-        a_zsprite.y = Phaser.Math.Between(100,1180);
+        a_zsprite.x = Phaser.Math.Between(x1,x2);
+        a_zsprite.y = Phaser.Math.Between(y1,y2);
         a_zsprite.animated = true;
         //a_zsprite.flying = true;
         a_zsprite.animationtimecheck=0;
@@ -1420,7 +1422,7 @@ function activate_octos(thisContext,quantity)
             if (this.dx>0)
             {
                 // moving right
-                if ((thisContext.fMap.charAt((playerYCell*thisContext.MAP_WIDTH)+playerXCell+1)!='-')&&
+                if ((thisContext.wMap.charAt((playerYCell*thisContext.MAP_WIDTH)+playerXCell+1)!='-')&&
                     (playerXCellOffset > (thisContext.TILE_SIZE-minDistanceToWall)))
                 {
                     // reverse x dir
@@ -1430,7 +1432,7 @@ function activate_octos(thisContext,quantity)
             else
             {
                 // moving left
-                if ((thisContext.fMap.charAt((playerYCell*thisContext.MAP_WIDTH)+playerXCell-1)!='-')&&
+                if ((thisContext.wMap.charAt((playerYCell*thisContext.MAP_WIDTH)+playerXCell-1)!='-')&&
                     (playerXCellOffset < (minDistanceToWall)))
                 {
                     /// reverse x dir
@@ -1441,7 +1443,7 @@ function activate_octos(thisContext,quantity)
             if (this.dy<0)
             {
                 // moving up
-                if ((thisContext.fMap.charAt(((playerYCell-1)*thisContext.MAP_HEIGHT)+playerXCell)!='-')&&
+                if ((thisContext.wMap.charAt(((playerYCell-1)*thisContext.MAP_HEIGHT)+playerXCell)!='-')&&
                     (playerYCellOffset < (minDistanceToWall)))
                 {
                     // reverse y dir
@@ -1451,7 +1453,7 @@ function activate_octos(thisContext,quantity)
             else
             {
                 // moving down                                  
-                if ((thisContext.fMap.charAt(((playerYCell+1)*thisContext.MAP_HEIGHT)+playerXCell)!='-')&&
+                if ((thisContext.wMap.charAt(((playerYCell+1)*thisContext.MAP_HEIGHT)+playerXCell)!='-')&&
                     (playerYCellOffset > (thisContext.TILE_SIZE-minDistanceToWall)))
                 {
                     // reverse y dir
@@ -1467,7 +1469,7 @@ function activate_octos(thisContext,quantity)
 }
 
 
-function activate_cydrones(thisContext,quantity)
+function activate_cydrones(thisContext,quantity,x1,x2,y1,y2)
 {
     active_objectGangs.push('cydrones');
 
@@ -1492,8 +1494,8 @@ function activate_cydrones(thisContext,quantity)
 
 
 
-        a_zsprite.x = Phaser.Math.Between(100,668);
-        a_zsprite.y = Phaser.Math.Between(100,1180);
+        a_zsprite.x = Phaser.Math.Between(x1,x2);
+        a_zsprite.y = Phaser.Math.Between(y1,y2);
         a_zsprite.animated = true;
         //a_zsprite.flying = true;
         a_zsprite.animationtimecheck=0;
@@ -1545,7 +1547,7 @@ function activate_cydrones(thisContext,quantity)
             if (this.dx>0)
             {
                 // moving right
-                if ((thisContext.fMap.charAt((playerYCell*thisContext.MAP_WIDTH)+playerXCell+1)!='-')&&
+                if ((thisContext.wMap.charAt((playerYCell*thisContext.MAP_WIDTH)+playerXCell+1)!='-')&&
                     (playerXCellOffset > (thisContext.TILE_SIZE-minDistanceToWall)))
                 {
                     // reverse x dir
@@ -1555,7 +1557,7 @@ function activate_cydrones(thisContext,quantity)
             else
             {
                 // moving left
-                if ((thisContext.fMap.charAt((playerYCell*thisContext.MAP_WIDTH)+playerXCell-1)!='-')&&
+                if ((thisContext.wMap.charAt((playerYCell*thisContext.MAP_WIDTH)+playerXCell-1)!='-')&&
                     (playerXCellOffset < (minDistanceToWall)))
                 {
                     /// reverse x dir
@@ -1566,7 +1568,7 @@ function activate_cydrones(thisContext,quantity)
             if (this.dy<0)
             {
                 // moving up
-                if ((thisContext.fMap.charAt(((playerYCell-1)*thisContext.MAP_HEIGHT)+playerXCell)!='-')&&
+                if ((thisContext.wMap.charAt(((playerYCell-1)*thisContext.MAP_HEIGHT)+playerXCell)!='-')&&
                     (playerYCellOffset < (minDistanceToWall)))
                 {
                     // reverse y dir
@@ -1576,7 +1578,7 @@ function activate_cydrones(thisContext,quantity)
             else
             {
                 // moving down                                  
-                if ((thisContext.fMap.charAt(((playerYCell+1)*thisContext.MAP_HEIGHT)+playerXCell)!='-')&&
+                if ((thisContext.wMap.charAt(((playerYCell+1)*thisContext.MAP_HEIGHT)+playerXCell)!='-')&&
                     (playerYCellOffset > (thisContext.TILE_SIZE-minDistanceToWall)))
                 {
                     // reverse y dir
@@ -1591,7 +1593,7 @@ function activate_cydrones(thisContext,quantity)
     }
 }
 
-function activate_redwings(thisContext,quantity)
+function activate_redwings(thisContext,quantity,x1,x2,y1,y2)
 {
     active_objectGangs.push('redwings');
     //animation test sprite - type 1
@@ -1615,8 +1617,8 @@ function activate_redwings(thisContext,quantity)
 
 
 
-        a_zsprite.x = Phaser.Math.Between(100,668);
-        a_zsprite.y = Phaser.Math.Between(100,1180);
+        a_zsprite.x = Phaser.Math.Between(x1,x2);
+        a_zsprite.y = Phaser.Math.Between(y1,y2);
         a_zsprite.animated = true;
         //a_zsprite.flying = true;
         a_zsprite.animationtimecheck=0;
@@ -1668,7 +1670,7 @@ function activate_redwings(thisContext,quantity)
             if (this.dx>0)
             {
                 // moving right
-                if ((thisContext.fMap.charAt((playerYCell*thisContext.MAP_WIDTH)+playerXCell+1)!='-')&&
+                if ((thisContext.wMap.charAt((playerYCell*thisContext.MAP_WIDTH)+playerXCell+1)!='-')&&
                     (playerXCellOffset > (thisContext.TILE_SIZE-minDistanceToWall)))
                 {
                     // reverse x dir
@@ -1678,7 +1680,7 @@ function activate_redwings(thisContext,quantity)
             else
             {
                 // moving left
-                if ((thisContext.fMap.charAt((playerYCell*thisContext.MAP_WIDTH)+playerXCell-1)!='-')&&
+                if ((thisContext.wMap.charAt((playerYCell*thisContext.MAP_WIDTH)+playerXCell-1)!='-')&&
                     (playerXCellOffset < (minDistanceToWall)))
                 {
                     /// reverse x dir
@@ -1689,7 +1691,7 @@ function activate_redwings(thisContext,quantity)
             if (this.dy<0)
             {
                 // moving up
-                if ((thisContext.fMap.charAt(((playerYCell-1)*thisContext.MAP_HEIGHT)+playerXCell)!='-')&&
+                if ((thisContext.wMap.charAt(((playerYCell-1)*thisContext.MAP_HEIGHT)+playerXCell)!='-')&&
                     (playerYCellOffset < (minDistanceToWall)))
                 {
                     // reverse y dir
@@ -1699,7 +1701,7 @@ function activate_redwings(thisContext,quantity)
             else
             {
                 // moving down                                  
-                if ((thisContext.fMap.charAt(((playerYCell+1)*thisContext.MAP_HEIGHT)+playerXCell)!='-')&&
+                if ((thisContext.wMap.charAt(((playerYCell+1)*thisContext.MAP_HEIGHT)+playerXCell)!='-')&&
                     (playerYCellOffset > (thisContext.TILE_SIZE-minDistanceToWall)))
                 {
                     // reverse y dir
@@ -1714,7 +1716,7 @@ function activate_redwings(thisContext,quantity)
     }
 }        
 
-function activate_pinkblobs(thisContext,quantity)
+function activate_pinkblobs(thisContext,quantity,x1,x2,y1,y2)
 {
     active_objectGangs.push('pinkblobs');
 
@@ -1809,7 +1811,7 @@ function activate_pinkblobs(thisContext,quantity)
     }
 }
 
-function activate_ufos(thisContext,quantity)
+function activate_ufos(thisContext,quantity,x1,x2,y1,y2)
 {
     active_objectGangs.push('ufos');
     //animation test sprite 3
@@ -1833,15 +1835,15 @@ function activate_ufos(thisContext,quantity)
             var imageData = a_zsprite.buffer.getContext('2d', {willReadFrequently:true}).getImageData(0, 0, a_zsprite.img.width, a_zsprite.img.height);
             a_zsprite.pixels = imageData.data;
 
-        a_zsprite.x = Phaser.Math.Between(100, 668);
-        a_zsprite.y = Phaser.Math.Between(100, 1180);
+        a_zsprite.x = Phaser.Math.Between(x1,x2);
+        a_zsprite.y = Phaser.Math.Between(y1,y2);
         // a_zsprite.xincr = Phaser.Math.RND.realInRange(4.5, 8.5);
         // a_zsprite.yincr = Phaser.Math.RND.realInRange(4.5, 8.5);
         a_zsprite.animated = true;
         //a_zsprite.flying = false;
         a_zsprite.animationtimecheck=0;
         a_zsprite.frametimer = 0;
-        a_zsprite.inplay = false;
+        a_zsprite.inplay = true;
         a_zsprite.numframes = 40;
         a_zsprite.framewidth = 29;
         a_zsprite.frameindex = 0;
@@ -1859,13 +1861,13 @@ function activate_ufos(thisContext,quantity)
 
         tweens: [{
             
-            x: Phaser.Math.Between(100, 668),
+            x: Phaser.Math.Between(x1, x2),
             base_elevation: Phaser.Math.Between(0, 96),
             duration: 1000
         },
         {
             
-            y: Phaser.Math.Between(100, 1180),
+            y: Phaser.Math.Between(y1, y2),
             base_elevation: Phaser.Math.Between(0, 96),
             duration: 1000
         },
@@ -1919,7 +1921,7 @@ function activate_ufos(thisContext,quantity)
             // if (this.dx>0)
             // {
             //     // moving right
-            //     if ((thisContext.fMap.charAt((playerYCell*thisContext.MAP_WIDTH)+playerXCell+1)!='-')&&
+            //     if ((thisContext.wMap.charAt((playerYCell*thisContext.MAP_WIDTH)+playerXCell+1)!='-')&&
             //         (playerXCellOffset > (thisContext.TILE_SIZE-minDistanceToWall)))
             //     {
             //         // reverse x dir
@@ -1929,7 +1931,7 @@ function activate_ufos(thisContext,quantity)
             // else
             // {
             //     // moving left
-            //     if ((thisContext.fMap.charAt((playerYCell*thisContext.MAP_WIDTH)+playerXCell-1)!='-')&&
+            //     if ((thisContext.wMap.charAt((playerYCell*thisContext.MAP_WIDTH)+playerXCell-1)!='-')&&
             //         (playerXCellOffset < (minDistanceToWall)))
             //     {
             //         /// reverse x dir
@@ -1940,7 +1942,7 @@ function activate_ufos(thisContext,quantity)
             // if (this.dy<0)
             // {
             //     // moving up
-            //     if ((thisContext.fMap.charAt(((playerYCell-1)*thisContext.MAP_HEIGHT)+playerXCell)!='-')&&
+            //     if ((thisContext.wMap.charAt(((playerYCell-1)*thisContext.MAP_HEIGHT)+playerXCell)!='-')&&
             //         (playerYCellOffset < (minDistanceToWall)))
             //     {
             //         // reverse y dir
@@ -1950,7 +1952,7 @@ function activate_ufos(thisContext,quantity)
             // else
             // {
             //     // moving down                                  
-            //     if ((thisContext.fMap.charAt(((playerYCell+1)*thisContext.MAP_HEIGHT)+playerXCell)!='-')&&
+            //     if ((thisContext.wMap.charAt(((playerYCell+1)*thisContext.MAP_HEIGHT)+playerXCell)!='-')&&
             //         (playerYCellOffset > (thisContext.TILE_SIZE-minDistanceToWall)))
             //     {
             //         // reverse y dir
@@ -1964,7 +1966,7 @@ function activate_ufos(thisContext,quantity)
     }
 }
 
-function activate_neonorbs(thisContext,quantity)
+function activate_neonorbs(thisContext,quantity,x1,x2,y1,y2)
 {
     active_objectGangs.push('neonorbs');
     //animation test sprite 5
@@ -1989,8 +1991,8 @@ function activate_neonorbs(thisContext,quantity)
             var imageData = a_zsprite.buffer.getContext('2d', {willReadFrequently:true}).getImageData(0, 0, a_zsprite.img.width, a_zsprite.img.height);
             a_zsprite.pixels = imageData.data;
 
-        a_zsprite.x = Phaser.Math.Between(100,1180);
-        a_zsprite.y = Phaser.Math.Between(100,1180);
+        a_zsprite.x = Phaser.Math.Between(x1,x2);
+        a_zsprite.y = Phaser.Math.Between(y1,y2);
         a_zsprite.dx = Phaser.Math.RND.realInRange(3, 7);
         a_zsprite.dy = Phaser.Math.RND.realInRange(-3, -7);
         a_zsprite.animated = false;
@@ -2059,7 +2061,7 @@ function activate_neonorbs(thisContext,quantity)
             if (this.dx>0)
             {
                 // moving right
-                if ((thisContext.fMap.charAt((playerYCell*thisContext.MAP_WIDTH)+playerXCell+1)!='-')&&
+                if ((thisContext.wMap.charAt((playerYCell*thisContext.MAP_WIDTH)+playerXCell+1)!='-')&&
                     (playerXCellOffset > (thisContext.TILE_SIZE-minDistanceToWall)))
                 {
                     // reverse x dir
@@ -2069,7 +2071,7 @@ function activate_neonorbs(thisContext,quantity)
             else
             {
                 // moving left
-                if ((thisContext.fMap.charAt((playerYCell*thisContext.MAP_WIDTH)+playerXCell-1)!='-')&&
+                if ((thisContext.wMap.charAt((playerYCell*thisContext.MAP_WIDTH)+playerXCell-1)!='-')&&
                     (playerXCellOffset < (minDistanceToWall)))
                 {
                     /// reverse x dir
@@ -2080,7 +2082,7 @@ function activate_neonorbs(thisContext,quantity)
             if (this.dy<0)
             {
                 // moving up
-                if ((thisContext.fMap.charAt(((playerYCell-1)*thisContext.MAP_HEIGHT)+playerXCell)!='-')&&
+                if ((thisContext.wMap.charAt(((playerYCell-1)*thisContext.MAP_HEIGHT)+playerXCell)!='-')&&
                     (playerYCellOffset < (minDistanceToWall)))
                 {
                     // reverse y dir
@@ -2090,7 +2092,7 @@ function activate_neonorbs(thisContext,quantity)
             else
             {
                 // moving down                                  
-                if ((thisContext.fMap.charAt(((playerYCell+1)*thisContext.MAP_HEIGHT)+playerXCell)!='-')&&
+                if ((thisContext.wMap.charAt(((playerYCell+1)*thisContext.MAP_HEIGHT)+playerXCell)!='-')&&
                     (playerYCellOffset > (thisContext.TILE_SIZE-minDistanceToWall)))
                 {
                     // reverse y dir
@@ -2104,7 +2106,7 @@ function activate_neonorbs(thisContext,quantity)
     }
 }
 
-function activate_blueorbs(thisContext,quantity)
+function activate_blueorbs(thisContext,quantity,x1,x2,y1,y2)
 {
     active_objectGangs.push('blueorbs');
     //animation test sprite 5
@@ -2129,8 +2131,8 @@ function activate_blueorbs(thisContext,quantity)
             var imageData = a_zsprite.buffer.getContext('2d', {willReadFrequently:true}).getImageData(0, 0, a_zsprite.img.width, a_zsprite.img.height);
             a_zsprite.pixels = imageData.data;
 
-        a_zsprite.x = Phaser.Math.Between(100,1180);
-        a_zsprite.y = Phaser.Math.Between(100,1180);
+        a_zsprite.x = Phaser.Math.Between(x1,x2);
+        a_zsprite.y = Phaser.Math.Between(y1,y2);
         a_zsprite.dx = Phaser.Math.RND.realInRange(3, 7);
         a_zsprite.dy = Phaser.Math.RND.realInRange(-3, -7);
         a_zsprite.animated = false;
@@ -2199,7 +2201,7 @@ function activate_blueorbs(thisContext,quantity)
             if (this.dx>0)
             {
                 // moving right
-                if ((thisContext.fMap.charAt((playerYCell*thisContext.MAP_WIDTH)+playerXCell+1)!='-')&&
+                if ((thisContext.wMap.charAt((playerYCell*thisContext.MAP_WIDTH)+playerXCell+1)!='-')&&
                     (playerXCellOffset > (thisContext.TILE_SIZE-minDistanceToWall)))
                 {
                     // reverse x dir
@@ -2209,7 +2211,7 @@ function activate_blueorbs(thisContext,quantity)
             else
             {
                 // moving left
-                if ((thisContext.fMap.charAt((playerYCell*thisContext.MAP_WIDTH)+playerXCell-1)!='-')&&
+                if ((thisContext.wMap.charAt((playerYCell*thisContext.MAP_WIDTH)+playerXCell-1)!='-')&&
                     (playerXCellOffset < (minDistanceToWall)))
                 {
                     /// reverse x dir
@@ -2220,7 +2222,7 @@ function activate_blueorbs(thisContext,quantity)
             if (this.dy<0)
             {
                 // moving up
-                if ((thisContext.fMap.charAt(((playerYCell-1)*thisContext.MAP_HEIGHT)+playerXCell)!='-')&&
+                if ((thisContext.wMap.charAt(((playerYCell-1)*thisContext.MAP_HEIGHT)+playerXCell)!='-')&&
                     (playerYCellOffset < (minDistanceToWall)))
                 {
                     // reverse y dir
@@ -2230,7 +2232,7 @@ function activate_blueorbs(thisContext,quantity)
             else
             {
                 // moving down                                  
-                if ((thisContext.fMap.charAt(((playerYCell+1)*thisContext.MAP_HEIGHT)+playerXCell)!='-')&&
+                if ((thisContext.wMap.charAt(((playerYCell+1)*thisContext.MAP_HEIGHT)+playerXCell)!='-')&&
                     (playerYCellOffset > (thisContext.TILE_SIZE-minDistanceToWall)))
                 {
                     // reverse y dir
@@ -2242,4 +2244,420 @@ function activate_blueorbs(thisContext,quantity)
         
         thisContext.zspritesgroup.add(a_zsprite);
     }
+}
+
+
+
+
+
+
+function activate_mariocarts(thisContext,quantity,x1,x2,y1,y2)
+{
+    //active_objectGangs.push('mariocarts');
+
+
+        thisContext.ralphcart = thisContext.add.image();
+
+        
+        thisContext.ralphcart.sswidth = 32;
+        thisContext.ralphcart.ssheight = 32;
+        thisContext.ralphcart.framewidth = 32;
+        thisContext.ralphcart.numframes = 22;
+        thisContext.ralphcart.frameindex = 0;
+
+        thisContext.ralphcart.buffer = thisContext.textures.createCanvas('ralphcartcanvas', thisContext.ralphcart.sswidth, thisContext.ralphcart.ssheight );
+        thisContext.ralphcart.context = thisContext.ralphcart.buffer.getContext('2d', {willReadFrequently:true});              
+        var imageData = thisContext.ralphcart.context.getImageData(0, 0, thisContext.ralphcart.sswidth, thisContext.ralphcart.ssheight);
+        thisContext.ralphcart.pixels = imageData.data;
+
+        thisContext.ralphcart.frames=[];
+
+        for (var i=1;i<23;i++)
+        {
+            thisContext.ralphcart.frames[i-1] = {};
+
+            var frameimg = thisContext.textures.get('ralphcart'+i+'.png').getSourceImage();
+            thisContext.ralphcart.frames[i-1].buffer = thisContext.textures.createCanvas('ralphcartframe'+i, thisContext.ralphcart.sswidth, thisContext.ralphcart.ssheight );
+
+            thisContext.ralphcart.frames[i-1].context = thisContext.ralphcart.frames[i-1].buffer.getContext('2d', {willReadFrequently:true});      
+            thisContext.ralphcart.frames[i-1].context.drawImage(frameimg, 0, 0,frameimg.width,frameimg.height, 0, 0, thisContext.ralphcart.framewidth, thisContext.ralphcart.ssheight );
+        
+            var imageData = thisContext.ralphcart.frames[i-1].context.getImageData(0, 0, thisContext.ralphcart.sswidth, thisContext.ralphcart.ssheight);
+            thisContext.ralphcart.frames[i-1].pixels = imageData.data;       
+        }
+        
+
+        thisContext.ralphcart.label = "mariocarts";
+        thisContext.ralphcart.type = 'target';
+        thisContext.ralphcart.hitcount = 0;
+        thisContext.ralphcart.explosioncolor= 'orange';
+
+        thisContext.ralphcart.img = thisContext.textures.get('ralphcartcanvas').getSourceImage();
+        thisContext.ralphcart.x = 400;
+        thisContext.ralphcart.y = 1060;
+        thisContext.ralphcart.arc = 0;
+        thisContext.ralphcart.animated = false;
+        //a_zsprite.flying = false;
+        thisContext.ralphcart.animationtimecheck=0;
+        thisContext.ralphcart.frametimer = 50;
+        thisContext.ralphcart.frameindex = 0;
+
+        thisContext.ralphcart.inplay = true;
+        
+        thisContext.ralphcart.elevation_delta = 0;
+        thisContext.ralphcart.base_elevation = Math.floor(thisContext.ralphcart.img.height/2)-5;
+
+        thisContext.ralphcart.startX = 100;
+        thisContext.ralphcart.startY = 100;
+
+        thisContext.ralphcart.relative_arcdelta;
+
+        thisContext.ralphcart.followerdata = 0;
+        thisContext.ralphcart.followerdata2 = 0;
+        thisContext.ralphcart.path_duration = 60000;
+        thisContext.ralphcart.path_delay = 800;
+
+        thisContext.ralphcart.path = new Phaser.Curves.Path(thisContext.ralphcart.startX, thisContext.ralphcart.startY);
+
+        //thisContext.demoBot.path.ellipseTo(1200,1200,360,0,true,180);
+        //160,136,440,280,640,56,870,194,1240,56,1160,536,1200,736,840,896,800,536,480,816,80,776,400,496,100,250 ]);
+        thisContext.ralphcart.path.splineTo([ 308,123,640,150,880,470,1440,256,1760,576,2240,470,2480,896,2400,1428,1760,1215,1520,1428,
+            1680,1855,2160,1748,2320,2174,1920,2480,1280,2390,1120,1960,1152,1450,800,1322,
+            604,1615,736,2051,560,2388,240,2494,80,2175,220,1818,200,1450,412,1215,400,895,180,656,84,341 ]);
+        thisContext.ralphcart.path.closePath();
+
+        thisContext.tweens.add({
+            targets: thisContext.ralphcart,
+            followerdata: 1,
+            ease: 'none',
+            duration: thisContext.ralphcart.path_duration,
+            delay: thisContext.ralphcart.path_delay,
+            yoyo: 0,
+            repeat: -1
+        });
+
+        thisContext.tweens.add({
+            targets: thisContext.ralphcart,
+            followerdata2: 1,
+            ease: 'none',
+            duration: thisContext.ralphcart.path_duration,
+            delay: thisContext.ralphcart.path_delay+1,
+            yoyo: 0,
+            repeat: -1
+        });
+        
+        thisContext.ralphcart.move = function()
+        {
+            this.x = this.path.getPoint(this.followerdata2).x; 
+            this.y = this.path.getPoint(this.followerdata2).y;
+
+            var trackingX = this.path.getPoint(this.followerdata).x;           
+            var trackingY = this.path.getPoint(this.followerdata).y;
+            
+            var distance = Phaser.Math.Distance.Between(this.x,this.y,trackingX,trackingY);
+            var xdelta = this.x-trackingX;
+            var ydelta = this.y-trackingY;
+            var myrad = Math.asin(ydelta/distance);
+            var myarc = Math.round(thisContext.radToArc(myrad))+thisContext.ANGLE180;
+
+            if (xdelta>0)
+            {
+                var myadjarc = myarc;
+            }
+            else if (ydelta>0)
+            {
+                var myadjarc = (1440-myarc)+1440;
+            }    
+            else 
+            {
+                var myadjarc = (960-myarc);
+            }
+
+            myadjarc -= thisContext.fPlayerArc;
+
+            if (myadjarc<0) myadjarc+=1920;
+            if (myadjarc>1920) myadjarc-=1920;
+            
+            this.arc = myadjarc;
+
+            var myarcframeindex = Math.floor((myadjarc*this.numframes)/1920);
+
+            if (this.frames[myarcframeindex] !=undefined)
+            {
+                this.pixels = this.frames[myarcframeindex].pixels;
+            }
+        }
+
+        thisContext.zspritesgroup.add(thisContext.ralphcart);
+        
+
+        thisContext.toadcart = thisContext.add.image();
+
+        
+        thisContext.toadcart.sswidth = 32;
+        thisContext.toadcart.ssheight = 32;
+        thisContext.toadcart.framewidth = 32;
+        thisContext.toadcart.numframes = 22;
+        thisContext.toadcart.frameindex = 0;
+
+        thisContext.toadcart.buffer = thisContext.textures.createCanvas('toadcartcanvas', thisContext.toadcart.sswidth, thisContext.toadcart.ssheight );
+        thisContext.toadcart.context = thisContext.toadcart.buffer.getContext('2d', {willReadFrequently:true});              
+        var imageData = thisContext.toadcart.context.getImageData(0, 0, thisContext.toadcart.sswidth, thisContext.toadcart.ssheight);
+        thisContext.toadcart.pixels = imageData.data;
+
+        thisContext.toadcart.frames=[];
+
+        for (var i=1;i<23;i++)
+        {
+            thisContext.toadcart.frames[i-1] = {};
+
+            var frameimg = thisContext.textures.get('toadcart'+i+'.png').getSourceImage();
+            thisContext.toadcart.frames[i-1].buffer = thisContext.textures.createCanvas('toadcartframe'+i, thisContext.toadcart.sswidth, thisContext.toadcart.ssheight );
+
+            thisContext.toadcart.frames[i-1].context = thisContext.toadcart.frames[i-1].buffer.getContext('2d', {willReadFrequently:true});      
+            thisContext.toadcart.frames[i-1].context.drawImage(frameimg, 0, 0,frameimg.width,frameimg.height, 0, 0, thisContext.toadcart.framewidth, thisContext.toadcart.ssheight );
+        
+            var imageData = thisContext.toadcart.frames[i-1].context.getImageData(0, 0, thisContext.toadcart.sswidth, thisContext.toadcart.ssheight);
+            thisContext.toadcart.frames[i-1].pixels = imageData.data;       
+        }
+        
+
+        thisContext.toadcart.label = "mariocarts";
+        thisContext.toadcart.type = 'target';
+        thisContext.toadcart.hitcount = 0;
+        thisContext.toadcart.explosioncolor= 'orange';
+
+        thisContext.toadcart.img = thisContext.textures.get('toadcartcanvas').getSourceImage();
+        thisContext.toadcart.x = 400;
+        thisContext.toadcart.y = 1060;
+        thisContext.toadcart.arc = 0;
+        thisContext.toadcart.animated = false;
+        //a_zsprite.flying = false;
+        thisContext.toadcart.animationtimecheck=0;
+        thisContext.toadcart.frametimer = 50;
+        thisContext.toadcart.frameindex = 0;
+
+        thisContext.toadcart.inplay = true;
+        
+        thisContext.toadcart.elevation_delta = 0;
+        thisContext.toadcart.base_elevation = Math.floor(thisContext.toadcart.img.height/2)-5;
+
+        thisContext.toadcart.startX = 100;
+        thisContext.toadcart.startY = 100;
+
+        thisContext.toadcart.relative_arcdelta;
+
+        thisContext.toadcart.followerdata = 0;
+        thisContext.toadcart.followerdata2 = 0;
+        thisContext.toadcart.path_duration = 60000;
+        thisContext.toadcart.path_delay = 1600;
+
+        thisContext.toadcart.path = new Phaser.Curves.Path(thisContext.toadcart.startX, thisContext.toadcart.startY);
+
+        //thisContext.demoBot.path.ellipseTo(1200,1200,360,0,true,180);
+        //160,136,440,280,640,56,870,194,1240,56,1160,536,1200,736,840,896,800,536,480,816,80,776,400,496,100,250 ]);
+        thisContext.toadcart.path.splineTo([ 308,123,640,150,880,470,1440,256,1760,576,2240,470,2480,896,2400,1428,1760,1215,1520,1428,
+            1680,1855,2160,1748,2320,2174,1920,2480,1280,2390,1120,1960,1152,1450,800,1322,
+            604,1615,736,2051,560,2388,240,2494,80,2175,220,1818,200,1450,412,1215,400,895,180,656,84,341 ]);
+        thisContext.toadcart.path.closePath();
+
+        thisContext.tweens.add({
+            targets: thisContext.toadcart,
+            followerdata: 1,
+            ease: 'none',
+            duration: thisContext.toadcart.path_duration,
+            delay: thisContext.toadcart.path_delay,
+            yoyo: 0,
+            repeat: -1
+        });
+
+        thisContext.tweens.add({
+            targets: thisContext.toadcart,
+            followerdata2: 1,
+            ease: 'none',
+            duration: thisContext.toadcart.path_duration,
+            delay: thisContext.toadcart.path_delay+1,
+            yoyo: 0,
+            repeat: -1
+        });
+        
+        thisContext.toadcart.move = function()
+        {
+            this.x = this.path.getPoint(this.followerdata2).x; 
+            this.y = this.path.getPoint(this.followerdata2).y;
+
+            var trackingX = this.path.getPoint(this.followerdata).x;           
+            var trackingY = this.path.getPoint(this.followerdata).y;
+            
+            var distance = Phaser.Math.Distance.Between(this.x,this.y,trackingX,trackingY);
+            var xdelta = this.x-trackingX;
+            var ydelta = this.y-trackingY;
+            var myrad = Math.asin(ydelta/distance);
+            var myarc = Math.round(thisContext.radToArc(myrad))+thisContext.ANGLE180;
+
+            if (xdelta>0)
+            {
+                var myadjarc = myarc;
+            }
+            else if (ydelta>0)
+            {
+                var myadjarc = (1440-myarc)+1440;
+            }    
+            else 
+            {
+                var myadjarc = (960-myarc);
+            }
+
+            myadjarc -= thisContext.fPlayerArc;
+
+            if (myadjarc<0) myadjarc+=1920;
+            if (myadjarc>1920) myadjarc-=1920;
+            
+            this.arc = myadjarc;
+
+            var myarcframeindex = Math.floor((myadjarc*this.numframes)/1920);
+
+            if (this.frames[myarcframeindex] !=undefined)
+            {
+                this.pixels = this.frames[myarcframeindex].pixels;
+            }
+        }
+
+        thisContext.zspritesgroup.add(thisContext.toadcart);
+
+
+        thisContext.pippincart = thisContext.add.image();
+
+        
+        thisContext.pippincart.sswidth = 32;
+        thisContext.pippincart.ssheight = 32;
+        thisContext.pippincart.framewidth = 32;
+        thisContext.pippincart.numframes = 22;
+        thisContext.pippincart.frameindex = 0;
+
+        thisContext.pippincart.buffer = thisContext.textures.createCanvas('pippincartcanvas', thisContext.pippincart.sswidth, thisContext.pippincart.ssheight );
+        thisContext.pippincart.context = thisContext.pippincart.buffer.getContext('2d', {willReadFrequently:true});              
+        var imageData = thisContext.pippincart.context.getImageData(0, 0, thisContext.pippincart.sswidth, thisContext.pippincart.ssheight);
+        thisContext.pippincart.pixels = imageData.data;
+
+        thisContext.pippincart.frames=[];
+
+        for (var i=1;i<23;i++)
+        {
+            thisContext.pippincart.frames[i-1] = {};
+
+            var frameimg = thisContext.textures.get('pippincart'+i+'.png').getSourceImage();
+            thisContext.pippincart.frames[i-1].buffer = thisContext.textures.createCanvas('pippincartframe'+i, thisContext.pippincart.sswidth, thisContext.pippincart.ssheight );
+
+            thisContext.pippincart.frames[i-1].context = thisContext.pippincart.frames[i-1].buffer.getContext('2d', {willReadFrequently:true});      
+            thisContext.pippincart.frames[i-1].context.drawImage(frameimg, 0, 0,frameimg.width,frameimg.height, 0, 0, thisContext.pippincart.framewidth, thisContext.pippincart.ssheight );
+        
+            var imageData = thisContext.pippincart.frames[i-1].context.getImageData(0, 0, thisContext.pippincart.sswidth, thisContext.pippincart.ssheight);
+            thisContext.pippincart.frames[i-1].pixels = imageData.data;       
+        }
+        
+
+        thisContext.pippincart.label = "mariocarts";
+        thisContext.pippincart.type = 'target';
+        thisContext.pippincart.hitcount = 0;
+        thisContext.pippincart.explosioncolor= 'orange';
+
+        thisContext.pippincart.img = thisContext.textures.get('pippincartcanvas').getSourceImage();
+        thisContext.pippincart.x = 400;
+        thisContext.pippincart.y = 1060;
+        thisContext.pippincart.arc = 0;
+        thisContext.pippincart.animated = false;
+        //a_zsprite.flying = false;
+        thisContext.pippincart.animationtimecheck=0;
+        thisContext.pippincart.frametimer = 50;
+        thisContext.pippincart.frameindex = 0;
+
+        thisContext.pippincart.inplay = true;
+        
+        thisContext.pippincart.elevation_delta = 0;
+        thisContext.pippincart.base_elevation = Math.floor(thisContext.pippincart.img.height/2)-5;
+
+        thisContext.pippincart.startX = 100;
+        thisContext.pippincart.startY = 100;
+
+        thisContext.pippincart.relative_arcdelta;
+
+        thisContext.pippincart.followerdata = 0;
+        thisContext.pippincart.followerdata2 = 0;
+        thisContext.pippincart.path_duration = 60000;
+        thisContext.pippincart.path_delay = 2400;
+
+        thisContext.pippincart.path = new Phaser.Curves.Path(thisContext.pippincart.startX, thisContext.pippincart.startY);
+
+        //thisContext.demoBot.path.ellipseTo(1200,1200,360,0,true,180);
+        //160,136,440,280,640,56,870,194,1240,56,1160,536,1200,736,840,896,800,536,480,816,80,776,400,496,100,250 ]);
+        thisContext.pippincart.path.splineTo([ 308,123,640,150,880,470,1440,256,1760,576,2240,470,2480,896,2400,1428,1760,1215,1520,1428,
+            1680,1855,2160,1748,2320,2174,1920,2480,1280,2390,1120,1960,1152,1450,800,1322,
+            604,1615,736,2051,560,2388,240,2494,80,2175,220,1818,200,1450,412,1215,400,895,180,656,84,341 ]);
+        thisContext.pippincart.path.closePath();
+
+        thisContext.tweens.add({
+            targets: thisContext.pippincart,
+            followerdata: 1,
+            ease: 'none',
+            duration: thisContext.pippincart.path_duration,
+            delay: thisContext.pippincart.path_delay,
+            yoyo: 0,
+            repeat: -1
+        });
+
+        thisContext.tweens.add({
+            targets: thisContext.pippincart,
+            followerdata2: 1,
+            ease: 'none',
+            duration: thisContext.pippincart.path_duration,
+            delay: thisContext.pippincart.path_delay+1,
+            yoyo: 0,
+            repeat: -1
+        });
+        
+        thisContext.pippincart.move = function()
+        {
+            this.x = this.path.getPoint(this.followerdata2).x; 
+            this.y = this.path.getPoint(this.followerdata2).y;
+
+            var trackingX = this.path.getPoint(this.followerdata).x;           
+            var trackingY = this.path.getPoint(this.followerdata).y;
+            
+            var distance = Phaser.Math.Distance.Between(this.x,this.y,trackingX,trackingY);
+            var xdelta = this.x-trackingX;
+            var ydelta = this.y-trackingY;
+            var myrad = Math.asin(ydelta/distance);
+            var myarc = Math.round(thisContext.radToArc(myrad))+thisContext.ANGLE180;
+
+            if (xdelta>0)
+            {
+                var myadjarc = myarc;
+            }
+            else if (ydelta>0)
+            {
+                var myadjarc = (1440-myarc)+1440;
+            }    
+            else 
+            {
+                var myadjarc = (960-myarc);
+            }
+
+            myadjarc -= thisContext.fPlayerArc;
+
+            if (myadjarc<0) myadjarc+=1920;
+            if (myadjarc>1920) myadjarc-=1920;
+            
+            this.arc = myadjarc;
+
+            var myarcframeindex = Math.floor((myadjarc*this.numframes)/1920);
+
+            if (this.frames[myarcframeindex] !=undefined)
+            {
+                this.pixels = this.frames[myarcframeindex].pixels;
+            }
+        }
+
+        thisContext.zspritesgroup.add(thisContext.pippincart);
+
 }
