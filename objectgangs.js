@@ -2661,3 +2661,184 @@ function activate_mariocarts(thisContext,quantity,x1,x2,y1,y2)
         thisContext.zspritesgroup.add(thisContext.pippincart);
 
 }
+
+
+
+function activate_runners(thisContext,quantity,x1,x2,y1,y2)
+{
+    //active_objectGangs.push('runners');
+
+    for (var j=0;j<quantity;j++)
+    {
+
+        a_zsprite = thisContext.add.image();
+
+        a_zsprite.sswidth = 320;
+        a_zsprite.ssheight = 32;
+
+        a_zsprite.num_position_frames = 8;
+
+        a_zsprite.srcimg = thisContext.textures.get('run_anim_'+1+'.png').getSourceImage();
+
+        var srcwidth = a_zsprite.srcimg.width;
+        var srcheight = a_zsprite.srcimg.height;
+
+        var randomKey = Math.random().toString();
+        a_zsprite.buffer = thisContext.textures.createCanvas(randomKey, a_zsprite.sswidth, a_zsprite.ssheight );
+
+        a_zsprite.context = a_zsprite.buffer.getContext('2d', {willReadFrequently:true});   
+
+        a_zsprite.context.drawImage(a_zsprite.srcimg, 0, 0,srcwidth,srcheight, 0, 0, a_zsprite.sswidth, a_zsprite.ssheight );
+
+        var imageData = a_zsprite.context.getImageData(0, 0, a_zsprite.sswidth, a_zsprite.ssheight);
+        a_zsprite.pixels = imageData.data;
+
+        a_zsprite.frames=[];
+
+        for (var i=1;i<9;i++)
+        {
+            a_zsprite.frames[i-1] = {};
+
+            var frameimg = thisContext.textures.get('run_anim_'+i+'.png').getSourceImage();
+            a_zsprite.frames[i-1].buffer = thisContext.textures.createCanvas(randomKey+i, a_zsprite.sswidth, a_zsprite.ssheight );
+
+            a_zsprite.frames[i-1].context = a_zsprite.frames[i-1].buffer.getContext('2d', {willReadFrequently:true});      
+            a_zsprite.frames[i-1].context.drawImage(frameimg, 0, 0,srcwidth,srcheight, 0, 0, a_zsprite.sswidth, a_zsprite.ssheight );
+
+            var imageData = a_zsprite.frames[i-1].context.getImageData(0, 0, a_zsprite.sswidth, a_zsprite.ssheight);
+            a_zsprite.frames[i-1].pixels = imageData.data;        
+        }
+
+
+        a_zsprite.label = "runner";
+        a_zsprite.type = 'target';
+        a_zsprite.hitcount = 0;
+        a_zsprite.explosioncolor= 'orange';
+
+        a_zsprite.img = thisContext.textures.get(randomKey).getSourceImage();
+        a_zsprite.x = Phaser.Math.Between(x1,x2);
+        a_zsprite.y = Phaser.Math.Between(y1,y2);
+        a_zsprite.arc = 0;
+        a_zsprite.animated = true;
+        //a_zsprite.flying = false;
+        a_zsprite.animationtimecheck=0;
+        a_zsprite.frametimer = 65;
+        a_zsprite.frameindex = 0;
+        a_zsprite.framewidth = 32;
+        a_zsprite.numframes = 10;
+
+
+        a_zsprite.inplay = true;
+
+        a_zsprite.elevation_delta = 0;
+        a_zsprite.base_elevation = Math.floor(a_zsprite.img.height/2)-5;
+
+        //a_zsprite.startX = 1000;
+        //a_zsprite.startY = 1000;
+
+        a_zsprite.followerdata = 0;
+        a_zsprite.followerdata2 = 0;
+        a_zsprite.path_duration = 28000;
+        a_zsprite.path_delay = 0
+
+        // a_zsprite.path = new Phaser.Curves.Path(a_zsprite.startX, a_zsprite.startY);
+
+        // a_zsprite.path.splineTo([ 160,136,440,280,640,56,870,194,1240,56,1160,536,1200,736,840,896,800,536,480,816,80,776,400,496,100,250 ]);
+        // a_zsprite.path.closePath();
+
+        a_zsprite.path = new Phaser.Curves.Path(a_zsprite.x, a_zsprite.y);
+        a_zsprite.path.quadraticBezierTo(Phaser.Math.Between(x1,x2), Phaser.Math.Between(y1,y2), a_zsprite.x+ Phaser.Math.Between(-100,+100)*5, a_zsprite.y+ Phaser.Math.Between(-100,100)*5);
+
+
+        thisContext.tweens.add({
+            targets: a_zsprite,
+            followerdata: 1,
+            ease: 'none',
+            duration: a_zsprite.path_duration,
+            delay: a_zsprite.path_delay,
+            yoyo: 0,
+            repeat: -1,
+            onRepeat: function (tw,zs) { 
+
+                    // console.log(tw);
+                    // console.log(zs);
+                    zs.followerdata=0;
+                    zs.followerdata2=0;
+                    zs.path = new Phaser.Curves.Path(zs.x, zs.y); 
+                    zs.path.quadraticBezierTo(Phaser.Math.Between(x1,x2), Phaser.Math.Between(y1,y2), zs.x+ Phaser.Math.Between(-100,+100)*5, zs.y+ Phaser.Math.Between(-100,100)*5);
+                    //zs.path.lineTo( Phaser.Math.Between(0,1280), Phaser.Math.Between(0,1280) ); 
+                }
+        });
+
+        thisContext.tweens.add({
+            targets: a_zsprite,
+            followerdata2: 1,
+            ease: 'none',
+            duration: a_zsprite.path_duration,
+            delay: a_zsprite.path_delay+1,
+            yoyo: 0,
+            repeat: -1
+        });
+
+        a_zsprite.jumptween = thisContext.tweens.add({
+                targets: a_zsprite,
+                elevation_delta: 80,
+                ease: 'Quad.easeOut',
+                duration: 450,
+                yoyo: true,
+                repeat: 0,
+                paused:true
+            });
+
+        a_zsprite.jump = function()
+        { 
+            if ( !this.jumptween.isPlaying() )
+            this.jumptween.play();
+        }
+
+        a_zsprite.move = function()
+        {            
+            this.x = this.path.getPoint(this.followerdata2).x; 
+            this.y = this.path.getPoint(this.followerdata2).y;
+
+            var trackingX = this.path.getPoint(this.followerdata).x;           
+            var trackingY = this.path.getPoint(this.followerdata).y;
+            
+            var distance = Phaser.Math.Distance.Between(this.x,this.y,trackingX,trackingY);
+            var xdelta = this.x-trackingX;
+            var ydelta = this.y-trackingY;
+            var myrad = Math.asin(ydelta/distance);
+            var myarc = Math.round(thisContext.radToArc(myrad))+thisContext.ANGLE180;
+
+            if (xdelta>0)
+            {
+                var myadjarc = myarc;
+            }
+            else if (ydelta>0)
+            {
+                var myadjarc = (1440-myarc)+1440;
+            }    
+            else 
+            {
+                var myadjarc = (960-myarc);
+            }
+
+            myadjarc -= thisContext.fPlayerArc;
+
+            if (myadjarc<0) myadjarc+=1920;
+            if (myadjarc>1920) myadjarc-=1920;
+            
+            this.arc = myadjarc;
+
+            var myarcframeindex = Math.floor((myadjarc*this.numframes)/1920);
+
+            if (this.frames[myarcframeindex] !=undefined)
+            {
+                this.pixels = this.frames[myarcframeindex].pixels;
+            }
+        }
+
+        thisContext.zspritesgroup.add(a_zsprite);
+
+    }
+}

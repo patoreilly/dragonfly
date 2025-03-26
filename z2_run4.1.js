@@ -1877,46 +1877,12 @@ var Demo = new Phaser.Class({
         }
         this.playercart.move = function()
         {            
-
-            // this.x = 500;//this.path.getPoint(this.followerdata2).x; 
-            // this.y = 500;//this.path.getPoint(this.followerdata2).y;
-
-            // var trackingX = 0;//this.path.getPoint(this.followerdata).x;           
-            // var trackingY = 0;//this.path.getPoint(this.followerdata).y;            
-
-            // var distance = Phaser.Math.Distance.Between(this.x,this.y,trackingX,trackingY);
-            // var xdelta = this.x-trackingX;
-            // var ydelta = this.y-trackingY;
-            // var myrad = Math.asin(ydelta/distance);
-            // var myarc = Math.round(thisContext.radToArc(myrad))+thisContext.ANGLE180;            
-
-            // if (xdelta>0)
-            // {
-            //     var myadjarc = myarc;                
-            // }
-            // else if (ydelta>0)
-            // {
-            //     var myadjarc = (1440-myarc)+1440;                
-            // }    
-            // else 
-            // {
-            //     var myadjarc = (960-myarc);                
-            // }
-
-
-
-
-
-
-
-
             var myadjarc = this.arc;
 
             myadjarc -= thisContext.fPlayerArc;
 
             if (myadjarc<0) myadjarc+=1920;
             if (myadjarc>1920) myadjarc-=1920;
-            
 
             var myarcframeindex = Math.round((myadjarc*this.num_position_frames)/1920);
 
@@ -1937,16 +1903,13 @@ var Demo = new Phaser.Class({
 
             this.lastX = this.x;
             this.lastY = this.y;
-
-            
         }
-
-
 
         this.zspritesgroup.add(this.playercart);
 
-
         //// end Player Cart
+
+
 
         this.mariocart = this.add.image();
 
@@ -2044,39 +2007,13 @@ var Demo = new Phaser.Class({
             repeat: -1
         });
 
-        
         this.mariocart.move = function()
         {
-
-            
-            
-
             this.x = this.path.getPoint(this.followerdata2).x; 
             this.y = this.path.getPoint(this.followerdata2).y;
 
-
-
-            // var trackBotSprite = thisContext.zspritesgroupArray[thisContext.trackbotData.index];
-            // var followDelta = trackBotSprite.followerdata;//*.945;
-
             var trackingX = this.path.getPoint(this.followerdata).x;           
             var trackingY = this.path.getPoint(this.followerdata).y;
-
-
-            
-            //console.log(adjtrackbotX,adjtrackbotY);
-
-            // if (trackBotSprite.x!=undefined && trackBotSprite.y!=undefined)
-            // {
-            //     var XlookPoint = trackingX;
-            //     var YlookPoint = trackingY;
-            // }
-            // else
-            // {
-            //     var XlookPoint = 600;
-            //     var YlookPoint = 1600;
-            // }
-            
 
             var distance = Phaser.Math.Distance.Between(this.x,this.y,trackingX,trackingY);
             var xdelta = this.x-trackingX;
@@ -2084,29 +2021,17 @@ var Demo = new Phaser.Class({
             var myrad = Math.asin(ydelta/distance);
             var myarc = Math.round(thisContext.radToArc(myrad))+thisContext.ANGLE180;
 
-            //myarc -= thisContext.fPlayerArc;
-
-            // if (myarc<0) myarc+=1920;
-            // if (myarc>1920) myarc-=1920;
-
             if (xdelta>0)
             {
                 var myadjarc = myarc;
-                // var shotXDir=this.fCosTable[myarc];//thisContext.fPlayerArc
-                // var shotYDir=this.fSinTable[myarc];
-
             }
             else if (ydelta>0)
             {
                 var myadjarc = (1440-myarc)+1440;
-                // var shotXDir=-this.fCosTable[myarc];//thisContext.fPlayerArc
-                // var shotYDir=this.fSinTable[myarc];
             }    
             else 
             {
                 var myadjarc = (960-myarc);
-                // var shotXDir=-this.fCosTable[myarc];//thisContext.fPlayerArc
-                // var shotYDir=this.fSinTable[myarc];
             }
 
             myadjarc -= thisContext.fPlayerArc;
@@ -2116,8 +2041,6 @@ var Demo = new Phaser.Class({
             
             this.arc = myadjarc;
 
-
-
             var myarcframeindex = Math.floor((myadjarc*this.numframes)/1920);
 
             if (this.frames[myarcframeindex] !=undefined)
@@ -2126,11 +2049,9 @@ var Demo = new Phaser.Class({
             }
         }
 
-
-
         this.zspritesgroup.add(this.mariocart);
 
-
+        // end mariocart
 
 
         
@@ -2590,7 +2511,13 @@ var Demo = new Phaser.Class({
                 var new_objectgang = objectGangs[og_index];
 
                 this.changeLevel(new_objectgang);
+
+                this.playercart.inplay = true;
+
                 this.mariocart.inplay = true;
+                this.ralphcart.inplay = true;
+                this.toadcart.inplay = true;
+                this.pippincart.inplay = true;
 
                 demo_mode = true; 
                 drive_mode = false;
@@ -2616,6 +2543,11 @@ var Demo = new Phaser.Class({
             { 
                 demo_mode = false; 
                 this.playercart.inplay = true;
+
+                this.mariocart.inplay = true;
+                this.ralphcart.inplay = true;
+                this.toadcart.inplay = true;
+                this.pippincart.inplay = true;
                 
 
                 this.displayHideMenu();
@@ -3175,6 +3107,8 @@ var Demo = new Phaser.Class({
 
 
         ///////////////pre activations
+
+        activate_runners(thisContext,200,100,2460,100,2460);
 
         activate_mariocarts(thisContext,3);
 
@@ -5769,12 +5703,12 @@ var wallMap=
                             '----------------------------------------'+
                             '----------------------------------------'+
                             '----------------------------------------'+
-                            '--------------4-------------------------'+
-                            '--------------4-------------------------'+
-                            '--------------4-------------------------'+
-                            '----------6666666666666666664-----------'+
-                            '----------------------------4-----------'+
-                            '----------------------------4-----------'+
+                            '----------------------------------------'+
+                            '----------------------------------------'+
+                            '----------------------------------------'+
+                            '----------------------------------------'+
+                            '----------------------------------------'+
+                            '----------------------------------------'+
                             '----------------------------------------'+
                             '----------------------------------------'+
                             '----------------------------------------'+
